@@ -1,0 +1,22 @@
+feature,kind,bins,iv,decision,reason,coefficient,p_value
+status_sep,numeric,5,0.882317443236286,kept,,0.7574758317503533,1.8465533032358e-310
+n_delinquent,numeric,4,0.8365417546248496,dropped,"correlated with status_sep (r = 0.75), which has the higher information value",,
+n_delinquent_recent,numeric,4,0.8313244662278028,dropped,"correlated with status_sep (r = 0.84), which has the higher information value",,
+months_since_delinquent,numeric,4,0.7992033388017123,dropped,"correlated with status_sep (r = 0.85), which has the higher information value",,
+worst_status,numeric,3,0.7383693473711996,dropped,"correlated with status_sep (r = 0.68), which has the higher information value",,
+status_aug,numeric,3,0.5602175309061307,dropped,"correlated with status_sep (r = 0.67), which has the higher information value",,
+status_jul,numeric,4,0.41007963826003374,kept,,0.2777712658564765,3.492583862159122e-18
+status_jun,numeric,4,0.3445844369091457,dropped,"correlated with status_jul (r = 0.62), which has the higher information value",,
+status_may,numeric,4,0.3251035485949124,kept,,0.28597396015572535,1.294980164661993e-16
+status_apr,numeric,2,0.2818668865636942,dropped,"correlated with status_may (r = 0.65), which has the higher information value",,
+pay_ratio_sep,numeric,3,0.22859479743001196,kept,,0.08714972894182432,0.04416162741778768
+paid_total,numeric,6,0.18359999732393675,kept,,0.44171988115492544,2.1073817252161858e-15
+paid_sep,numeric,4,0.17676343331323793,kept,,0.17769026006034436,0.0018997477786186767
+limit,numeric,5,0.17630424393095215,kept,,0.2623466488340261,4.274181594698569e-08
+paid_aug,numeric,5,0.15175126083101062,dropped,"correlated with paid_total (r = 0.62), which has the higher information value",,
+utilisation_avg,numeric,6,0.13776233679562036,kept,,0.37556564520865254,4.555942208390872e-14
+pay_ratio_total,numeric,4,0.12595141633751356,dropped,coefficient -0.10 is not positive once the others are in the model,,
+pay_ratio_avg,numeric,4,0.12310030537631582,dropped,"correlated with pay_ratio_total (r = 0.89), which has the higher information value",,
+utilisation_max,numeric,5,0.0994278923930153,dropped,"correlated with utilisation_avg (r = 0.81), which has the higher information value",,
+utilisation_sep,numeric,6,0.0825089597378916,dropped,"correlated with utilisation_avg (r = 0.74), which has the higher information value",,
+bill_sep,numeric,4,0.01000340322948099,dropped,information value under 0.02,,

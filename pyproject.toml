@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "creditrisk"
+version = "1.0.0"
+description = "Credit card default scorecard: who will miss next month's payment, and where should a lender draw the line?"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2.0", "pandas>=2.2", "scipy>=1.13", "scikit-learn>=1.5", "statsmodels>=0.14", "matplotlib>=3.9", "lightgbm>=4.3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5", "nbformat>=5.9"]
+notebook = ["nbformat>=5.9", "nbclient>=0.10", "ipykernel>=6.29"]
+
+[project.scripts]
+creditrisk = "creditrisk.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["creditrisk*"]
+
+[tool.setuptools.package-data]
+creditrisk = ["templates/*", "templates/docs/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]            # the package sits at the repository root, so plain `pytest` can import it without an install
+filterwarnings = ["ignore::FutureWarning", "ignore::RuntimeWarning", "ignore::DeprecationWarning", "ignore::UserWarning"]
+
+[tool.ruff]
+line-length = 125
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501", "B905"]

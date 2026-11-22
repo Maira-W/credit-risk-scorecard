@@ -1,0 +1,45 @@
+{
+  "files": {
+    "uci/default_of_credit_card_clients.csv": {
+      "bytes": 2897080,
+      "sha256": "45bcf4df62ff2e237a74eb155cabfb4bbbc171219a0637daef44fdad07503dd0",
+      "source": "https://archive.ics.uci.edu/static/public/350/data.csv",
+      "what": "30,000 credit card accounts in Taiwan, April to September 2005 (UCI dataset 350)",
+      "licence": "CC BY 4.0",
+      "retrieved": "2026-11-22T15:42:02Z"
+    },
+    "uci/metadata.json": {
+      "bytes": 7253,
+      "sha256": "b92ff7a69d5b65179f61f0b01c456dc6cf69e783fbd02eb2be0a014abce1ad2b",
+      "source": "https://archive.ics.uci.edu/api/dataset?id=350",
+      "what": "UCI's description of the dataset: variables, notes, citation",
+      "licence": "CC BY 4.0",
+      "retrieved": "2026-11-22T15:54:30Z"
+    },
+    "macro/worldbank_npl_ratio.json": {
+      "bytes": 15290,
+      "sha256": "60326fb4e2fa412b47f6f0d71127421949ed98c8fc093f32c4103117fdaaac42",
+      "source": "https://api.worldbank.org/v2/country/PAK/indicator/FB.AST.NPER.ZS?format=json&per_page=100",
+      "what": "Pakistan: bank non-performing loans to gross loans, % (World Bank FB.AST.NPER.ZS)",
+      "licence": "CC BY 4.0",
+      "retrieved": "2026-11-22T15:54:30Z"
+    },
+    "macro/worldbank_gfdd_npl_ratio.json": {
+      "bytes": 13747,
+      "sha256": "9d195ff41a75c38fd0472ca11894f725eb0b0cefecdd6f56592d36d9aed09932",
+      "source": "https://api.worldbank.org/v2/country/PAK/indicator/GFDD.SI.02?source=32&format=json&per_page=100",
+      "what": "Pakistan: bank non-performing loans to gross loans, %, 1998 to 2020 (World Bank GFDD.SI.02)",
+      "licence": "CC BY 4.0",
+      "retrieved": "2026-11-22T16:03:11Z"
+    },
+    "macro/worldbank_private_credit.json": {
+      "bytes": 15790,
+      "sha256": "b2e644deccfbbc8bc851d30e9703feb1bf2e45b00cf911fccf9fbeb3d6cf7702",
+      "source": "https://api.worldbank.org/v2/country/PAK/indicator/FS.AST.PRVT.GD.ZS?format=json&per_page=100",
+      "what": "Pakistan: domestic credit to the private sector, % of GDP (World Bank FS.AST.PRVT.GD.ZS)",
+      "licence": "CC BY 4.0",
+      "retrieved": "2026-11-22T15:54:30Z"
+    }
+  },
+  "citation": "Yeh, I-C. and Lien, C-H. (2009). The comparisons of data mining techniques for the predictive accuracy of probability of default of credit card clients. Expert Systems with Applications 36(2), 2473-2480. doi:10.1016/j.eswa.2007.12.020"
+}

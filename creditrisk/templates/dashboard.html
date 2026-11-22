@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Credit card default scorecard</title>
+<script src="__PLOTLY__" charset="utf-8"></script>
+<style>
+  :root { --navy:#1F3B57; --teal:#2A9D8F; --orange:#E76F51; --ink:#1F2937; --muted:#5B6575; --line:#D9DEE5; --wash:#F3F5F8; --card:#fff; }
+  @media (prefers-color-scheme: dark) { :root { --ink:#E6EAF0; --muted:#A5B0BF; --line:#2F3A48; --wash:#161C24; --card:#1D2530; --navy:#8FB4DA; } }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:"Segoe UI",system-ui,Arial,sans-serif; color:var(--ink); background:var(--wash); line-height:1.45; }
+  header { background:#1F3B57; color:#fff; padding:18px 5vw 0; }
+  header h1 { margin:0; font-size:1.55rem; }
+  header p { margin:4px 0 12px; color:#C9D6E4; font-size:.95rem; max-width:64rem; }
+  nav { display:flex; gap:4px; flex-wrap:wrap; }
+  nav button { border:0; background:transparent; color:#C9D6E4; padding:9px 14px; font:inherit; cursor:pointer; border-radius:8px 8px 0 0; }
+  nav button[aria-selected="true"] { background:var(--wash); color:var(--navy); font-weight:600; }
+  main { padding:18px 5vw 40px; max-width:1240px; margin:auto; }
+  section[hidden] { display:none; }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; margin-bottom:16px; }
+  .kpi { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .kpi b { display:block; font-size:1.5rem; color:var(--navy); }
+  .kpi span { color:var(--muted); font-size:.85rem; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:16px; }
+  .card h2 { margin:0 0 4px; font-size:1.1rem; } .card p.sub { margin:0 0 8px; color:var(--muted); font-size:.9rem; }
+  .grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr)); gap:16px; }
+  .grid2 > .card { min-width:0; }
+  table { width:100%; border-collapse:collapse; font-size:.88rem; }
+  th, td { padding:6px 8px; border-bottom:1px solid var(--line); text-align:right; } th:first-child, td:first-child, th.l, td.l { text-align:left; }
+  th { color:var(--muted); font-weight:600; white-space:nowrap; }
+  tr.dim td { color:var(--muted); } tr.hl td { background:var(--wash); font-weight:600; }
+  .pill { display:inline-block; padding:1px 8px; border-radius:99px; font-size:.75rem; color:#fff; background:#8A94A3; }
+  .pill.good { background:var(--teal); } .pill.bad { background:var(--orange); } .pill.k { background:var(--navy); }
+  select, button.act { font:inherit; padding:6px 10px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--ink); cursor:pointer; }
+  button.act.on { background:var(--navy); color:var(--card); border-color:var(--navy); }
+  .note { color:var(--muted); font-size:.85rem; }
+  .callout { border-left:4px solid var(--teal); background:var(--card); padding:10px 14px; border-radius:0 8px 8px 0; margin-bottom:16px; }
+  .callout.warn { border-left-color:var(--orange); }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:6px 0; }
+  footer { color:var(--muted); font-size:.82rem; padding:0 5vw 30px; max-width:1240px; margin:auto; }
+  a { color:var(--navy); }
+  ul.tight { margin:6px 0; padding-left:20px; } ul.tight li { margin:3px 0; }
+  .sliders { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px 22px; margin:8px 0 10px; }
+  .sliders label { display:block; font-size:.86rem; } .sliders label b { float:right; color:var(--navy); }
+  .sliders input[type=range] { width:100%; accent-color:var(--teal); }
+  .bar { display:inline-block; height:9px; border-radius:3px; background:var(--teal); vertical-align:middle; }
+  .bar.neg { background:var(--orange); }
+  .calc { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:8px 14px; margin:8px 0; }
+  .calc label { font-size:.84rem; display:block; color:var(--muted); } .calc select { width:100%; margin-top:2px; }
+  .score { font-size:2rem; font-weight:700; color:var(--navy); }
+  details { margin:8px 0; } summary { cursor:pointer; font-weight:600; }
+  .tag { font-size:.78rem; color:var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Credit card default scorecard</h1>
+  <p>Who will miss next month's card payment, and where should a lender draw the line? A transparent points scorecard against a gradient-boosting model on 30,000 cardholders, a fairness audit, and the break-even cut-off as the State Bank of Pakistan's policy rate moves. The cardholders are from Taiwan (2005); the cost of money is Pakistan's.</p>
+  <nav role="tablist" id="tabs"></nav>
+</header>
+<main>
+  <section id="answer"></section>
+  <section id="who" hidden></section>
+  <section id="card" hidden></section>
+  <section id="quality" hidden></section>
+  <section id="cutoff" hidden></section>
+  <section id="rates" hidden></section>
+  <section id="fair" hidden></section>
+  <section id="pakistan" hidden></section>
+  <section id="method" hidden></section>
+</main>
+<footer>Cardholder data: UCI Machine Learning Repository, "Default of Credit Card Clients" (Yeh and Lien, 2009), CC BY 4.0. Pakistan: State Bank of Pakistan policy rate (typed in from announcements), World Bank bank and credit series (CC BY 4.0). Card APR: MCB credit card summary box, July to December 2026. A learning project, not lending advice.
+  Code, memo and method: <a href="https://github.com/Maira-W/credit-risk-scorecard">github.com/Maira-W/credit-risk-scorecard</a>. MIT licence.</footer>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function () {
+  "use strict";
+  const D = JSON.parse(document.getElementById("data").textContent);
+  const S = D.stats, E0 = S.economics, SC = S.scorecard;
+  const $ = id => document.getElementById(id);
+  const pc = (x, d = 1) => x == null ? "–" : (x * 100).toFixed(d) + "%";
+  const num = (x, d = 0) => x == null ? "–" : Number(x).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+  const nt = x => x == null ? "–" : (x < 0 ? "−" : "") + "NT$ " + num(Math.abs(x));
+  const f3 = x => x == null ? "–" : Number(x).toFixed(3);
+  const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const ink = dark ? "#E6EAF0" : "#1F2937", grid = dark ? "#2F3A48" : "#E6EAF0";
+  const primary = dark ? "#5AAEF2" : "#1F3B57";
+  const TEAL = "#2A9D8F", ORANGE = "#E76F51", GREY = "#9AA5B1", AMBER = "#E9C46A";
+  const NAME = { naive: "Naive: last month's status", scorecard: "Scorecard", challenger: "Gradient boosting",
+                 scorecard_demographics: "Scorecard + sex, age, education, marriage", challenger_demographics: "Gradient boosting + sex, age, education, marriage" };
+  const COL = { naive: GREY, scorecard: primary, challenger: TEAL, scorecard_demographics: "#6C86A3", challenger_demographics: "#7FC8BF" };
+  const layout = extra => Object.assign({ margin: { t: 10, r: 14, b: 50, l: 60 }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
+    font: { color: ink, size: 12 }, xaxis: { gridcolor: grid }, yaxis: { gridcolor: grid } }, extra || {});
+  const cfg = { displayModeBar: false, responsive: true };
+  const list = a => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1];
+  const tabs = [["answer", "The answer"], ["who", "Who defaults"], ["card", "The scorecard"], ["quality", "How good is it?"], ["cutoff", "Cut-off explorer"],
+                ["rates", "Policy-rate scenarios"], ["fair", "Fairness"], ["pakistan", "Pakistan context"], ["method", "Method and limits"]];
+  const rendered = {}, renderers = {};
+  tabs.forEach(([id, label]) => {
+    const b = document.createElement("button"); b.textContent = label; b.setAttribute("role", "tab"); b.id = "t-" + id;
+    b.addEventListener("click", () => show(id)); $("tabs").appendChild(b);
+  });
+  function show(id, quiet) {
+    tabs.forEach(([t]) => { $(t).hidden = t !== id; $("t-" + t).setAttribute("aria-selected", t === id); });
+    if (!rendered[id]) { renderers[id](); rendered[id] = true; }
+    if (!quiet) history.replaceState(null, "", "#" + id);
+    window.dispatchEvent(new Event("resize"));
+  }
+
+  // ------------------------------------------------------------------ the economics, worked out here exactly as in creditrisk/economics.py
+  const state = { apr: E0.apr, funding: E0.funding, opex: E0.opex, loss: E0.loss, model: "scorecard" };
+  const econ = st => { const yld = st.apr * E0.revolve_share, margin = (yld - st.funding - st.opex) / 12;
+                       return { yld, margin, be: margin > 0 ? margin / (margin + st.loss) : 0 }; };
+  const rowsOf = model => D.explorer[model];
+  const total = (model, key) => rowsOf(model).reduce((s, r) => s + r[key], 0);
+  function curve(model, st) {
+    const e = econ(st), T = rowsOf(model), N = total(model, "accounts");
+    let n = 0, paid = 0, lost = 0, bad = 0;
+    return T.map(r => { n += r.accounts; paid += r.balance_paid; lost += r.balance_defaulted; bad += r.defaults;
+      return { cutoff: r.probability, share: n / N, profit: (e.margin * paid - st.loss * lost) / N, badRate: bad / n }; });
+  }
+  function atCutoff(model, st, cutoff) {                       // approve every account at or below the cut-off probability
+    const c = curve(model, st); let idx = -1;
+    for (let i = 0; i < c.length; i++) if (c[i].cutoff <= cutoff) idx = i;
+    return idx < 0 ? { idx, share: 0, profit: 0, badRate: null } : Object.assign({ idx }, c[idx]);
+  }
+  const best = (model, st) => { const c = curve(model, st); let b = { share: 0, profit: 0, cutoff: null };
+    c.forEach(r => { if (r.profit > b.profit) b = r; }); return b; };
+  const scoreOf = p => SC.offset + SC.factor * Math.log((1 - p) / p);
+  const probOf = s => 1 / (1 + Math.exp((s - SC.offset) / SC.factor));
+  window.creditRisk = { econ, curve, atCutoff, state, D };      // a hook for checking the page against the Python results
+
+  function sliders(container, onChange, only) {
+    const defs = [["apr", "Card APR (yield if the balance is not repaid in time)", 0.20, 0.60, 0.01], ["funding", "Funding cost: the policy rate", 0, 0.30, 0.0025],
+                  ["opex", "Running cost, a year", 0, 0.15, 0.005], ["loss", "Loss when an account defaults (share of balance)", 0.05, 0.60, 0.01]]
+      .filter(d => !only || only.includes(d[0]));
+    const box = document.createElement("div"); box.className = "sliders";
+    defs.forEach(([key, label, lo, hi, step]) => {
+      const l = document.createElement("label"); l.innerHTML = label + ' <b id="v-' + container + '-' + key + '"></b>';
+      const i = document.createElement("input"); i.type = "range"; i.min = lo; i.max = hi; i.step = step; i.value = state[key]; i.id = "s-" + container + "-" + key;
+      i.addEventListener("input", () => { state[key] = parseFloat(i.value); sync(); onChange(); });
+      l.appendChild(i); box.appendChild(l);
+    });
+    $(container).appendChild(box);
+    return box;
+  }
+  function sync() {
+    document.querySelectorAll(".sliders input").forEach(i => { const m = i.id.match(/^s-(.+)-([a-z]+)$/), key = m[2]; i.value = state[key];
+      const v = document.getElementById("v-" + m[1] + "-" + key); if (v) v.textContent = pc(state[key], key === "funding" ? 2 : 1); });
+  }
+
+  // ------------------------------------------------------------------ the answer
+  renderers.answer = function () {
+    const m = S.metrics, sc = m.scorecard, ch = m.challenger, nv = m.naive;
+    const cmp = D.comparisons.find(r => r.model === "challenger" && r.against === "scorecard" && r.metric === "auc");
+    const e = econ(state), at = atCutoff("scorecard", state, e.be), all = atCutoff("scorecard", state, 1);
+    const strat = Object.fromEntries(D.strategies.map(r => [r.rule, r]));
+    const gap = cmp.low <= 0 && cmp.high >= 0 ? "within the noise of a " + num(S.data.holdout) + "-account test" : "larger than the noise of a " + num(S.data.holdout) + "-account test";
+    $("answer").innerHTML = `
+      <div class="kpis">
+        <div class="kpi"><b>${num(S.data.accounts)}</b><span>cardholders, ${pc(S.data.default_rate)} defaulted the next month</span></div>
+        <div class="kpi"><b>${f3(sc.auc)}</b><span>scorecard AUC on ${num(S.data.holdout)} hold-out accounts (${f3(sc.auc_low)} to ${f3(sc.auc_high)})</span></div>
+        <div class="kpi"><b>${f3(nv.auc)}</b><span>AUC of a rule that only looks at last month's status</span></div>
+        <div class="kpi"><b>${f3(ch.auc)}</b><span>AUC of gradient boosting, ${cmp.difference >= 0 ? "+" : ""}${f3(cmp.difference)} on the scorecard: ${gap}</span></div>
+        <div class="kpi"><b>${E0.cutoff_score == null ? "none" : E0.cutoff_score}</b><span>cut-off score: approve at or above it, if the assumptions below hold</span></div>
+      </div>
+      <div class="callout"><b>The answer, under stated assumptions.</b> With a card APR of ${pc(E0.apr, 0)}, ${pc(E0.revolve_share, 0)} of balances not repaid in time, money costing ${pc(E0.funding, 2)} (the policy rate on ${E0.policy_rate_date}), running costs of ${pc(E0.opex, 0)} and a loss of ${pc(E0.loss, 0)} of the balance when an account defaults,
+        an account is worth approving only while its probability of default is under <b>${pc(E0.break_even_pd)}</b> (a bad account costs about ${E0.cost_ratio.toFixed(1)} good accounts' monthly profit). On the hold-out accounts that approves <b>${pc(strat.scorecard.approved_share, 0)}</b> of them, ${pc(strat.scorecard.default_rate_approved)} of whom default, and the portfolio earns
+        <b>${nt(strat.scorecard.profit_per_account)}</b> per account a month (95% range ${nt(strat.scorecard.low)} to ${nt(strat.scorecard.high)}), against <b>${nt(strat.approve_all.profit_per_account)}</b> if everyone were approved. The assumptions are the weak part: change them in the <a href="#cutoff" id="go-cutoff">cut-off explorer</a>.</div>
+      <div class="grid2">
+        <div class="card"><h2>Profit per account, by rule</h2><p class="sub">Hold-out accounts, base-case assumptions, 95% bootstrap range. Approved accounts only earn; declined accounts earn nothing.</p><div id="a-strat" style="height:310px"></div></div>
+        <div class="card"><h2>Risk bands</h2><p class="sub">Scorecard probability on the hold-out accounts.</p><table id="a-bands"></table>
+          <p class="note">A rule that only looks at last month's status finds ${pc(S.metrics.naive.capture_top_decile, 0)} of the defaults in its riskiest tenth; the scorecard finds ${pc(S.metrics.scorecard.capture_top_decile, 0)}.</p></div>
+      </div>
+      <div class="callout warn"><b>Read this before quoting a number.</b> The cardholders are 30,000 accounts of a bank in Taiwan in 2005, a crisis-era book with ${pc(S.data.default_rate, 0)} missing a payment in one month. "Default" here means a missed payment next month, not a written-off loan. Profit uses assumptions for yield, running cost and loss that are not in the data. What carries over to Pakistan is the method, and the link between the policy rate and the cut-off.</div>`;
+    $("go-cutoff").addEventListener("click", ev => { ev.preventDefault(); show("cutoff"); });
+    const rules = [["approve_all", "Approve everyone"], ["last_month_on_time", "Approve if not late last month"], ["scorecard", "Scorecard at break-even"], ["challenger", "Gradient boosting at break-even"]];
+    const rows = rules.map(([k, label]) => [label, strat[k]]);
+    Plotly.newPlot("a-strat", [{ type: "bar", orientation: "h", y: rows.map(r => r[0]), x: rows.map(r => r[1].profit_per_account),
+      error_x: { type: "data", symmetric: false, array: rows.map(r => r[1].high - r[1].profit_per_account), arrayminus: rows.map(r => r[1].profit_per_account - r[1].low), color: GREY },
+      marker: { color: rows.map(r => r[1].profit_per_account >= 0 ? TEAL : ORANGE) }, hovertemplate: "%{y}: NT$ %{x:,.0f}<extra></extra>" }],
+      layout({ margin: { t: 10, r: 20, b: 45, l: 240 }, xaxis: { gridcolor: grid, title: "NT$ per account per month", zeroline: true }, yaxis: { autorange: "reversed" } }), cfg);
+    $("a-bands").innerHTML = "<tr><th class='l'>Band</th><th>Accounts</th><th>Default rate</th><th>Share of defaults</th></tr>" +
+      D.bands.map(b => `<tr><td class="l">${b.band}</td><td>${pc(b.share, 0)}</td><td>${pc(b.default_rate)}</td><td>${pc(b.share_of_defaults, 0)}</td></tr>`).join("");
+  };
+
+  // ------------------------------------------------------------------ who defaults
+  renderers.who = function () {
+    const vars = [...new Set(D.segments.map(r => r.variable))];
+    $("who").innerHTML = `<div class="card"><h2>Who defaults</h2><p class="sub">Share of accounts that missed the next payment, by group, with 95% Wilson ranges. All 30,000 accounts; descriptive only.</p>
+      <div class="row"><label>Look at <select id="w-var">${vars.map(v => `<option>${v}</option>`).join("")}</select></label></div>
+      <div id="w-chart" style="height:340px"></div><table id="w-table"></table></div>`;
+    const draw = () => {
+      const v = $("w-var").value, rows = D.segments.filter(r => r.variable === v).sort((a, b) => a.position - b.position);
+      Plotly.newPlot("w-chart", [{ type: "bar", x: rows.map(r => r.group), y: rows.map(r => r.default_rate),
+        error_y: { type: "data", symmetric: false, array: rows.map(r => r.ci_high - r.default_rate), arrayminus: rows.map(r => r.default_rate - r.ci_low), color: GREY },
+        marker: { color: rows.map(r => r.default_rate > S.data.default_rate ? ORANGE : TEAL) }, hovertemplate: "%{x}: %{y:.1%}<extra></extra>" }],
+        layout({ yaxis: { gridcolor: grid, tickformat: ".0%", title: "default rate" }, shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: S.data.default_rate, y1: S.data.default_rate, line: { color: primary, dash: "dash", width: 1 } }] }), cfg);
+      $("w-table").innerHTML = "<tr><th class='l'>Group</th><th>Accounts</th><th>Share</th><th>Defaults</th><th>Default rate</th><th>95% range</th></tr>" +
+        rows.map(r => `<tr><td class="l">${r.group}</td><td>${num(r.accounts)}</td><td>${pc(r.share)}</td><td>${num(r.defaults)}</td><td>${pc(r.default_rate)}</td><td>${pc(r.ci_low)} to ${pc(r.ci_high)}</td></tr>`).join("");
+    };
+    $("w-var").addEventListener("change", draw); draw();
+  };
+
+  // ------------------------------------------------------------------ the scorecard
+  renderers.card = function () {
+    const feats = SC.features.slice().sort((a, b) => SC.points_range[b] - SC.points_range[a]);
+    const byFeat = Object.fromEntries(feats.map(f => [f, D.points.filter(p => p.feature === f)]));
+    const maxPts = Math.max(...D.points.map(p => Math.abs(p.points)));
+    let table = "<tr><th class='l'>Feature</th><th class='l'>Bin</th><th>Accounts</th><th>Default rate</th><th>Points</th><th class='l'></th></tr>";
+    feats.forEach(f => byFeat[f].forEach((p, i) => { table += `<tr class="${i === 0 ? "" : ""}"><td class="l">${i === 0 ? "<b>" + p.name + "</b>" : ""}</td><td class="l">${p.bin}</td><td>${num(p.accounts)}</td><td>${pc(p.default_rate)}</td><td>${p.points}</td>
+      <td class="l"><span class="bar ${p.points < 0 ? "neg" : ""}" style="width:${Math.max(2, Math.abs(p.points) / maxPts * 120)}px"></span></td></tr>`; }));
+    const status = Object.entries(D.statusMeaning).map(([k, v]) => `${k}: ${v}`).join("; ");
+    $("card").innerHTML = `<div class="grid2">
+      <div class="card"><h2>The card</h2><p class="sub">${SC.n_features} features, ${SC.n_bins} bins, built from ${SC.candidates} candidates on the 80% development set. The score is the sum of the points: ${SC.base_score} points means odds of ${SC.base_odds} good accounts to 1 bad one, and every ${SC.pdo} more points doubles those odds. More points is safer.</p>
+        <p class="note">Repayment status codes: ${status}, and so on for longer delays. A status of 1 hardly appears before September in this file, so the older months are coded on a different basis; the card treats 1 and above as late.</p>
+        <table>${table}</table></div>
+      <div><div class="card"><h2>Score an account</h2><p class="sub">Pick a bin for each feature to see its score, probability of default and decision at the cut-off set by the explorer's assumptions.</p>
+        <div class="calc" id="calc"></div><div class="row"><div><div class="score" id="c-score"></div><span class="note">points</span></div><div style="margin-left:24px"><div class="score" id="c-pd"></div><span class="note">probability of default</span></div>
+        <div style="margin-left:24px"><div class="score" id="c-dec"></div><span class="note" id="c-note"></span></div></div></div>
+        <div class="card"><h2>Why some candidates were left out</h2><p class="sub">Information value (IV) measures how well a feature's bins separate good from bad accounts: under 0.02 is useless, 0.1 to 0.3 medium, above 0.3 strong.</p>
+        <details><summary>Show all ${SC.candidates} candidates</summary><table>${"<tr><th class='l'>Feature</th><th>IV</th><th class='l'>Decision</th><th class='l'>Reason</th></tr>" +
+          D.screening.map(r => `<tr class="${r.decision === "kept" ? "hl" : "dim"}"><td class="l">${r.name}</td><td>${r.iv.toFixed(3)}</td><td class="l">${r.decision}</td><td class="l">${r.reason || ""}</td></tr>`).join("")}</table></details></div></div></div>`;
+    const calc = $("calc");
+    feats.forEach(f => { const l = document.createElement("label"); l.textContent = byFeat[f][0].name;
+      const s = document.createElement("select"); s.dataset.feature = f;
+      byFeat[f].forEach((p, i) => { const o = document.createElement("option"); o.value = p.points; o.textContent = `${p.bin} (${p.points} pts)`; s.appendChild(o); });
+      s.selectedIndex = byFeat[f].reduce((bi, p, i, a) => Math.abs(p.default_rate - S.data.default_rate) < Math.abs(a[bi].default_rate - S.data.default_rate) ? i : bi, 0);
+      s.addEventListener("change", update); l.appendChild(s); calc.appendChild(l); });
+    function update() {
+      const score = [...calc.querySelectorAll("select")].reduce((s, e) => s + parseFloat(e.value), 0), p = probOf(score), be = econ(state).be;
+      $("c-score").textContent = Math.round(score); $("c-pd").textContent = pc(p);
+      const ok = p <= be; $("c-dec").textContent = ok ? "Approve" : "Decline"; $("c-dec").style.color = ok ? TEAL : ORANGE;
+      $("c-note").textContent = "break-even probability " + pc(be) + (E0.cutoff_score != null && state.apr === E0.apr ? ", cut-off score " + E0.cutoff_score : "");
+    }
+    window.creditRisk.updateCalc = update; update();
+  };
+
+  // ------------------------------------------------------------------ how good is it
+  renderers.quality = function () {
+    const m = S.metrics, order = ["naive", "scorecard", "scorecard_demographics", "challenger", "challenger_demographics"];
+    const cvRows = Object.fromEntries(D.cv.map(r => [r.model, r]));
+    const sentence = c => { const s = c.metric === "auc" ? "AUC" : c.metric === "ks" ? "KS" : "Brier score";
+      const sig = c.low > 0 || c.high < 0; return `<tr><td class="l">${NAME[c.model]} against ${NAME[c.against]}</td><td>${s}</td><td>${c.difference >= 0 ? "+" : ""}${c.difference.toFixed(4)}</td><td>${c.low.toFixed(4)} to ${c.high.toFixed(4)}</td><td class="l">${sig ? "a real difference" : "within the noise"}</td></tr>`; };
+    $("quality").innerHTML = `<div class="grid2">
+      <div class="card"><h2>Ranking power</h2><p class="sub">AUC and KS on the ${num(S.data.holdout)} hold-out accounts, with 95% bootstrap ranges (1,000 resamples of the accounts).</p><div id="q-cmp" style="height:330px"></div></div>
+      <div class="card"><h2>ROC curves</h2><p class="sub">Share of defaulters declined against share of good accounts declined, as the cut-off moves.</p><div id="q-roc" style="height:330px"></div></div>
+      <div class="card"><h2>Are the probabilities honest?</h2><p class="sub">Average predicted against observed default rate in each tenth of hold-out accounts. On the line is perfect. Calibration slope: scorecard ${f3(m.scorecard.calibration_slope)}, gradient boosting ${f3(m.challenger.calibration_slope)} (1 is perfect).</p><div id="q-cal" style="height:330px"></div></div>
+      <div class="card"><h2>Finding the defaults early</h2><p class="sub">Share of all defaults found when only the riskiest accounts are reviewed.</p><div id="q-lift" style="height:330px"></div></div>
+    </div>
+    <div class="card"><h2>Cross-validation and the hold-out</h2><p class="sub">Every model was refitted from scratch on each training part, binning and feature choice included. Hold-out figures are from the single final test.</p>
+      <table><tr><th class='l'>Model</th><th>AUC, cross-validated</th><th>AUC, hold-out</th><th>KS, hold-out</th><th>Brier, hold-out</th><th>Defaults found in riskiest tenth</th></tr>
+      ${order.map(k => `<tr><td class="l">${NAME[k]}</td><td>${f3(cvRows[k].auc_mean)} ± ${cvRows[k].auc_std.toFixed(3)}</td><td>${f3(m[k].auc)}</td><td>${f3(m[k].ks)}</td><td>${f3(m[k].brier)}</td><td>${pc(m[k].capture_top_decile, 0)}</td></tr>`).join("")}</table></div>
+    <div class="card"><h2>Which differences are real?</h2><p class="sub">Differences between models on the same 6,000 accounts, from the same bootstrap resamples. A range that includes 0 means the difference could be chance.</p>
+      <table><tr><th class='l'>Comparison</th><th class='l'>Measure</th><th>Difference</th><th>95% range</th><th class='l'>Verdict</th></tr>${D.comparisons.filter(c => c.metric !== "brier").map(sentence).join("")}</table></div>
+    <div class="card"><h2>Stability</h2><p class="sub">Population stability index of the development accounts against the hold-out: under 0.10 is stable. The split is random, so values near 0 only show that nothing is broken; there is no later period in the file to test against.</p>
+      <table><tr><th class='l'>Item</th><th>PSI</th></tr>${D.psi.map(r => `<tr><td class="l">${r.item === "Score" ? "Scorecard score" : (D.featureNames[r.item] || r.item)}</td><td>${r.psi.toFixed(4)}</td></tr>`).join("")}</table></div>`;
+    Plotly.newPlot("q-cmp", ["auc", "ks"].map((k, i) => ({ type: "scatter", mode: "markers", name: k.toUpperCase(), xaxis: i ? "x2" : "x", yaxis: "y",
+      x: order.map(o => m[o][k]), y: order.map(o => NAME[o]), marker: { color: order.map(o => COL[o]), size: 10 },
+      error_x: { type: "data", symmetric: false, array: order.map(o => m[o][k + "_high"] - m[o][k]), arrayminus: order.map(o => m[o][k] - m[o][k + "_low"]), color: GREY },
+      hovertemplate: "%{y}: %{x:.3f}<extra>" + k.toUpperCase() + "</extra>" })),
+      layout({ showlegend: false, margin: { t: 24, r: 10, b: 40, l: 190 }, xaxis: { domain: [0, 0.46], gridcolor: grid, title: "AUC" }, xaxis2: { domain: [0.54, 1], gridcolor: grid, title: "KS", anchor: "y" },
+        yaxis: { autorange: "reversed", gridcolor: grid } }), cfg);
+    Plotly.newPlot("q-roc", [...["naive", "scorecard", "challenger"].map(k => ({ type: "scatter", mode: "lines", name: `${NAME[k]} (AUC ${f3(m[k].auc)})`, x: D.roc[k].fpr, y: D.roc[k].tpr, line: { color: COL[k], width: 2 } })),
+      { type: "scatter", mode: "lines", name: "no skill", x: [0, 1], y: [0, 1], line: { color: GREY, dash: "dot" } }],
+      layout({ xaxis: { gridcolor: grid, title: "good accounts declined" }, yaxis: { gridcolor: grid, title: "defaulters declined" }, legend: { x: 0.35, y: 0.1, font: { size: 11 } } }), cfg);
+    const cal = k => D.calibration.filter(r => r.model === k);
+    Plotly.newPlot("q-cal", [{ type: "scatter", mode: "lines", x: [0, 0.8], y: [0, 0.8], line: { color: GREY, dash: "dot" }, name: "perfect" },
+      ...["scorecard", "challenger"].map(k => ({ type: "scatter", mode: "lines+markers", name: NAME[k], x: cal(k).map(r => r.predicted), y: cal(k).map(r => r.observed), line: { color: COL[k] } }))],
+      layout({ xaxis: { gridcolor: grid, tickformat: ".0%", title: "predicted" }, yaxis: { gridcolor: grid, tickformat: ".0%", title: "observed" }, legend: { x: 0.02, y: 0.98 } }), cfg);
+    const lf = k => D.lift.filter(r => r.model === k);
+    Plotly.newPlot("q-lift", [{ type: "scatter", mode: "lines", x: [0, 1], y: [0, 1], line: { color: GREY, dash: "dot" }, name: "at random" },
+      ...["naive", "scorecard", "challenger"].map(k => ({ type: "scatter", mode: "lines+markers", name: NAME[k], x: [0, ...lf(k).map(r => r.group / 10)], y: [0, ...lf(k).map(r => r.capture)], line: { color: COL[k] } }))],
+      layout({ xaxis: { gridcolor: grid, tickformat: ".0%", title: "riskiest accounts reviewed" }, yaxis: { gridcolor: grid, tickformat: ".0%", title: "defaults found" }, legend: { x: 0.45, y: 0.1, font: { size: 11 } } }), cfg);
+  };
+
+  // ------------------------------------------------------------------ the cut-off explorer
+  renderers.cutoff = function () {
+    $("cutoff").innerHTML = `<div class="card"><h2>Where does approving stop paying?</h2>
+      <p class="sub">An account that pays earns a margin on its balance; an account that defaults loses a share of it. Approve every account whose probability of default is under margin ÷ (margin + loss). Move the assumptions and see the cut-off, the share approved and the profit change, on the ${num(S.data.holdout)} hold-out accounts and their real outcomes.</p>
+      <div class="row"><span class="note">Funding cost at a policy-rate date:</span><span id="c-presets"></span></div><div id="c-sliders"></div>
+      <div class="row"><label>Model <select id="c-model">${["scorecard", "challenger", "naive"].map(k => `<option value="${k}">${NAME[k]}</option>`).join("")}</select></label></div>
+      <div class="kpis" id="c-kpis"></div></div>
+      <div class="card"><h2>Profit against the share of accounts approved</h2><p class="sub">Accounts are approved from the safest up. The dot is the break-even cut-off.</p><div id="c-chart" style="height:360px"></div></div>
+      <div class="note">Base case: APR ${pc(E0.apr, 0)} (MCB's published retail markup of 3.67% a month is "an APR of up to 44%"), ${pc(E0.revolve_share, 0)} of balances revolving (measured in this file), funding ${pc(E0.funding, 2)}, running cost ${pc(E0.opex, 0)}, loss ${pc(E0.loss, 0)}. Only the APR and the policy rate are sourced; the rest are assumptions.</div>`;
+    const presets = $("c-presets");
+    D.scenarioDates.forEach((d, i) => { const row = D.policy.filter(p => p.effective_date <= d).pop(); const b = document.createElement("button"); b.className = "act";
+      b.textContent = `${new Date(d + "T00:00:00").toLocaleString("en-GB", { month: "short", year: "numeric" })}: ${row.policy_rate_pct}%`;
+      b.addEventListener("click", () => { state.funding = row.policy_rate_pct / 100; sync(); draw(); }); presets.appendChild(b); presets.appendChild(document.createTextNode(" ")); });
+    const reset = document.createElement("button"); reset.className = "act"; reset.textContent = "Reset all";
+    reset.addEventListener("click", () => { Object.assign(state, { apr: E0.apr, funding: E0.funding, opex: E0.opex, loss: E0.loss }); sync(); draw(); }); presets.appendChild(reset);
+    sliders("c-sliders", draw); $("c-model").addEventListener("change", ev => { state.model = ev.target.value; draw(); }); sync();
+    function draw() {
+      const e = econ(state), model = state.model, at = atCutoff(model, state, e.be), all = curve(model, state).slice(-1)[0], b = best(model, state);
+      const cutScore = model === "scorecard" && e.be > 0 ? Math.ceil(scoreOf(e.be)) : null;
+      $("c-kpis").innerHTML = [
+        [pc(e.margin, 2), "margin a month on a good balance"], [e.margin > 0 ? (state.loss / e.margin).toFixed(1) : "–", "good accounts' profit one bad account costs"],
+        [pc(e.be), "break-even probability of default" + (cutScore != null ? ` (score ${cutScore})` : "")], [pc(at.share, 0), "of accounts approved, " + (at.badRate == null ? "none to judge" : pc(at.badRate) + " of them default")],
+        [nt(at.profit), "profit per account a month, in the whole portfolio"], [nt(all.profit), "per account if everyone were approved"], [nt(b.profit), "best possible cut-off in hindsight (" + pc(b.share, 0) + " approved)"]]
+        .map(([v, l]) => `<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join("");
+      const traces = ["scorecard", "challenger", "naive"].map(k => { const c = curve(k, state); return { type: "scatter", mode: "lines", name: NAME[k], x: [0, ...c.map(r => r.share)], y: [0, ...c.map(r => r.profit)],
+        line: { color: COL[k], width: k === model ? 3 : 1.5 }, hovertemplate: "approved %{x:.0%}: NT$ %{y:,.0f}<extra>" + NAME[k] + "</extra>" }; });
+      traces.push({ type: "scatter", mode: "markers", name: "break-even cut-off", x: [at.share], y: [at.profit], marker: { color: ORANGE, size: 12 }, hoverinfo: "skip" });
+      Plotly.react("c-chart", traces, layout({ xaxis: { gridcolor: grid, tickformat: ".0%", title: "share of accounts approved (safest first)" },
+        yaxis: { gridcolor: grid, title: "NT$ per account per month", zeroline: true, zerolinecolor: ink }, legend: { x: 0.01, y: 0.02, yanchor: "bottom", font: { size: 11 } } }), cfg);
+      if (window.creditRisk.updateCalc) window.creditRisk.updateCalc();
+      if (rendered.rates) renderers.rates.draw(); if (rendered.fair) renderers.fair.draw();
+    }
+    renderers.cutoff.draw = draw; draw();
+  };
+
+  // ------------------------------------------------------------------ policy-rate scenarios
+  renderers.rates = function () {
+    $("rates").innerHTML = `<div class="card"><h2>What the policy rate does to the cut-off</h2><p class="sub">Money gets dearer when the State Bank raises its rate, so a card balance has to be safer to be worth holding. Each date below uses the policy rate then in force and the assumptions set in the explorer (they are shared). The first date's cut-off is also tried under each later date's costs, to show what not re-pricing risk would have cost.</p>
+      <div id="r-sliders"></div><div id="r-chart" style="height:340px"></div><table id="r-table"></table></div>
+      <div class="card"><h2>How sensitive is the answer to the assumptions?</h2><p class="sub">Share of accounts worth approving at the current policy rate, for combinations of card APR and loss on a default (scorecard, hold-out accounts).</p><table id="r-grid"></table></div>`;
+    sliders("r-sliders", () => { renderers.cutoff.draw && rendered.cutoff ? renderers.cutoff.draw() : renderers.rates.draw(); }); sync();
+    function draw() {
+      const model = state.model === "naive" ? "scorecard" : state.model, N = total(model, "accounts"); let first = null; const rows = [];
+      D.scenarioDates.forEach(d => { const rate = D.policy.filter(p => p.effective_date <= d).pop().policy_rate_pct / 100, st = Object.assign({}, state, { funding: rate }), e = econ(st);
+        first = first || e; const mine = atCutoff(model, st, e.be), kept = atCutoff(model, st, first.be); rows.push({ d, rate, e, mine, kept }); });
+      const lab = rows.map(r => new Date(r.d + "T00:00:00").toLocaleString("en-GB", { month: "short", year: "numeric" }) + " (" + (r.rate * 100).toFixed(2).replace(/\.?0+$/, "") + "%)");
+      Plotly.react("r-chart", [{ type: "bar", name: "cut-off reset to the rate", x: lab, y: rows.map(r => r.mine.profit), marker: { color: TEAL } },
+        { type: "bar", name: lab[0].split(" (")[0] + " cut-off kept", x: lab, y: rows.map(r => r.kept.profit), marker: { color: ORANGE } }],
+        layout({ barmode: "group", yaxis: { gridcolor: grid, title: "NT$ per account per month", zerolinecolor: ink }, legend: { x: 0.01, y: 0.02, yanchor: "bottom" } }), cfg);
+      $("r-table").innerHTML = "<tr><th class='l'>Policy rate on</th><th>Rate</th><th>Margin a month</th><th>Break-even probability</th><th>Share approved</th><th>Default rate of approved</th><th>Profit per account</th><th>If the first cut-off were kept</th></tr>" +
+        rows.map(r => `<tr><td class="l">${r.d}</td><td>${pc(r.rate, 2)}</td><td>${pc(r.e.margin, 2)}</td><td>${pc(r.e.be)}</td><td>${pc(r.mine.share, 0)}</td><td>${pc(r.mine.badRate)}</td><td>${nt(r.mine.profit)}</td><td>${nt(r.kept.profit)}</td></tr>`).join("");
+      const grid2 = D.aprChecks.slice().sort((a, b) => b - a);
+      $("r-grid").innerHTML = "<tr><th class='l'>Card APR \\ loss on default</th>" + D.lossChecks.map(l => `<th>${pc(l, 0)}</th>`).join("") + "</tr>" +
+        grid2.map(a => `<tr><td class="l">${pc(a, 0)}</td>` + D.lossChecks.map(l => { const st = Object.assign({}, state, { apr: a, loss: l }), e = econ(st), at = atCutoff(model, st, e.be);
+          return `<td>${pc(at.share, 0)} <span class="tag">(< ${pc(e.be)})</span></td>`; }).join("") + "</tr>").join("");
+    }
+    renderers.rates.draw = draw; draw();
+  };
+
+  // ------------------------------------------------------------------ fairness
+  renderers.fair = function () {
+    const titles = { sex: "Sex", age_band: "Age", education: "Education", marriage: "Marital status" };
+    $("fair").innerHTML = `<div class="callout"><b>None of sex, age, education or marital status is an input to the scorecard or the challenger.</b> They are used only here, to check what the decisions do to each group at the cut-off set in the explorer (${"<span id='f-cut'></span>"}). ${S.fairness.flagged.length ? "Groups under four-fifths of the best group's approval rate: " + S.fairness.flagged.join("; ") + " (at the base case)." : "No group falls under four-fifths of the best group's approval rate at the base case."}</div>
+      <div class="card"><h2>Approval rate by group</h2><p class="sub">Orange: under four-fifths (80%) of the best-treated group's approval rate, a screening rule from US lending and employment practice, not a Pakistani legal test. Grey: fewer than 100 hold-out accounts, shown but not judged.</p><div id="f-chart" style="height:430px"></div></div>
+      <div class="card"><h2>The detail</h2><table id="f-table"></table><p class="note">Approval rate, default rate among the approved and the disparate-impact ratio move with the cut-off; the default rate, the average predicted probability and the calibration ratio (predicted ÷ observed) do not. A model can be well calibrated for every group and still approve groups at different rates, when their true default rates differ.</p></div>
+      <div class="card"><h2>Could the model infer who is who?</h2><p class="sub">AUC of a model that tries to tell the group apart using only the inputs the scorecard may use (0.5 means the inputs say nothing about it).</p><table>${"<tr><th class='l'>Attribute</th><th>AUC</th></tr>" + D.proxy.map(r => `<tr><td class="l">${r.attribute}</td><td>${r.auc.toFixed(3)}</td></tr>`).join("")}</table>
+      <p class="note">What leaving them out costs: adding sex, age, education and marital status to the scorecard changes the hold-out AUC by ${(() => { const c = D.comparisons.find(r => r.model === "scorecard_demographics" && r.against === "scorecard" && r.metric === "auc"); return (c.difference >= 0 ? "+" : "") + c.difference.toFixed(4) + " (95% range " + c.low.toFixed(4) + " to " + c.high.toFixed(4) + ")"; })()}.</p></div>`;
+    const T = D.explorer.scorecard, N = T.reduce((s, r) => s + r.accounts, 0);
+    function draw() {
+      const e = econ(state), idx = (() => { let k = -1; T.forEach((r, i) => { if (r.probability <= e.be) k = i; }); return k; })();
+      $("f-cut").textContent = "break-even probability " + pc(e.be) + (E0.cutoff_score != null && state.apr === E0.apr && state.funding === E0.funding && state.loss === E0.loss && state.opex === E0.opex ? ", score " + E0.cutoff_score : "");
+      const rows = D.fairBins.map(g => { const n = g.accounts.reduce((s, v) => s + v, 0); let a = 0, b = 0; for (let i = 0; i <= idx; i++) { a += g.accounts[i]; b += g.defaults[i]; }
+        const stat = D.fairGroups.find(r => r.attribute === g.attribute && r.group === g.group);
+        return { attribute: g.attribute, group: g.group, n, approval: n ? a / n : 0, badRate: a ? b / a : null, stat, judged: n >= 100 }; });
+      const topRate = Math.max(...rows.filter(r => r.judged).map(r => r.approval));
+      rows.forEach(r => { r.di = r.judged && topRate > 0 ? r.approval / topRate : null; r.flag = r.di != null && r.di < 0.8; });
+      const order = ["sex", "age_band", "education", "marriage"], sorted = rows.slice().sort((a, b) => order.indexOf(a.attribute) - order.indexOf(b.attribute) || String(a.group).localeCompare(String(b.group)));
+      Plotly.react("f-chart", [{ type: "bar", orientation: "h", y: sorted.map(r => titles[r.attribute] + ": " + r.group), x: sorted.map(r => r.approval),
+        marker: { color: sorted.map(r => !r.judged ? GREY : r.flag ? ORANGE : primary) }, text: sorted.map(r => pc(r.approval, 0)), textposition: "outside", hovertemplate: "%{y}: %{x:.1%}<extra></extra>" }],
+        layout({ margin: { t: 10, r: 40, b: 40, l: 190 }, xaxis: { gridcolor: grid, tickformat: ".0%", title: "approval rate at the cut-off" }, yaxis: { autorange: "reversed" } }), cfg);
+      $("f-table").innerHTML = "<tr><th class='l'>Group</th><th>Accounts</th><th>Default rate</th><th>Predicted probability</th><th>Predicted ÷ observed</th><th>Approved</th><th>Default rate of approved</th><th>Disparate impact</th></tr>" +
+        sorted.map(r => `<tr class="${r.judged ? "" : "dim"}"><td class="l">${titles[r.attribute]}: ${r.group}</td><td>${num(r.n)}</td><td>${pc(r.stat.default_rate)}</td><td>${pc(r.stat.mean_probability)}</td><td>${r.stat.calibration_ratio == null ? "–" : r.stat.calibration_ratio.toFixed(2)}</td>
+          <td>${pc(r.approval, 0)}</td><td>${pc(r.badRate)}</td><td>${r.di == null ? "–" : r.di.toFixed(2)}${r.flag ? ' <span class="pill bad">flag</span>' : ""}</td></tr>`).join("");
+    }
+    renderers.fair.draw = draw; draw();
+  };
+
+  // ------------------------------------------------------------------ Pakistan
+  renderers.pakistan = function () {
+    const P = S.pakistan;
+    $("pakistan").innerHTML = `<div class="callout"><b>Why Pakistan is in a Taiwanese dataset.</b> The cardholders are not Pakistani, so nothing here says how Pakistani cardholders behave. What is Pakistani is the price of money: the policy rate sets what a lender gives up by holding a card balance instead of government paper, so it moves the break-even cut-off. The policy rate went from ${P.rate_low}% (${P.rate_low_date}) to ${P.rate_peak}% (${P.rate_peak_date}) and was ${P.rate_now}% on ${P.rate_now_date}.</div>
+      <div class="grid2"><div class="card"><h2>SBP policy rate</h2><p class="sub">Typed in from State Bank announcements, with a source for every change (data/reference/policy_rate.csv).</p><div id="p-rate" style="height:300px"></div></div>
+      <div class="card"><h2>Banks' non-performing loans</h2><p class="sub">Non-performing loans as a share of gross loans, World Bank. ${P.npl_first_year}: ${P.npl_first.toFixed(1)}%; peak ${P.npl_peak.toFixed(1)}% in ${P.npl_peak_year}; ${P.npl_latest_year}: ${P.npl_latest.toFixed(1)}%.</p><div id="p-npl" style="height:300px"></div></div>
+      <div class="card"><h2>Credit to the private sector</h2><p class="sub">Domestic credit to the private sector, % of GDP, World Bank: ${P.credit_latest.toFixed(1)}% in ${P.credit_latest_year}.</p><div id="p-credit" style="height:300px"></div></div>
+      <div class="card"><h2>How to read the 22%</h2><p class="sub">Nothing to compare it with directly.</p><ul class="tight"><li>The ${pc(S.data.default_rate)} here is accounts that missed a payment in one month, in a card book at the start of Taiwan's 2005-06 card-debt crisis.</li><li>Pakistan's ${P.npl_latest.toFixed(1)}% is the share of all loans that are non-performing (the rules count a loan as non-performing after a long delay, so it is a much later and much rarer event).</li><li>So the two numbers are on different footings and are not compared. They are shown together only for scale.</li></ul></div></div>`;
+    const stepX = [], stepY = []; D.policy.forEach((p, i) => { stepX.push(p.effective_date); stepY.push(p.policy_rate_pct); });
+    Plotly.newPlot("p-rate", [{ type: "scatter", mode: "lines", line: { shape: "hv", color: primary, width: 2 }, x: stepX, y: stepY, hovertemplate: "%{x}: %{y}%<extra></extra>" }], layout({ yaxis: { gridcolor: grid, title: "%" } }), cfg);
+    Plotly.newPlot("p-npl", [{ type: "scatter", mode: "lines+markers", line: { color: ORANGE }, x: D.npl.map(r => r.year), y: D.npl.map(r => r.value), hovertemplate: "%{x}: %{y:.1f}%<extra></extra>" }], layout({ yaxis: { gridcolor: grid, title: "% of gross loans" } }), cfg);
+    Plotly.newPlot("p-credit", [{ type: "scatter", mode: "lines", line: { color: TEAL }, x: D.credit.map(r => r.year), y: D.credit.map(r => r.value), hovertemplate: "%{x}: %{y:.1f}% of GDP<extra></extra>" }], layout({ yaxis: { gridcolor: grid, title: "% of GDP" } }), cfg);
+  };
+
+  // ------------------------------------------------------------------ method
+  renderers.method = function () {
+    const st = S.settings;
+    $("method").innerHTML = `<div class="card"><h2>What was done</h2><ul class="tight">
+      <li><b>Data.</b> ${num(S.data.accounts)} cardholders, April to September 2005; the label is whether the account missed its payment in October. ${num(S.data.development)} accounts (80%) for development and ${num(S.data.holdout)} (20%) kept aside for one final test. Accounts with identical features always stay on one side of the split.</li>
+      <li><b>Scorecard.</b> Each candidate feature is cut into bins by merging neighbours that lose least information, each bin gets a weight of evidence, correlated features are thinned, and a logistic regression with positive, significant coefficients is turned into whole points (${SC.base_score} at ${SC.base_odds}:1 odds, ${SC.pdo} points to double). Rounding the points changed the hold-out AUC by ${SC.rounding_auc_change.toFixed(4)}.</li>
+      <li><b>Challenger.</b> LightGBM, ${st.tuning_trials} random settings tried by ${st.cv_folds}-fold cross-validation on the development accounts, then recalibrated with a logistic correction fitted on out-of-fold predictions (log loss ${f3(S.challenger.log_loss_before_recalibration)} before, ${f3(S.challenger.log_loss_after_recalibration)} after, on the hold-out). Probabilities are rounded to 0.1 of a percentage point.</li>
+      <li><b>Validation.</b> ${st.cv_repeats} × ${st.cv_folds}-fold cross-validation with every step refitted, hold-out AUC, KS, Brier score and calibration slope with ${num(st.bootstrap_draws)} bootstrap resamples, lift, and population stability.</li>
+      <li><b>Fairness.</b> Sex, marital status, education and age are not inputs. Decisions are audited by group at the cut-off; leaving them out costs almost nothing in accuracy.</li>
+      <li><b>Cut-off.</b> Profit per unit of balance over one billing month: margin if the account pays, minus loss if it defaults. Balances are the September statement.</li></ul></div>
+      <div class="card"><h2>What this cannot tell you</h2><ul class="tight">
+      <li><b>Not Pakistani data.</b> The cardholders are from Taiwan in 2005, a crisis-era book. There is no public borrower-level data for Pakistan. A Pakistani lender would refit the scorecard on its own accounts.</li>
+      <li><b>Default means a missed payment.</b> It is not a charge-off, so the loss when an account "defaults" is an assumption, not a measurement.</li>
+      <li><b>The economics are assumptions.</b> Only the card APR (MCB's published rate) and the policy rate are sourced. The share of balances that revolve is measured in this file; running cost and loss are guesses with ranges, and the answer moves a lot with them.</li>
+      <li><b>One cohort.</b> The accounts are one snapshot, so there is no later period to test the model's stability against, and no way to check how it would behave through a cycle.</li>
+      <li><b>Selection.</b> These are accounts the bank had already approved; applicants it rejected are not here.</li>
+      <li><b>Repayment codes.</b> The documentation does not explain the codes -2 and 0, and "1 month late" hardly appears before September; the card treats status 1 and above as late.</li>
+      <li><b>One billing month.</b> A good account keeps earning after the month counted, so the profit of the accounts approved is understated.</li></ul></div>`;
+  };
+
+  const start = location.hash.slice(1);
+  show(tabs.some(t => t[0] === start) ? start : "answer", true);
+  sync();
+})();
+</script>
+</body>
+</html>

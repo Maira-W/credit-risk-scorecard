@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Derived tables that `python -m creditrisk build` rebuilds in a few seconds. The raw data (CC BY 4.0) are kept in
+# data/raw so that the project runs without a download.
+data/interim/
+
+# Local scratch work
+_local/

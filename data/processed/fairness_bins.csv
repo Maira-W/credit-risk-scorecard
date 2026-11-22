@@ -1,0 +1,3394 @@
+attribute,group,bin,accounts,defaults
+sex,Female,0,1,0
+sex,Female,1,3,1
+sex,Female,2,6,0
+sex,Female,3,0,0
+sex,Female,4,2,1
+sex,Female,5,3,0
+sex,Female,6,5,0
+sex,Female,7,9,0
+sex,Female,8,2,0
+sex,Female,9,9,1
+sex,Female,10,12,0
+sex,Female,11,10,1
+sex,Female,12,21,1
+sex,Female,13,5,0
+sex,Female,14,31,0
+sex,Female,15,15,0
+sex,Female,16,21,0
+sex,Female,17,8,0
+sex,Female,18,30,3
+sex,Female,19,26,3
+sex,Female,20,4,0
+sex,Female,21,14,1
+sex,Female,22,38,1
+sex,Female,23,32,5
+sex,Female,24,15,0
+sex,Female,25,31,8
+sex,Female,26,34,1
+sex,Female,27,24,0
+sex,Female,28,30,1
+sex,Female,29,10,1
+sex,Female,30,40,5
+sex,Female,31,56,4
+sex,Female,32,46,3
+sex,Female,33,23,2
+sex,Female,34,34,5
+sex,Female,35,42,6
+sex,Female,36,76,8
+sex,Female,37,47,8
+sex,Female,38,20,1
+sex,Female,39,37,4
+sex,Female,40,34,1
+sex,Female,41,44,4
+sex,Female,42,112,6
+sex,Female,43,16,1
+sex,Female,44,23,3
+sex,Female,45,44,4
+sex,Female,46,98,8
+sex,Female,47,33,2
+sex,Female,48,32,6
+sex,Female,49,75,10
+sex,Female,50,18,2
+sex,Female,51,38,4
+sex,Female,52,49,6
+sex,Female,53,37,6
+sex,Female,54,22,4
+sex,Female,55,78,9
+sex,Female,56,23,3
+sex,Female,57,40,1
+sex,Female,58,33,6
+sex,Female,59,21,4
+sex,Female,60,51,6
+sex,Female,61,64,8
+sex,Female,62,13,2
+sex,Female,63,25,5
+sex,Female,64,81,10
+sex,Female,65,18,1
+sex,Female,66,37,4
+sex,Female,67,66,7
+sex,Female,68,21,5
+sex,Female,69,18,4
+sex,Female,70,129,19
+sex,Female,71,12,2
+sex,Female,72,13,1
+sex,Female,73,16,3
+sex,Female,74,14,2
+sex,Female,75,34,14
+sex,Female,76,63,14
+sex,Female,77,63,12
+sex,Female,78,8,2
+sex,Female,79,19,4
+sex,Female,80,65,14
+sex,Female,81,14,4
+sex,Female,82,32,3
+sex,Female,83,62,11
+sex,Female,84,14,4
+sex,Female,85,6,3
+sex,Female,86,18,5
+sex,Female,87,5,0
+sex,Female,88,10,0
+sex,Female,89,30,6
+sex,Female,90,10,2
+sex,Female,91,12,1
+sex,Female,92,11,3
+sex,Female,93,9,3
+sex,Female,94,3,1
+sex,Female,95,11,1
+sex,Female,96,4,1
+sex,Female,97,12,3
+sex,Female,98,12,4
+sex,Female,99,6,1
+sex,Female,100,4,1
+sex,Female,101,3,0
+sex,Female,102,20,5
+sex,Female,103,4,1
+sex,Female,104,9,2
+sex,Female,105,10,1
+sex,Female,106,9,1
+sex,Female,107,7,3
+sex,Female,108,6,2
+sex,Female,109,3,1
+sex,Female,110,3,1
+sex,Female,111,13,5
+sex,Female,112,12,2
+sex,Female,113,5,3
+sex,Female,114,8,2
+sex,Female,115,8,4
+sex,Female,116,7,2
+sex,Female,117,8,3
+sex,Female,118,5,0
+sex,Female,119,4,1
+sex,Female,120,5,2
+sex,Female,121,6,2
+sex,Female,122,7,2
+sex,Female,123,9,1
+sex,Female,124,8,4
+sex,Female,125,5,1
+sex,Female,126,8,2
+sex,Female,127,3,1
+sex,Female,128,18,8
+sex,Female,129,10,2
+sex,Female,130,2,0
+sex,Female,131,5,1
+sex,Female,132,10,5
+sex,Female,133,35,10
+sex,Female,134,0,0
+sex,Female,135,5,3
+sex,Female,136,3,0
+sex,Female,137,5,1
+sex,Female,138,4,3
+sex,Female,139,23,12
+sex,Female,140,1,0
+sex,Female,141,6,4
+sex,Female,142,6,2
+sex,Female,143,5,4
+sex,Female,144,2,2
+sex,Female,145,2,0
+sex,Female,146,1,1
+sex,Female,147,4,0
+sex,Female,148,6,3
+sex,Female,149,6,4
+sex,Female,150,3,1
+sex,Female,151,5,2
+sex,Female,152,6,4
+sex,Female,153,8,4
+sex,Female,154,4,3
+sex,Female,155,1,0
+sex,Female,156,2,1
+sex,Female,157,1,1
+sex,Female,158,3,2
+sex,Female,159,4,2
+sex,Female,160,9,3
+sex,Female,161,2,1
+sex,Female,162,6,5
+sex,Female,163,7,5
+sex,Female,164,2,0
+sex,Female,165,3,2
+sex,Female,166,3,1
+sex,Female,167,1,1
+sex,Female,168,4,4
+sex,Female,169,5,3
+sex,Female,170,7,3
+sex,Female,171,2,1
+sex,Female,172,6,4
+sex,Female,173,4,2
+sex,Female,174,3,1
+sex,Female,175,7,1
+sex,Female,176,4,2
+sex,Female,177,4,2
+sex,Female,178,6,3
+sex,Female,179,9,5
+sex,Female,180,3,3
+sex,Female,181,1,1
+sex,Female,182,4,1
+sex,Female,183,2,0
+sex,Female,184,5,5
+sex,Female,185,8,4
+sex,Female,186,7,4
+sex,Female,187,9,4
+sex,Female,188,5,3
+sex,Female,189,2,1
+sex,Female,190,8,7
+sex,Female,191,3,2
+sex,Female,192,4,1
+sex,Female,193,3,2
+sex,Female,194,2,1
+sex,Female,195,1,1
+sex,Female,196,8,6
+sex,Female,197,4,4
+sex,Female,198,0,0
+sex,Female,199,3,2
+sex,Female,200,4,2
+sex,Female,201,5,3
+sex,Female,202,7,6
+sex,Female,203,10,8
+sex,Female,204,3,3
+sex,Female,205,6,3
+sex,Female,206,6,3
+sex,Female,207,3,1
+sex,Female,208,1,1
+sex,Female,209,8,5
+sex,Female,210,1,1
+sex,Female,211,2,1
+sex,Female,212,2,2
+sex,Female,213,4,2
+sex,Female,214,0,0
+sex,Female,215,2,2
+sex,Female,216,7,5
+sex,Female,217,1,1
+sex,Female,218,5,4
+sex,Female,219,2,1
+sex,Female,220,1,0
+sex,Female,221,2,2
+sex,Female,222,7,6
+sex,Female,223,9,6
+sex,Female,224,9,4
+sex,Female,225,0,0
+sex,Female,226,3,1
+sex,Female,227,4,2
+sex,Female,228,4,3
+sex,Female,229,8,7
+sex,Female,230,1,0
+sex,Female,231,9,7
+sex,Female,232,2,2
+sex,Female,233,4,3
+sex,Female,234,11,9
+sex,Female,235,0,0
+sex,Female,236,3,2
+sex,Female,237,8,4
+sex,Female,238,1,1
+sex,Female,239,1,1
+sex,Female,240,8,6
+sex,Female,241,1,0
+sex,Female,242,0,0
+sex,Female,243,12,9
+sex,Female,244,0,0
+sex,Female,245,3,3
+sex,Female,246,3,3
+sex,Female,247,0,0
+sex,Female,248,3,3
+sex,Female,249,5,4
+sex,Female,250,0,0
+sex,Female,251,1,1
+sex,Female,252,10,8
+sex,Female,253,4,4
+sex,Female,254,0,0
+sex,Female,255,2,2
+sex,Female,256,0,0
+sex,Female,257,1,1
+sex,Female,258,0,0
+sex,Female,259,0,0
+sex,Female,260,2,1
+sex,Male,0,0,0
+sex,Male,1,3,0
+sex,Male,2,2,0
+sex,Male,3,2,1
+sex,Male,4,3,0
+sex,Male,5,4,0
+sex,Male,6,3,0
+sex,Male,7,7,0
+sex,Male,8,4,0
+sex,Male,9,4,0
+sex,Male,10,9,1
+sex,Male,11,15,0
+sex,Male,12,3,0
+sex,Male,13,1,0
+sex,Male,14,14,0
+sex,Male,15,7,0
+sex,Male,16,8,0
+sex,Male,17,5,0
+sex,Male,18,22,2
+sex,Male,19,11,0
+sex,Male,20,2,0
+sex,Male,21,12,0
+sex,Male,22,13,0
+sex,Male,23,26,1
+sex,Male,24,6,0
+sex,Male,25,18,1
+sex,Male,26,19,1
+sex,Male,27,12,2
+sex,Male,28,18,0
+sex,Male,29,4,1
+sex,Male,30,21,1
+sex,Male,31,29,1
+sex,Male,32,28,1
+sex,Male,33,12,1
+sex,Male,34,15,2
+sex,Male,35,19,0
+sex,Male,36,41,3
+sex,Male,37,22,4
+sex,Male,38,6,1
+sex,Male,39,31,3
+sex,Male,40,16,0
+sex,Male,41,26,3
+sex,Male,42,51,5
+sex,Male,43,11,3
+sex,Male,44,20,1
+sex,Male,45,23,5
+sex,Male,46,53,3
+sex,Male,47,20,3
+sex,Male,48,20,5
+sex,Male,49,36,2
+sex,Male,50,10,0
+sex,Male,51,24,1
+sex,Male,52,31,5
+sex,Male,53,26,2
+sex,Male,54,25,9
+sex,Male,55,40,5
+sex,Male,56,11,2
+sex,Male,57,24,3
+sex,Male,58,13,1
+sex,Male,59,27,2
+sex,Male,60,29,6
+sex,Male,61,31,4
+sex,Male,62,12,1
+sex,Male,63,16,4
+sex,Male,64,36,6
+sex,Male,65,10,2
+sex,Male,66,18,4
+sex,Male,67,35,2
+sex,Male,68,11,3
+sex,Male,69,17,6
+sex,Male,70,96,22
+sex,Male,71,9,2
+sex,Male,72,9,3
+sex,Male,73,26,2
+sex,Male,74,5,1
+sex,Male,75,30,8
+sex,Male,76,51,8
+sex,Male,77,55,11
+sex,Male,78,5,1
+sex,Male,79,17,7
+sex,Male,80,21,6
+sex,Male,81,7,1
+sex,Male,82,35,8
+sex,Male,83,24,5
+sex,Male,84,8,3
+sex,Male,85,5,2
+sex,Male,86,7,3
+sex,Male,87,4,1
+sex,Male,88,2,0
+sex,Male,89,43,8
+sex,Male,90,7,0
+sex,Male,91,13,3
+sex,Male,92,9,3
+sex,Male,93,5,1
+sex,Male,94,2,1
+sex,Male,95,3,0
+sex,Male,96,9,1
+sex,Male,97,7,0
+sex,Male,98,10,4
+sex,Male,99,5,1
+sex,Male,100,3,2
+sex,Male,101,5,4
+sex,Male,102,3,1
+sex,Male,103,4,1
+sex,Male,104,7,1
+sex,Male,105,3,1
+sex,Male,106,7,3
+sex,Male,107,5,1
+sex,Male,108,6,0
+sex,Male,109,3,0
+sex,Male,110,4,1
+sex,Male,111,7,4
+sex,Male,112,7,3
+sex,Male,113,2,2
+sex,Male,114,6,1
+sex,Male,115,6,3
+sex,Male,116,3,1
+sex,Male,117,4,1
+sex,Male,118,6,2
+sex,Male,119,7,2
+sex,Male,120,3,0
+sex,Male,121,2,0
+sex,Male,122,4,0
+sex,Male,123,6,5
+sex,Male,124,6,2
+sex,Male,125,4,1
+sex,Male,126,5,1
+sex,Male,127,3,3
+sex,Male,128,16,8
+sex,Male,129,5,1
+sex,Male,130,2,0
+sex,Male,131,4,1
+sex,Male,132,4,0
+sex,Male,133,20,4
+sex,Male,134,1,0
+sex,Male,135,2,0
+sex,Male,136,2,2
+sex,Male,137,4,3
+sex,Male,138,3,0
+sex,Male,139,5,1
+sex,Male,140,1,1
+sex,Male,141,6,2
+sex,Male,142,11,2
+sex,Male,143,3,1
+sex,Male,144,1,0
+sex,Male,145,4,0
+sex,Male,146,2,0
+sex,Male,147,8,5
+sex,Male,148,11,5
+sex,Male,149,3,3
+sex,Male,150,2,0
+sex,Male,151,3,1
+sex,Male,152,3,1
+sex,Male,153,4,3
+sex,Male,154,0,0
+sex,Male,155,0,0
+sex,Male,156,2,0
+sex,Male,157,2,2
+sex,Male,158,6,3
+sex,Male,159,5,3
+sex,Male,160,9,3
+sex,Male,161,3,1
+sex,Male,162,4,2
+sex,Male,163,6,2
+sex,Male,164,2,2
+sex,Male,165,0,0
+sex,Male,166,6,2
+sex,Male,167,3,1
+sex,Male,168,3,0
+sex,Male,169,3,2
+sex,Male,170,4,3
+sex,Male,171,2,1
+sex,Male,172,3,2
+sex,Male,173,6,4
+sex,Male,174,2,2
+sex,Male,175,3,2
+sex,Male,176,5,4
+sex,Male,177,8,5
+sex,Male,178,4,2
+sex,Male,179,5,2
+sex,Male,180,6,5
+sex,Male,181,4,4
+sex,Male,182,2,2
+sex,Male,183,0,0
+sex,Male,184,2,2
+sex,Male,185,13,9
+sex,Male,186,3,0
+sex,Male,187,5,5
+sex,Male,188,4,2
+sex,Male,189,0,0
+sex,Male,190,2,2
+sex,Male,191,2,2
+sex,Male,192,6,4
+sex,Male,193,1,1
+sex,Male,194,3,3
+sex,Male,195,2,1
+sex,Male,196,4,4
+sex,Male,197,5,1
+sex,Male,198,8,5
+sex,Male,199,4,1
+sex,Male,200,4,2
+sex,Male,201,3,1
+sex,Male,202,2,2
+sex,Male,203,4,2
+sex,Male,204,3,3
+sex,Male,205,3,2
+sex,Male,206,5,3
+sex,Male,207,2,2
+sex,Male,208,0,0
+sex,Male,209,8,3
+sex,Male,210,1,0
+sex,Male,211,4,2
+sex,Male,212,2,1
+sex,Male,213,6,5
+sex,Male,214,2,1
+sex,Male,215,1,0
+sex,Male,216,6,2
+sex,Male,217,1,1
+sex,Male,218,4,3
+sex,Male,219,1,1
+sex,Male,220,3,2
+sex,Male,221,0,0
+sex,Male,222,4,3
+sex,Male,223,6,5
+sex,Male,224,5,4
+sex,Male,225,2,2
+sex,Male,226,1,1
+sex,Male,227,3,3
+sex,Male,228,2,2
+sex,Male,229,6,4
+sex,Male,230,2,1
+sex,Male,231,5,4
+sex,Male,232,0,0
+sex,Male,233,7,5
+sex,Male,234,3,2
+sex,Male,235,1,1
+sex,Male,236,3,0
+sex,Male,237,4,3
+sex,Male,238,0,0
+sex,Male,239,3,2
+sex,Male,240,2,2
+sex,Male,241,1,0
+sex,Male,242,2,2
+sex,Male,243,6,5
+sex,Male,244,1,1
+sex,Male,245,1,1
+sex,Male,246,0,0
+sex,Male,247,1,0
+sex,Male,248,8,6
+sex,Male,249,2,1
+sex,Male,250,2,2
+sex,Male,251,0,0
+sex,Male,252,17,15
+sex,Male,253,5,2
+sex,Male,254,1,1
+sex,Male,255,6,6
+sex,Male,256,1,0
+sex,Male,257,0,0
+sex,Male,258,1,1
+sex,Male,259,2,2
+sex,Male,260,9,6
+age_band,21-29,0,0,0
+age_band,21-29,1,0,0
+age_band,21-29,2,4,0
+age_band,21-29,3,0,0
+age_band,21-29,4,1,1
+age_band,21-29,5,1,0
+age_band,21-29,6,2,0
+age_band,21-29,7,2,0
+age_band,21-29,8,1,0
+age_band,21-29,9,3,0
+age_band,21-29,10,5,0
+age_band,21-29,11,1,0
+age_band,21-29,12,2,0
+age_band,21-29,13,2,0
+age_band,21-29,14,6,0
+age_band,21-29,15,6,0
+age_band,21-29,16,11,0
+age_band,21-29,17,3,0
+age_band,21-29,18,11,3
+age_band,21-29,19,6,0
+age_band,21-29,20,2,0
+age_band,21-29,21,4,0
+age_band,21-29,22,14,0
+age_band,21-29,23,11,1
+age_band,21-29,24,8,0
+age_band,21-29,25,8,0
+age_band,21-29,26,17,1
+age_band,21-29,27,7,0
+age_band,21-29,28,15,1
+age_band,21-29,29,1,0
+age_band,21-29,30,18,0
+age_band,21-29,31,20,0
+age_band,21-29,32,17,1
+age_band,21-29,33,11,1
+age_band,21-29,34,9,1
+age_band,21-29,35,13,1
+age_band,21-29,36,38,3
+age_band,21-29,37,16,3
+age_band,21-29,38,12,0
+age_band,21-29,39,17,0
+age_band,21-29,40,14,0
+age_band,21-29,41,26,4
+age_band,21-29,42,51,3
+age_band,21-29,43,12,1
+age_band,21-29,44,11,0
+age_band,21-29,45,18,2
+age_band,21-29,46,39,4
+age_band,21-29,47,18,1
+age_band,21-29,48,19,4
+age_band,21-29,49,26,3
+age_band,21-29,50,9,1
+age_band,21-29,51,25,2
+age_band,21-29,52,30,5
+age_band,21-29,53,24,5
+age_band,21-29,54,14,3
+age_band,21-29,55,40,8
+age_band,21-29,56,15,0
+age_band,21-29,57,20,2
+age_band,21-29,58,18,5
+age_band,21-29,59,14,1
+age_band,21-29,60,28,7
+age_band,21-29,61,36,5
+age_band,21-29,62,11,1
+age_band,21-29,63,7,1
+age_band,21-29,64,44,4
+age_band,21-29,65,8,2
+age_band,21-29,66,18,4
+age_band,21-29,67,29,6
+age_band,21-29,68,12,4
+age_band,21-29,69,14,6
+age_band,21-29,70,71,10
+age_band,21-29,71,7,1
+age_band,21-29,72,9,1
+age_band,21-29,73,7,2
+age_band,21-29,74,8,0
+age_band,21-29,75,15,1
+age_band,21-29,76,43,11
+age_band,21-29,77,27,5
+age_band,21-29,78,7,2
+age_band,21-29,79,10,2
+age_band,21-29,80,24,5
+age_band,21-29,81,7,3
+age_band,21-29,82,35,7
+age_band,21-29,83,41,6
+age_band,21-29,84,7,1
+age_band,21-29,85,6,3
+age_band,21-29,86,8,2
+age_band,21-29,87,4,1
+age_band,21-29,88,4,0
+age_band,21-29,89,36,6
+age_band,21-29,90,8,0
+age_band,21-29,91,5,2
+age_band,21-29,92,8,2
+age_band,21-29,93,3,0
+age_band,21-29,94,2,2
+age_band,21-29,95,8,1
+age_band,21-29,96,5,1
+age_band,21-29,97,5,2
+age_band,21-29,98,9,2
+age_band,21-29,99,4,0
+age_band,21-29,100,4,1
+age_band,21-29,101,2,1
+age_band,21-29,102,11,1
+age_band,21-29,103,4,0
+age_band,21-29,104,4,1
+age_band,21-29,105,8,2
+age_band,21-29,106,7,2
+age_band,21-29,107,4,1
+age_band,21-29,108,5,0
+age_band,21-29,109,2,0
+age_band,21-29,110,1,0
+age_band,21-29,111,12,6
+age_band,21-29,112,5,1
+age_band,21-29,113,1,0
+age_band,21-29,114,2,0
+age_band,21-29,115,6,3
+age_band,21-29,116,4,2
+age_band,21-29,117,7,1
+age_band,21-29,118,4,0
+age_band,21-29,119,1,0
+age_band,21-29,120,4,1
+age_band,21-29,121,4,1
+age_band,21-29,122,4,1
+age_band,21-29,123,7,2
+age_band,21-29,124,4,2
+age_band,21-29,125,4,0
+age_band,21-29,126,5,2
+age_band,21-29,127,2,1
+age_band,21-29,128,10,4
+age_band,21-29,129,4,1
+age_band,21-29,130,0,0
+age_band,21-29,131,5,0
+age_band,21-29,132,6,1
+age_band,21-29,133,11,1
+age_band,21-29,134,0,0
+age_band,21-29,135,3,2
+age_band,21-29,136,2,1
+age_band,21-29,137,4,2
+age_band,21-29,138,5,3
+age_band,21-29,139,14,8
+age_band,21-29,140,1,0
+age_band,21-29,141,2,0
+age_band,21-29,142,5,1
+age_band,21-29,143,2,2
+age_band,21-29,144,2,2
+age_band,21-29,145,4,0
+age_band,21-29,146,1,0
+age_band,21-29,147,6,3
+age_band,21-29,148,6,2
+age_band,21-29,149,5,4
+age_band,21-29,150,2,1
+age_band,21-29,151,5,1
+age_band,21-29,152,3,1
+age_band,21-29,153,7,2
+age_band,21-29,154,0,0
+age_band,21-29,155,1,0
+age_band,21-29,156,1,0
+age_band,21-29,157,1,1
+age_band,21-29,158,2,1
+age_band,21-29,159,6,2
+age_band,21-29,160,8,4
+age_band,21-29,161,0,0
+age_band,21-29,162,3,3
+age_band,21-29,163,9,6
+age_band,21-29,164,2,1
+age_band,21-29,165,0,0
+age_band,21-29,166,3,1
+age_band,21-29,167,0,0
+age_band,21-29,168,0,0
+age_band,21-29,169,2,1
+age_band,21-29,170,7,4
+age_band,21-29,171,3,1
+age_band,21-29,172,3,3
+age_band,21-29,173,3,1
+age_band,21-29,174,3,1
+age_band,21-29,175,4,2
+age_band,21-29,176,4,3
+age_band,21-29,177,4,2
+age_band,21-29,178,3,1
+age_band,21-29,179,5,2
+age_band,21-29,180,2,1
+age_band,21-29,181,3,3
+age_band,21-29,182,1,1
+age_band,21-29,183,1,0
+age_band,21-29,184,4,4
+age_band,21-29,185,7,4
+age_band,21-29,186,3,2
+age_band,21-29,187,6,5
+age_band,21-29,188,5,3
+age_band,21-29,189,1,0
+age_band,21-29,190,9,8
+age_band,21-29,191,0,0
+age_band,21-29,192,4,3
+age_band,21-29,193,1,1
+age_band,21-29,194,2,2
+age_band,21-29,195,2,1
+age_band,21-29,196,7,5
+age_band,21-29,197,6,5
+age_band,21-29,198,3,1
+age_band,21-29,199,0,0
+age_band,21-29,200,2,1
+age_band,21-29,201,3,1
+age_band,21-29,202,4,4
+age_band,21-29,203,7,5
+age_band,21-29,204,1,1
+age_band,21-29,205,1,1
+age_band,21-29,206,5,3
+age_band,21-29,207,1,0
+age_band,21-29,208,0,0
+age_band,21-29,209,6,1
+age_band,21-29,210,1,1
+age_band,21-29,211,3,2
+age_band,21-29,212,1,0
+age_band,21-29,213,0,0
+age_band,21-29,214,1,1
+age_band,21-29,215,2,1
+age_band,21-29,216,4,2
+age_band,21-29,217,1,1
+age_band,21-29,218,2,1
+age_band,21-29,219,1,1
+age_band,21-29,220,0,0
+age_band,21-29,221,0,0
+age_band,21-29,222,5,4
+age_band,21-29,223,5,4
+age_band,21-29,224,8,3
+age_band,21-29,225,0,0
+age_band,21-29,226,0,0
+age_band,21-29,227,1,1
+age_band,21-29,228,4,3
+age_band,21-29,229,5,3
+age_band,21-29,230,3,1
+age_band,21-29,231,5,4
+age_band,21-29,232,0,0
+age_band,21-29,233,7,4
+age_band,21-29,234,3,2
+age_band,21-29,235,0,0
+age_band,21-29,236,3,1
+age_band,21-29,237,3,2
+age_band,21-29,238,1,1
+age_band,21-29,239,1,1
+age_band,21-29,240,2,1
+age_band,21-29,241,0,0
+age_band,21-29,242,0,0
+age_band,21-29,243,6,5
+age_band,21-29,244,1,1
+age_band,21-29,245,0,0
+age_band,21-29,246,1,1
+age_band,21-29,247,0,0
+age_band,21-29,248,2,2
+age_band,21-29,249,3,2
+age_band,21-29,250,0,0
+age_band,21-29,251,1,1
+age_band,21-29,252,11,9
+age_band,21-29,253,4,3
+age_band,21-29,254,0,0
+age_band,21-29,255,1,1
+age_band,21-29,256,0,0
+age_band,21-29,257,1,1
+age_band,21-29,258,0,0
+age_band,21-29,259,1,1
+age_band,21-29,260,7,4
+age_band,30-39,0,1,0
+age_band,30-39,1,5,1
+age_band,30-39,2,2,0
+age_band,30-39,3,1,0
+age_band,30-39,4,3,0
+age_band,30-39,5,3,0
+age_band,30-39,6,5,0
+age_band,30-39,7,6,0
+age_band,30-39,8,3,0
+age_band,30-39,9,10,1
+age_band,30-39,10,7,0
+age_band,30-39,11,7,1
+age_band,30-39,12,14,1
+age_band,30-39,13,4,0
+age_band,30-39,14,27,0
+age_band,30-39,15,11,0
+age_band,30-39,16,10,0
+age_band,30-39,17,4,0
+age_band,30-39,18,31,2
+age_band,30-39,19,23,1
+age_band,30-39,20,2,0
+age_band,30-39,21,13,1
+age_band,30-39,22,19,0
+age_band,30-39,23,29,4
+age_band,30-39,24,6,0
+age_band,30-39,25,19,4
+age_band,30-39,26,21,0
+age_band,30-39,27,20,1
+age_band,30-39,28,24,0
+age_band,30-39,29,5,0
+age_band,30-39,30,28,3
+age_band,30-39,31,37,2
+age_band,30-39,32,32,3
+age_band,30-39,33,12,1
+age_band,30-39,34,21,3
+age_band,30-39,35,30,2
+age_band,30-39,36,49,4
+age_band,30-39,37,29,4
+age_band,30-39,38,10,2
+age_band,30-39,39,30,4
+age_band,30-39,40,24,1
+age_band,30-39,41,29,3
+age_band,30-39,42,70,7
+age_band,30-39,43,8,2
+age_band,30-39,44,17,0
+age_band,30-39,45,33,3
+age_band,30-39,46,59,2
+age_band,30-39,47,15,3
+age_band,30-39,48,22,3
+age_band,30-39,49,49,3
+age_band,30-39,50,10,1
+age_band,30-39,51,17,1
+age_band,30-39,52,25,3
+age_band,30-39,53,20,2
+age_band,30-39,54,16,6
+age_band,30-39,55,41,4
+age_band,30-39,56,13,3
+age_band,30-39,57,28,1
+age_band,30-39,58,17,1
+age_band,30-39,59,22,2
+age_band,30-39,60,24,0
+age_band,30-39,61,29,5
+age_band,30-39,62,7,0
+age_band,30-39,63,17,3
+age_band,30-39,64,35,6
+age_band,30-39,65,11,1
+age_band,30-39,66,25,2
+age_band,30-39,67,35,0
+age_band,30-39,68,9,0
+age_band,30-39,69,11,3
+age_band,30-39,70,75,19
+age_band,30-39,71,7,3
+age_band,30-39,72,7,2
+age_band,30-39,73,22,2
+age_band,30-39,74,6,2
+age_band,30-39,75,30,13
+age_band,30-39,76,30,8
+age_band,30-39,77,46,11
+age_band,30-39,78,4,0
+age_band,30-39,79,13,4
+age_band,30-39,80,35,7
+age_band,30-39,81,10,2
+age_band,30-39,82,16,2
+age_band,30-39,83,25,5
+age_band,30-39,84,10,3
+age_band,30-39,85,2,0
+age_band,30-39,86,8,3
+age_band,30-39,87,1,0
+age_band,30-39,88,4,0
+age_band,30-39,89,17,3
+age_band,30-39,90,5,0
+age_band,30-39,91,10,1
+age_band,30-39,92,2,2
+age_band,30-39,93,8,4
+age_band,30-39,94,1,0
+age_band,30-39,95,3,0
+age_band,30-39,96,5,1
+age_band,30-39,97,9,0
+age_band,30-39,98,6,2
+age_band,30-39,99,3,0
+age_band,30-39,100,2,1
+age_band,30-39,101,2,0
+age_band,30-39,102,5,1
+age_band,30-39,103,2,1
+age_band,30-39,104,7,2
+age_band,30-39,105,1,0
+age_band,30-39,106,3,0
+age_band,30-39,107,4,2
+age_band,30-39,108,1,0
+age_band,30-39,109,2,1
+age_band,30-39,110,3,2
+age_band,30-39,111,3,1
+age_band,30-39,112,9,3
+age_band,30-39,113,4,3
+age_band,30-39,114,6,1
+age_band,30-39,115,6,3
+age_band,30-39,116,3,0
+age_band,30-39,117,1,1
+age_band,30-39,118,5,2
+age_band,30-39,119,5,2
+age_band,30-39,120,3,1
+age_band,30-39,121,2,1
+age_band,30-39,122,5,1
+age_band,30-39,123,6,3
+age_band,30-39,124,7,2
+age_band,30-39,125,4,1
+age_band,30-39,126,2,1
+age_band,30-39,127,2,2
+age_band,30-39,128,9,4
+age_band,30-39,129,8,2
+age_band,30-39,130,3,0
+age_band,30-39,131,1,0
+age_band,30-39,132,3,2
+age_band,30-39,133,24,9
+age_band,30-39,134,1,0
+age_band,30-39,135,2,0
+age_band,30-39,136,1,0
+age_band,30-39,137,2,0
+age_band,30-39,138,1,0
+age_band,30-39,139,5,2
+age_band,30-39,140,0,0
+age_band,30-39,141,4,4
+age_band,30-39,142,5,0
+age_band,30-39,143,6,3
+age_band,30-39,144,0,0
+age_band,30-39,145,1,0
+age_band,30-39,146,0,0
+age_band,30-39,147,4,1
+age_band,30-39,148,9,6
+age_band,30-39,149,1,1
+age_band,30-39,150,3,0
+age_band,30-39,151,3,2
+age_band,30-39,152,0,0
+age_band,30-39,153,3,3
+age_band,30-39,154,2,1
+age_band,30-39,155,0,0
+age_band,30-39,156,2,1
+age_band,30-39,157,2,2
+age_band,30-39,158,3,2
+age_band,30-39,159,2,2
+age_band,30-39,160,6,1
+age_band,30-39,161,3,1
+age_band,30-39,162,4,1
+age_band,30-39,163,0,0
+age_band,30-39,164,2,1
+age_band,30-39,165,2,2
+age_band,30-39,166,4,1
+age_band,30-39,167,1,1
+age_band,30-39,168,4,2
+age_band,30-39,169,5,3
+age_band,30-39,170,2,2
+age_band,30-39,171,0,0
+age_band,30-39,172,3,2
+age_band,30-39,173,5,3
+age_band,30-39,174,2,2
+age_band,30-39,175,3,0
+age_band,30-39,176,3,1
+age_band,30-39,177,5,2
+age_band,30-39,178,6,3
+age_band,30-39,179,6,3
+age_band,30-39,180,4,4
+age_band,30-39,181,0,0
+age_band,30-39,182,4,1
+age_band,30-39,183,0,0
+age_band,30-39,184,0,0
+age_band,30-39,185,6,4
+age_band,30-39,186,4,1
+age_band,30-39,187,4,3
+age_band,30-39,188,2,1
+age_band,30-39,189,0,0
+age_band,30-39,190,1,1
+age_band,30-39,191,3,2
+age_band,30-39,192,1,0
+age_band,30-39,193,1,1
+age_band,30-39,194,2,1
+age_band,30-39,195,1,1
+age_band,30-39,196,3,3
+age_band,30-39,197,2,0
+age_band,30-39,198,2,2
+age_band,30-39,199,3,1
+age_band,30-39,200,2,1
+age_band,30-39,201,0,0
+age_band,30-39,202,3,2
+age_band,30-39,203,2,1
+age_band,30-39,204,1,1
+age_band,30-39,205,5,2
+age_band,30-39,206,5,2
+age_band,30-39,207,3,3
+age_band,30-39,208,1,1
+age_band,30-39,209,2,2
+age_band,30-39,210,1,0
+age_band,30-39,211,1,0
+age_band,30-39,212,1,1
+age_band,30-39,213,5,3
+age_band,30-39,214,0,0
+age_band,30-39,215,0,0
+age_band,30-39,216,4,2
+age_band,30-39,217,0,0
+age_band,30-39,218,2,2
+age_band,30-39,219,1,0
+age_band,30-39,220,1,1
+age_band,30-39,221,1,1
+age_band,30-39,222,4,3
+age_band,30-39,223,6,3
+age_band,30-39,224,4,4
+age_band,30-39,225,0,0
+age_band,30-39,226,1,1
+age_band,30-39,227,5,3
+age_band,30-39,228,0,0
+age_band,30-39,229,5,4
+age_band,30-39,230,0,0
+age_band,30-39,231,4,3
+age_band,30-39,232,1,1
+age_band,30-39,233,3,3
+age_band,30-39,234,4,4
+age_band,30-39,235,0,0
+age_band,30-39,236,0,0
+age_band,30-39,237,4,2
+age_band,30-39,238,0,0
+age_band,30-39,239,1,1
+age_band,30-39,240,3,2
+age_band,30-39,241,1,0
+age_band,30-39,242,1,1
+age_band,30-39,243,8,6
+age_band,30-39,244,0,0
+age_band,30-39,245,1,1
+age_band,30-39,246,0,0
+age_band,30-39,247,1,0
+age_band,30-39,248,5,4
+age_band,30-39,249,3,2
+age_band,30-39,250,0,0
+age_band,30-39,251,0,0
+age_band,30-39,252,9,8
+age_band,30-39,253,3,1
+age_band,30-39,254,1,1
+age_band,30-39,255,2,2
+age_band,30-39,256,1,0
+age_band,30-39,257,0,0
+age_band,30-39,258,1,1
+age_band,30-39,259,1,1
+age_band,30-39,260,3,2
+age_band,40-49,0,0,0
+age_band,40-49,1,1,0
+age_band,40-49,2,2,0
+age_band,40-49,3,1,1
+age_band,40-49,4,1,0
+age_band,40-49,5,3,0
+age_band,40-49,6,1,0
+age_band,40-49,7,7,0
+age_band,40-49,8,2,0
+age_band,40-49,9,0,0
+age_band,40-49,10,6,1
+age_band,40-49,11,13,0
+age_band,40-49,12,8,0
+age_band,40-49,13,0,0
+age_band,40-49,14,10,0
+age_band,40-49,15,5,0
+age_band,40-49,16,5,0
+age_band,40-49,17,4,0
+age_band,40-49,18,7,0
+age_band,40-49,19,4,2
+age_band,40-49,20,1,0
+age_band,40-49,21,8,0
+age_band,40-49,22,12,1
+age_band,40-49,23,16,1
+age_band,40-49,24,5,0
+age_band,40-49,25,16,5
+age_band,40-49,26,13,0
+age_band,40-49,27,7,1
+age_band,40-49,28,5,0
+age_band,40-49,29,6,1
+age_band,40-49,30,10,2
+age_band,40-49,31,23,2
+age_band,40-49,32,17,0
+age_band,40-49,33,7,0
+age_band,40-49,34,13,1
+age_band,40-49,35,15,3
+age_band,40-49,36,24,3
+age_band,40-49,37,14,2
+age_band,40-49,38,3,0
+age_band,40-49,39,16,2
+age_band,40-49,40,8,0
+age_band,40-49,41,9,0
+age_band,40-49,42,30,0
+age_band,40-49,43,4,0
+age_band,40-49,44,15,4
+age_band,40-49,45,13,3
+age_band,40-49,46,44,3
+age_band,40-49,47,15,1
+age_band,40-49,48,7,3
+age_band,40-49,49,23,6
+age_band,40-49,50,7,0
+age_band,40-49,51,14,1
+age_band,40-49,52,18,3
+age_band,40-49,53,15,1
+age_band,40-49,54,13,2
+age_band,40-49,55,18,0
+age_band,40-49,56,4,2
+age_band,40-49,57,11,1
+age_band,40-49,58,9,1
+age_band,40-49,59,8,1
+age_band,40-49,60,23,3
+age_band,40-49,61,17,1
+age_band,40-49,62,7,2
+age_band,40-49,63,12,4
+age_band,40-49,64,23,5
+age_band,40-49,65,6,0
+age_band,40-49,66,8,0
+age_band,40-49,67,25,2
+age_band,40-49,68,6,1
+age_band,40-49,69,5,1
+age_band,40-49,70,53,9
+age_band,40-49,71,6,0
+age_band,40-49,72,2,0
+age_band,40-49,73,12,1
+age_band,40-49,74,4,1
+age_band,40-49,75,10,3
+age_band,40-49,76,30,3
+age_band,40-49,77,32,5
+age_band,40-49,78,2,1
+age_band,40-49,79,11,5
+age_band,40-49,80,17,4
+age_band,40-49,81,2,0
+age_band,40-49,82,11,1
+age_band,40-49,83,13,3
+age_band,40-49,84,5,3
+age_band,40-49,85,2,2
+age_band,40-49,86,5,1
+age_band,40-49,87,4,0
+age_band,40-49,88,3,0
+age_band,40-49,89,9,5
+age_band,40-49,90,3,2
+age_band,40-49,91,7,1
+age_band,40-49,92,7,1
+age_band,40-49,93,1,0
+age_band,40-49,94,1,0
+age_band,40-49,95,1,0
+age_band,40-49,96,3,0
+age_band,40-49,97,4,1
+age_band,40-49,98,4,2
+age_band,40-49,99,3,1
+age_band,40-49,100,1,1
+age_band,40-49,101,3,2
+age_band,40-49,102,5,2
+age_band,40-49,103,1,1
+age_band,40-49,104,3,0
+age_band,40-49,105,2,0
+age_band,40-49,106,4,1
+age_band,40-49,107,2,1
+age_band,40-49,108,3,1
+age_band,40-49,109,1,0
+age_band,40-49,110,2,0
+age_band,40-49,111,4,1
+age_band,40-49,112,4,1
+age_band,40-49,113,2,2
+age_band,40-49,114,4,1
+age_band,40-49,115,1,0
+age_band,40-49,116,3,1
+age_band,40-49,117,4,2
+age_band,40-49,118,2,0
+age_band,40-49,119,3,1
+age_band,40-49,120,1,0
+age_band,40-49,121,1,0
+age_band,40-49,122,1,0
+age_band,40-49,123,1,1
+age_band,40-49,124,3,2
+age_band,40-49,125,1,1
+age_band,40-49,126,4,0
+age_band,40-49,127,1,0
+age_band,40-49,128,10,5
+age_band,40-49,129,2,0
+age_band,40-49,130,1,0
+age_band,40-49,131,3,2
+age_band,40-49,132,3,1
+age_band,40-49,133,17,1
+age_band,40-49,134,0,0
+age_band,40-49,135,2,1
+age_band,40-49,136,2,1
+age_band,40-49,137,2,1
+age_band,40-49,138,0,0
+age_band,40-49,139,6,1
+age_band,40-49,140,1,1
+age_band,40-49,141,5,2
+age_band,40-49,142,4,1
+age_band,40-49,143,0,0
+age_band,40-49,144,0,0
+age_band,40-49,145,0,0
+age_band,40-49,146,1,1
+age_band,40-49,147,1,1
+age_band,40-49,148,1,0
+age_band,40-49,149,3,2
+age_band,40-49,150,0,0
+age_band,40-49,151,0,0
+age_band,40-49,152,3,3
+age_band,40-49,153,0,0
+age_band,40-49,154,1,1
+age_band,40-49,155,0,0
+age_band,40-49,156,1,0
+age_band,40-49,157,0,0
+age_band,40-49,158,3,1
+age_band,40-49,159,1,1
+age_band,40-49,160,3,1
+age_band,40-49,161,1,0
+age_band,40-49,162,2,2
+age_band,40-49,163,3,1
+age_band,40-49,164,0,0
+age_band,40-49,165,1,0
+age_band,40-49,166,0,0
+age_band,40-49,167,1,1
+age_band,40-49,168,0,0
+age_band,40-49,169,0,0
+age_band,40-49,170,1,0
+age_band,40-49,171,0,0
+age_band,40-49,172,0,0
+age_band,40-49,173,1,1
+age_band,40-49,174,0,0
+age_band,40-49,175,1,0
+age_band,40-49,176,1,1
+age_band,40-49,177,2,2
+age_band,40-49,178,1,1
+age_band,40-49,179,2,2
+age_band,40-49,180,1,1
+age_band,40-49,181,2,2
+age_band,40-49,182,0,0
+age_band,40-49,183,0,0
+age_band,40-49,184,1,1
+age_band,40-49,185,5,2
+age_band,40-49,186,3,1
+age_band,40-49,187,1,1
+age_band,40-49,188,2,1
+age_band,40-49,189,0,0
+age_band,40-49,190,0,0
+age_band,40-49,191,2,2
+age_band,40-49,192,3,1
+age_band,40-49,193,2,1
+age_band,40-49,194,1,1
+age_band,40-49,195,0,0
+age_band,40-49,196,2,2
+age_band,40-49,197,0,0
+age_band,40-49,198,2,1
+age_band,40-49,199,2,2
+age_band,40-49,200,3,1
+age_band,40-49,201,4,2
+age_band,40-49,202,1,1
+age_band,40-49,203,3,3
+age_band,40-49,204,2,2
+age_band,40-49,205,2,1
+age_band,40-49,206,1,1
+age_band,40-49,207,1,0
+age_band,40-49,208,0,0
+age_band,40-49,209,2,2
+age_band,40-49,210,0,0
+age_band,40-49,211,2,1
+age_band,40-49,212,1,1
+age_band,40-49,213,3,2
+age_band,40-49,214,1,0
+age_band,40-49,215,0,0
+age_band,40-49,216,3,2
+age_band,40-49,217,1,1
+age_band,40-49,218,3,2
+age_band,40-49,219,0,0
+age_band,40-49,220,1,0
+age_band,40-49,221,0,0
+age_band,40-49,222,1,1
+age_band,40-49,223,4,4
+age_band,40-49,224,1,0
+age_band,40-49,225,2,2
+age_band,40-49,226,2,1
+age_band,40-49,227,1,1
+age_band,40-49,228,2,2
+age_band,40-49,229,4,4
+age_band,40-49,230,0,0
+age_band,40-49,231,4,3
+age_band,40-49,232,1,1
+age_band,40-49,233,1,1
+age_band,40-49,234,4,3
+age_band,40-49,235,0,0
+age_band,40-49,236,2,1
+age_band,40-49,237,3,2
+age_band,40-49,238,0,0
+age_band,40-49,239,1,0
+age_band,40-49,240,4,4
+age_band,40-49,241,1,0
+age_band,40-49,242,1,1
+age_band,40-49,243,4,3
+age_band,40-49,244,0,0
+age_band,40-49,245,2,2
+age_band,40-49,246,2,2
+age_band,40-49,247,0,0
+age_band,40-49,248,3,3
+age_band,40-49,249,1,1
+age_band,40-49,250,2,2
+age_band,40-49,251,0,0
+age_band,40-49,252,6,5
+age_band,40-49,253,2,2
+age_band,40-49,254,0,0
+age_band,40-49,255,4,4
+age_band,40-49,256,0,0
+age_band,40-49,257,0,0
+age_band,40-49,258,0,0
+age_band,40-49,259,0,0
+age_band,40-49,260,0,0
+age_band,50 and over,0,0,0
+age_band,50 and over,1,0,0
+age_band,50 and over,2,0,0
+age_band,50 and over,3,0,0
+age_band,50 and over,4,0,0
+age_band,50 and over,5,0,0
+age_band,50 and over,6,0,0
+age_band,50 and over,7,1,0
+age_band,50 and over,8,0,0
+age_band,50 and over,9,0,0
+age_band,50 and over,10,3,0
+age_band,50 and over,11,4,0
+age_band,50 and over,12,0,0
+age_band,50 and over,13,0,0
+age_band,50 and over,14,2,0
+age_band,50 and over,15,0,0
+age_band,50 and over,16,3,0
+age_band,50 and over,17,2,0
+age_band,50 and over,18,3,0
+age_band,50 and over,19,4,0
+age_band,50 and over,20,1,0
+age_band,50 and over,21,1,0
+age_band,50 and over,22,6,0
+age_band,50 and over,23,2,0
+age_band,50 and over,24,2,0
+age_band,50 and over,25,6,0
+age_band,50 and over,26,2,1
+age_band,50 and over,27,2,0
+age_band,50 and over,28,4,0
+age_band,50 and over,29,2,1
+age_band,50 and over,30,5,1
+age_band,50 and over,31,5,1
+age_band,50 and over,32,8,0
+age_band,50 and over,33,5,1
+age_band,50 and over,34,6,2
+age_band,50 and over,35,3,0
+age_band,50 and over,36,6,1
+age_band,50 and over,37,10,3
+age_band,50 and over,38,1,0
+age_band,50 and over,39,5,1
+age_band,50 and over,40,4,0
+age_band,50 and over,41,6,0
+age_band,50 and over,42,12,1
+age_band,50 and over,43,3,1
+age_band,50 and over,44,0,0
+age_band,50 and over,45,3,1
+age_band,50 and over,46,9,2
+age_band,50 and over,47,5,0
+age_band,50 and over,48,4,1
+age_band,50 and over,49,13,0
+age_band,50 and over,50,2,0
+age_band,50 and over,51,6,1
+age_band,50 and over,52,7,0
+age_band,50 and over,53,4,0
+age_band,50 and over,54,4,2
+age_band,50 and over,55,19,2
+age_band,50 and over,56,2,0
+age_band,50 and over,57,5,0
+age_band,50 and over,58,2,0
+age_band,50 and over,59,4,2
+age_band,50 and over,60,5,2
+age_band,50 and over,61,13,1
+age_band,50 and over,62,0,0
+age_band,50 and over,63,5,1
+age_band,50 and over,64,15,1
+age_band,50 and over,65,3,0
+age_band,50 and over,66,4,2
+age_band,50 and over,67,12,1
+age_band,50 and over,68,5,3
+age_band,50 and over,69,5,0
+age_band,50 and over,70,26,3
+age_band,50 and over,71,1,0
+age_band,50 and over,72,4,1
+age_band,50 and over,73,1,0
+age_band,50 and over,74,1,0
+age_band,50 and over,75,9,5
+age_band,50 and over,76,11,0
+age_band,50 and over,77,13,2
+age_band,50 and over,78,0,0
+age_band,50 and over,79,2,0
+age_band,50 and over,80,10,4
+age_band,50 and over,81,2,0
+age_band,50 and over,82,5,1
+age_band,50 and over,83,7,2
+age_band,50 and over,84,0,0
+age_band,50 and over,85,1,0
+age_band,50 and over,86,4,2
+age_band,50 and over,87,0,0
+age_band,50 and over,88,1,0
+age_band,50 and over,89,11,0
+age_band,50 and over,90,1,0
+age_band,50 and over,91,3,0
+age_band,50 and over,92,3,1
+age_band,50 and over,93,2,0
+age_band,50 and over,94,1,0
+age_band,50 and over,95,2,0
+age_band,50 and over,96,0,0
+age_band,50 and over,97,1,0
+age_band,50 and over,98,3,2
+age_band,50 and over,99,1,1
+age_band,50 and over,100,0,0
+age_band,50 and over,101,1,1
+age_band,50 and over,102,2,2
+age_band,50 and over,103,1,0
+age_band,50 and over,104,2,0
+age_band,50 and over,105,2,0
+age_band,50 and over,106,2,1
+age_band,50 and over,107,2,0
+age_band,50 and over,108,3,1
+age_band,50 and over,109,1,0
+age_band,50 and over,110,1,0
+age_band,50 and over,111,1,1
+age_band,50 and over,112,1,0
+age_band,50 and over,113,0,0
+age_band,50 and over,114,2,1
+age_band,50 and over,115,1,1
+age_band,50 and over,116,0,0
+age_band,50 and over,117,0,0
+age_band,50 and over,118,0,0
+age_band,50 and over,119,2,0
+age_band,50 and over,120,0,0
+age_band,50 and over,121,1,0
+age_band,50 and over,122,1,0
+age_band,50 and over,123,1,0
+age_band,50 and over,124,0,0
+age_band,50 and over,125,0,0
+age_band,50 and over,126,2,0
+age_band,50 and over,127,1,1
+age_band,50 and over,128,5,3
+age_band,50 and over,129,1,0
+age_band,50 and over,130,0,0
+age_band,50 and over,131,0,0
+age_band,50 and over,132,2,1
+age_band,50 and over,133,3,3
+age_band,50 and over,134,0,0
+age_band,50 and over,135,0,0
+age_band,50 and over,136,0,0
+age_band,50 and over,137,1,1
+age_band,50 and over,138,1,0
+age_band,50 and over,139,3,2
+age_band,50 and over,140,0,0
+age_band,50 and over,141,1,0
+age_band,50 and over,142,3,2
+age_band,50 and over,143,0,0
+age_band,50 and over,144,1,0
+age_band,50 and over,145,1,0
+age_band,50 and over,146,1,0
+age_band,50 and over,147,1,0
+age_band,50 and over,148,1,0
+age_band,50 and over,149,0,0
+age_band,50 and over,150,0,0
+age_band,50 and over,151,0,0
+age_band,50 and over,152,3,1
+age_band,50 and over,153,2,2
+age_band,50 and over,154,1,1
+age_band,50 and over,155,0,0
+age_band,50 and over,156,0,0
+age_band,50 and over,157,0,0
+age_band,50 and over,158,1,1
+age_band,50 and over,159,0,0
+age_band,50 and over,160,1,0
+age_band,50 and over,161,1,1
+age_band,50 and over,162,1,1
+age_band,50 and over,163,1,0
+age_band,50 and over,164,0,0
+age_band,50 and over,165,0,0
+age_band,50 and over,166,2,1
+age_band,50 and over,167,2,0
+age_band,50 and over,168,3,2
+age_band,50 and over,169,1,1
+age_band,50 and over,170,1,0
+age_band,50 and over,171,1,1
+age_band,50 and over,172,3,1
+age_band,50 and over,173,1,1
+age_band,50 and over,174,0,0
+age_band,50 and over,175,2,1
+age_band,50 and over,176,1,1
+age_band,50 and over,177,1,1
+age_band,50 and over,178,0,0
+age_band,50 and over,179,1,0
+age_band,50 and over,180,2,2
+age_band,50 and over,181,0,0
+age_band,50 and over,182,1,1
+age_band,50 and over,183,1,0
+age_band,50 and over,184,2,2
+age_band,50 and over,185,3,3
+age_band,50 and over,186,0,0
+age_band,50 and over,187,3,0
+age_band,50 and over,188,0,0
+age_band,50 and over,189,1,1
+age_band,50 and over,190,0,0
+age_band,50 and over,191,0,0
+age_band,50 and over,192,2,1
+age_band,50 and over,193,0,0
+age_band,50 and over,194,0,0
+age_band,50 and over,195,0,0
+age_band,50 and over,196,0,0
+age_band,50 and over,197,1,0
+age_band,50 and over,198,1,1
+age_band,50 and over,199,2,0
+age_band,50 and over,200,1,1
+age_band,50 and over,201,1,1
+age_band,50 and over,202,1,1
+age_band,50 and over,203,2,1
+age_band,50 and over,204,2,2
+age_band,50 and over,205,1,1
+age_band,50 and over,206,0,0
+age_band,50 and over,207,0,0
+age_band,50 and over,208,0,0
+age_band,50 and over,209,6,3
+age_band,50 and over,210,0,0
+age_band,50 and over,211,0,0
+age_band,50 and over,212,1,1
+age_band,50 and over,213,2,2
+age_band,50 and over,214,0,0
+age_band,50 and over,215,1,1
+age_band,50 and over,216,2,1
+age_band,50 and over,217,0,0
+age_band,50 and over,218,2,2
+age_band,50 and over,219,1,1
+age_band,50 and over,220,2,1
+age_band,50 and over,221,1,1
+age_band,50 and over,222,1,1
+age_band,50 and over,223,0,0
+age_band,50 and over,224,1,1
+age_band,50 and over,225,0,0
+age_band,50 and over,226,1,0
+age_band,50 and over,227,0,0
+age_band,50 and over,228,0,0
+age_band,50 and over,229,0,0
+age_band,50 and over,230,0,0
+age_band,50 and over,231,1,1
+age_band,50 and over,232,0,0
+age_band,50 and over,233,0,0
+age_band,50 and over,234,3,2
+age_band,50 and over,235,1,1
+age_band,50 and over,236,1,0
+age_band,50 and over,237,2,1
+age_band,50 and over,238,0,0
+age_band,50 and over,239,1,1
+age_band,50 and over,240,1,1
+age_band,50 and over,241,0,0
+age_band,50 and over,242,0,0
+age_band,50 and over,243,0,0
+age_band,50 and over,244,0,0
+age_band,50 and over,245,1,1
+age_band,50 and over,246,0,0
+age_band,50 and over,247,0,0
+age_band,50 and over,248,1,0
+age_band,50 and over,249,0,0
+age_band,50 and over,250,0,0
+age_band,50 and over,251,0,0
+age_band,50 and over,252,1,1
+age_band,50 and over,253,0,0
+age_band,50 and over,254,0,0
+age_band,50 and over,255,1,1
+age_band,50 and over,256,0,0
+age_band,50 and over,257,0,0
+age_band,50 and over,258,0,0
+age_band,50 and over,259,0,0
+age_band,50 and over,260,1,1
+education,Graduate school,0,1,0
+education,Graduate school,1,2,1
+education,Graduate school,2,6,0
+education,Graduate school,3,1,1
+education,Graduate school,4,2,0
+education,Graduate school,5,3,0
+education,Graduate school,6,3,0
+education,Graduate school,7,9,0
+education,Graduate school,8,4,0
+education,Graduate school,9,10,0
+education,Graduate school,10,8,0
+education,Graduate school,11,15,1
+education,Graduate school,12,8,0
+education,Graduate school,13,3,0
+education,Graduate school,14,31,0
+education,Graduate school,15,13,0
+education,Graduate school,16,13,0
+education,Graduate school,17,6,0
+education,Graduate school,18,26,4
+education,Graduate school,19,20,1
+education,Graduate school,20,5,0
+education,Graduate school,21,15,1
+education,Graduate school,22,20,0
+education,Graduate school,23,38,3
+education,Graduate school,24,6,0
+education,Graduate school,25,21,5
+education,Graduate school,26,25,1
+education,Graduate school,27,18,1
+education,Graduate school,28,23,0
+education,Graduate school,29,5,1
+education,Graduate school,30,31,3
+education,Graduate school,31,29,1
+education,Graduate school,32,29,1
+education,Graduate school,33,14,1
+education,Graduate school,34,21,3
+education,Graduate school,35,31,4
+education,Graduate school,36,47,1
+education,Graduate school,37,38,7
+education,Graduate school,38,12,1
+education,Graduate school,39,27,1
+education,Graduate school,40,20,1
+education,Graduate school,41,23,2
+education,Graduate school,42,58,2
+education,Graduate school,43,8,1
+education,Graduate school,44,24,3
+education,Graduate school,45,28,2
+education,Graduate school,46,56,1
+education,Graduate school,47,16,1
+education,Graduate school,48,18,2
+education,Graduate school,49,29,3
+education,Graduate school,50,9,0
+education,Graduate school,51,15,1
+education,Graduate school,52,21,2
+education,Graduate school,53,19,5
+education,Graduate school,54,15,5
+education,Graduate school,55,38,7
+education,Graduate school,56,19,3
+education,Graduate school,57,20,2
+education,Graduate school,58,14,4
+education,Graduate school,59,13,0
+education,Graduate school,60,32,4
+education,Graduate school,61,17,2
+education,Graduate school,62,7,1
+education,Graduate school,63,15,4
+education,Graduate school,64,34,3
+education,Graduate school,65,11,1
+education,Graduate school,66,17,4
+education,Graduate school,67,31,4
+education,Graduate school,68,4,1
+education,Graduate school,69,10,3
+education,Graduate school,70,61,8
+education,Graduate school,71,4,0
+education,Graduate school,72,9,1
+education,Graduate school,73,20,1
+education,Graduate school,74,6,0
+education,Graduate school,75,33,13
+education,Graduate school,76,23,4
+education,Graduate school,77,40,8
+education,Graduate school,78,3,0
+education,Graduate school,79,12,3
+education,Graduate school,80,31,10
+education,Graduate school,81,7,2
+education,Graduate school,82,13,2
+education,Graduate school,83,19,1
+education,Graduate school,84,13,5
+education,Graduate school,85,2,1
+education,Graduate school,86,7,3
+education,Graduate school,87,5,1
+education,Graduate school,88,5,0
+education,Graduate school,89,12,1
+education,Graduate school,90,3,0
+education,Graduate school,91,10,2
+education,Graduate school,92,8,4
+education,Graduate school,93,8,3
+education,Graduate school,94,2,1
+education,Graduate school,95,7,1
+education,Graduate school,96,4,1
+education,Graduate school,97,6,1
+education,Graduate school,98,9,3
+education,Graduate school,99,3,0
+education,Graduate school,100,3,3
+education,Graduate school,101,3,1
+education,Graduate school,102,7,1
+education,Graduate school,103,2,0
+education,Graduate school,104,4,1
+education,Graduate school,105,2,1
+education,Graduate school,106,5,2
+education,Graduate school,107,6,2
+education,Graduate school,108,3,0
+education,Graduate school,109,1,0
+education,Graduate school,110,2,0
+education,Graduate school,111,8,3
+education,Graduate school,112,12,4
+education,Graduate school,113,1,0
+education,Graduate school,114,6,1
+education,Graduate school,115,4,1
+education,Graduate school,116,3,1
+education,Graduate school,117,3,1
+education,Graduate school,118,8,1
+education,Graduate school,119,4,1
+education,Graduate school,120,4,1
+education,Graduate school,121,4,1
+education,Graduate school,122,7,2
+education,Graduate school,123,5,3
+education,Graduate school,124,6,1
+education,Graduate school,125,4,1
+education,Graduate school,126,3,0
+education,Graduate school,127,0,0
+education,Graduate school,128,18,10
+education,Graduate school,129,8,1
+education,Graduate school,130,2,0
+education,Graduate school,131,6,1
+education,Graduate school,132,5,1
+education,Graduate school,133,32,11
+education,Graduate school,134,1,0
+education,Graduate school,135,3,2
+education,Graduate school,136,1,1
+education,Graduate school,137,1,1
+education,Graduate school,138,2,0
+education,Graduate school,139,9,3
+education,Graduate school,140,1,1
+education,Graduate school,141,3,2
+education,Graduate school,142,3,1
+education,Graduate school,143,3,1
+education,Graduate school,144,0,0
+education,Graduate school,145,2,0
+education,Graduate school,146,0,0
+education,Graduate school,147,3,0
+education,Graduate school,148,4,2
+education,Graduate school,149,4,4
+education,Graduate school,150,1,0
+education,Graduate school,151,4,2
+education,Graduate school,152,2,2
+education,Graduate school,153,3,2
+education,Graduate school,154,0,0
+education,Graduate school,155,1,0
+education,Graduate school,156,1,0
+education,Graduate school,157,1,1
+education,Graduate school,158,4,2
+education,Graduate school,159,4,3
+education,Graduate school,160,2,1
+education,Graduate school,161,2,1
+education,Graduate school,162,2,1
+education,Graduate school,163,3,2
+education,Graduate school,164,1,0
+education,Graduate school,165,1,1
+education,Graduate school,166,1,0
+education,Graduate school,167,0,0
+education,Graduate school,168,0,0
+education,Graduate school,169,4,3
+education,Graduate school,170,3,3
+education,Graduate school,171,0,0
+education,Graduate school,172,0,0
+education,Graduate school,173,1,0
+education,Graduate school,174,2,2
+education,Graduate school,175,5,1
+education,Graduate school,176,2,0
+education,Graduate school,177,4,1
+education,Graduate school,178,1,1
+education,Graduate school,179,5,3
+education,Graduate school,180,2,2
+education,Graduate school,181,2,2
+education,Graduate school,182,1,1
+education,Graduate school,183,0,0
+education,Graduate school,184,2,2
+education,Graduate school,185,5,3
+education,Graduate school,186,3,0
+education,Graduate school,187,6,6
+education,Graduate school,188,3,2
+education,Graduate school,189,0,0
+education,Graduate school,190,3,3
+education,Graduate school,191,2,1
+education,Graduate school,192,3,2
+education,Graduate school,193,0,0
+education,Graduate school,194,1,1
+education,Graduate school,195,1,1
+education,Graduate school,196,1,0
+education,Graduate school,197,1,0
+education,Graduate school,198,0,0
+education,Graduate school,199,1,0
+education,Graduate school,200,2,2
+education,Graduate school,201,2,1
+education,Graduate school,202,2,2
+education,Graduate school,203,5,3
+education,Graduate school,204,1,1
+education,Graduate school,205,2,1
+education,Graduate school,206,1,1
+education,Graduate school,207,0,0
+education,Graduate school,208,1,1
+education,Graduate school,209,1,0
+education,Graduate school,210,0,0
+education,Graduate school,211,1,0
+education,Graduate school,212,2,2
+education,Graduate school,213,2,1
+education,Graduate school,214,1,1
+education,Graduate school,215,1,1
+education,Graduate school,216,3,1
+education,Graduate school,217,1,1
+education,Graduate school,218,2,2
+education,Graduate school,219,1,1
+education,Graduate school,220,2,2
+education,Graduate school,221,0,0
+education,Graduate school,222,1,1
+education,Graduate school,223,5,3
+education,Graduate school,224,3,2
+education,Graduate school,225,1,1
+education,Graduate school,226,1,0
+education,Graduate school,227,2,1
+education,Graduate school,228,0,0
+education,Graduate school,229,4,3
+education,Graduate school,230,1,0
+education,Graduate school,231,3,2
+education,Graduate school,232,1,1
+education,Graduate school,233,3,3
+education,Graduate school,234,1,0
+education,Graduate school,235,1,1
+education,Graduate school,236,0,0
+education,Graduate school,237,1,1
+education,Graduate school,238,0,0
+education,Graduate school,239,2,1
+education,Graduate school,240,4,4
+education,Graduate school,241,1,0
+education,Graduate school,242,0,0
+education,Graduate school,243,7,5
+education,Graduate school,244,0,0
+education,Graduate school,245,1,1
+education,Graduate school,246,0,0
+education,Graduate school,247,0,0
+education,Graduate school,248,2,2
+education,Graduate school,249,1,1
+education,Graduate school,250,0,0
+education,Graduate school,251,1,1
+education,Graduate school,252,2,1
+education,Graduate school,253,2,1
+education,Graduate school,254,0,0
+education,Graduate school,255,1,1
+education,Graduate school,256,1,0
+education,Graduate school,257,1,1
+education,Graduate school,258,0,0
+education,Graduate school,259,1,1
+education,Graduate school,260,1,1
+education,High school,0,0,0
+education,High school,1,2,0
+education,High school,2,2,0
+education,High school,3,0,0
+education,High school,4,0,0
+education,High school,5,0,0
+education,High school,6,0,0
+education,High school,7,1,0
+education,High school,8,1,0
+education,High school,9,0,0
+education,High school,10,1,0
+education,High school,11,3,0
+education,High school,12,5,0
+education,High school,13,0,0
+education,High school,14,2,0
+education,High school,15,1,0
+education,High school,16,7,0
+education,High school,17,0,0
+education,High school,18,4,0
+education,High school,19,5,1
+education,High school,20,0,0
+education,High school,21,3,0
+education,High school,22,9,0
+education,High school,23,2,0
+education,High school,24,4,0
+education,High school,25,8,0
+education,High school,26,6,1
+education,High school,27,4,1
+education,High school,28,3,0
+education,High school,29,4,1
+education,High school,30,4,0
+education,High school,31,12,2
+education,High school,32,8,0
+education,High school,33,5,1
+education,High school,34,3,1
+education,High school,35,7,0
+education,High school,36,6,0
+education,High school,37,9,2
+education,High school,38,0,0
+education,High school,39,11,2
+education,High school,40,9,0
+education,High school,41,4,0
+education,High school,42,11,2
+education,High school,43,5,0
+education,High school,44,6,0
+education,High school,45,9,2
+education,High school,46,16,3
+education,High school,47,11,0
+education,High school,48,9,2
+education,High school,49,26,2
+education,High school,50,5,2
+education,High school,51,6,2
+education,High school,52,14,1
+education,High school,53,11,1
+education,High school,54,8,1
+education,High school,55,25,1
+education,High school,56,4,0
+education,High school,57,9,0
+education,High school,58,8,2
+education,High school,59,10,3
+education,High school,60,13,3
+education,High school,61,18,2
+education,High school,62,4,1
+education,High school,63,7,1
+education,High school,64,28,4
+education,High school,65,2,0
+education,High school,66,11,3
+education,High school,67,21,1
+education,High school,68,9,2
+education,High school,69,7,1
+education,High school,70,34,3
+education,High school,71,5,1
+education,High school,72,8,1
+education,High school,73,7,0
+education,High school,74,4,1
+education,High school,75,13,5
+education,High school,76,25,2
+education,High school,77,20,4
+education,High school,78,3,1
+education,High school,79,5,1
+education,High school,80,14,4
+education,High school,81,3,0
+education,High school,82,16,2
+education,High school,83,13,3
+education,High school,84,2,1
+education,High school,85,2,1
+education,High school,86,2,0
+education,High school,87,1,0
+education,High school,88,3,0
+education,High school,89,18,3
+education,High school,90,3,1
+education,High school,91,7,1
+education,High school,92,3,1
+education,High school,93,2,0
+education,High school,94,2,0
+education,High school,95,1,0
+education,High school,96,1,0
+education,High school,97,2,0
+education,High school,98,4,2
+education,High school,99,3,1
+education,High school,100,0,0
+education,High school,101,2,1
+education,High school,102,4,2
+education,High school,103,1,0
+education,High school,104,2,0
+education,High school,105,4,0
+education,High school,106,5,2
+education,High school,107,0,0
+education,High school,108,2,1
+education,High school,109,2,0
+education,High school,110,1,0
+education,High school,111,2,2
+education,High school,112,2,1
+education,High school,113,4,3
+education,High school,114,2,0
+education,High school,115,4,2
+education,High school,116,2,1
+education,High school,117,3,0
+education,High school,118,0,0
+education,High school,119,1,1
+education,High school,120,1,1
+education,High school,121,2,0
+education,High school,122,0,0
+education,High school,123,1,0
+education,High school,124,0,0
+education,High school,125,1,0
+education,High school,126,2,1
+education,High school,127,0,0
+education,High school,128,5,1
+education,High school,129,4,1
+education,High school,130,0,0
+education,High school,131,1,0
+education,High school,132,1,0
+education,High school,133,2,0
+education,High school,134,0,0
+education,High school,135,1,0
+education,High school,136,1,1
+education,High school,137,3,2
+education,High school,138,3,2
+education,High school,139,7,3
+education,High school,140,0,0
+education,High school,141,1,0
+education,High school,142,12,2
+education,High school,143,3,2
+education,High school,144,0,0
+education,High school,145,2,0
+education,High school,146,1,0
+education,High school,147,1,1
+education,High school,148,6,2
+education,High school,149,1,1
+education,High school,150,1,0
+education,High school,151,0,0
+education,High school,152,3,2
+education,High school,153,4,3
+education,High school,154,1,1
+education,High school,155,0,0
+education,High school,156,0,0
+education,High school,157,0,0
+education,High school,158,2,1
+education,High school,159,1,0
+education,High school,160,4,0
+education,High school,161,1,1
+education,High school,162,3,3
+education,High school,163,5,3
+education,High school,164,2,1
+education,High school,165,1,0
+education,High school,166,2,1
+education,High school,167,0,0
+education,High school,168,3,2
+education,High school,169,0,0
+education,High school,170,1,1
+education,High school,171,2,1
+education,High school,172,3,1
+education,High school,173,4,4
+education,High school,174,1,0
+education,High school,175,1,0
+education,High school,176,3,2
+education,High school,177,2,2
+education,High school,178,1,0
+education,High school,179,2,0
+education,High school,180,1,1
+education,High school,181,1,1
+education,High school,182,1,1
+education,High school,183,0,0
+education,High school,184,1,1
+education,High school,185,6,5
+education,High school,186,1,0
+education,High school,187,2,0
+education,High school,188,1,0
+education,High school,189,2,1
+education,High school,190,2,2
+education,High school,191,0,0
+education,High school,192,1,0
+education,High school,193,2,2
+education,High school,194,0,0
+education,High school,195,0,0
+education,High school,196,5,4
+education,High school,197,3,2
+education,High school,198,1,1
+education,High school,199,1,0
+education,High school,200,2,0
+education,High school,201,2,1
+education,High school,202,1,1
+education,High school,203,1,1
+education,High school,204,3,3
+education,High school,205,2,1
+education,High school,206,4,3
+education,High school,207,2,1
+education,High school,208,0,0
+education,High school,209,6,3
+education,High school,210,0,0
+education,High school,211,1,1
+education,High school,212,0,0
+education,High school,213,2,1
+education,High school,214,1,0
+education,High school,215,1,1
+education,High school,216,4,2
+education,High school,217,1,1
+education,High school,218,2,1
+education,High school,219,0,0
+education,High school,220,2,0
+education,High school,221,0,0
+education,High school,222,4,2
+education,High school,223,5,5
+education,High school,224,3,1
+education,High school,225,0,0
+education,High school,226,1,0
+education,High school,227,2,1
+education,High school,228,1,1
+education,High school,229,4,3
+education,High school,230,1,0
+education,High school,231,5,5
+education,High school,232,0,0
+education,High school,233,2,2
+education,High school,234,6,5
+education,High school,235,0,0
+education,High school,236,3,0
+education,High school,237,3,2
+education,High school,238,0,0
+education,High school,239,0,0
+education,High school,240,4,4
+education,High school,241,0,0
+education,High school,242,2,2
+education,High school,243,2,1
+education,High school,244,0,0
+education,High school,245,1,1
+education,High school,246,2,2
+education,High school,247,0,0
+education,High school,248,3,2
+education,High school,249,1,1
+education,High school,250,1,1
+education,High school,251,0,0
+education,High school,252,5,5
+education,High school,253,3,2
+education,High school,254,0,0
+education,High school,255,4,4
+education,High school,256,0,0
+education,High school,257,0,0
+education,High school,258,0,0
+education,High school,259,1,1
+education,High school,260,2,1
+education,Other or unknown,0,0,0
+education,Other or unknown,1,1,0
+education,Other or unknown,2,0,0
+education,Other or unknown,3,0,0
+education,Other or unknown,4,0,0
+education,Other or unknown,5,0,0
+education,Other or unknown,6,0,0
+education,Other or unknown,7,1,0
+education,Other or unknown,8,0,0
+education,Other or unknown,9,0,0
+education,Other or unknown,10,1,0
+education,Other or unknown,11,0,0
+education,Other or unknown,12,0,0
+education,Other or unknown,13,0,0
+education,Other or unknown,14,1,0
+education,Other or unknown,15,0,0
+education,Other or unknown,16,2,0
+education,Other or unknown,17,0,0
+education,Other or unknown,18,0,0
+education,Other or unknown,19,0,0
+education,Other or unknown,20,0,0
+education,Other or unknown,21,0,0
+education,Other or unknown,22,4,1
+education,Other or unknown,23,0,0
+education,Other or unknown,24,3,0
+education,Other or unknown,25,1,0
+education,Other or unknown,26,0,0
+education,Other or unknown,27,1,0
+education,Other or unknown,28,2,0
+education,Other or unknown,29,0,0
+education,Other or unknown,30,1,0
+education,Other or unknown,31,1,0
+education,Other or unknown,32,4,0
+education,Other or unknown,33,1,0
+education,Other or unknown,34,1,0
+education,Other or unknown,35,2,0
+education,Other or unknown,36,4,1
+education,Other or unknown,37,0,0
+education,Other or unknown,38,0,0
+education,Other or unknown,39,1,0
+education,Other or unknown,40,0,0
+education,Other or unknown,41,2,0
+education,Other or unknown,42,5,1
+education,Other or unknown,43,0,0
+education,Other or unknown,44,0,0
+education,Other or unknown,45,0,0
+education,Other or unknown,46,3,0
+education,Other or unknown,47,2,0
+education,Other or unknown,48,1,0
+education,Other or unknown,49,5,1
+education,Other or unknown,50,0,0
+education,Other or unknown,51,0,0
+education,Other or unknown,52,1,0
+education,Other or unknown,53,0,0
+education,Other or unknown,54,3,0
+education,Other or unknown,55,2,0
+education,Other or unknown,56,0,0
+education,Other or unknown,57,2,0
+education,Other or unknown,58,0,0
+education,Other or unknown,59,2,0
+education,Other or unknown,60,0,0
+education,Other or unknown,61,0,0
+education,Other or unknown,62,0,0
+education,Other or unknown,63,0,0
+education,Other or unknown,64,2,0
+education,Other or unknown,65,0,0
+education,Other or unknown,66,1,0
+education,Other or unknown,67,1,0
+education,Other or unknown,68,0,0
+education,Other or unknown,69,1,0
+education,Other or unknown,70,4,0
+education,Other or unknown,71,0,0
+education,Other or unknown,72,0,0
+education,Other or unknown,73,0,0
+education,Other or unknown,74,0,0
+education,Other or unknown,75,0,0
+education,Other or unknown,76,0,0
+education,Other or unknown,77,0,0
+education,Other or unknown,78,0,0
+education,Other or unknown,79,0,0
+education,Other or unknown,80,7,0
+education,Other or unknown,81,0,0
+education,Other or unknown,82,2,0
+education,Other or unknown,83,1,0
+education,Other or unknown,84,1,0
+education,Other or unknown,85,0,0
+education,Other or unknown,86,0,0
+education,Other or unknown,87,0,0
+education,Other or unknown,88,0,0
+education,Other or unknown,89,1,0
+education,Other or unknown,90,0,0
+education,Other or unknown,91,0,0
+education,Other or unknown,92,0,0
+education,Other or unknown,93,0,0
+education,Other or unknown,94,0,0
+education,Other or unknown,95,0,0
+education,Other or unknown,96,0,0
+education,Other or unknown,97,0,0
+education,Other or unknown,98,0,0
+education,Other or unknown,99,0,0
+education,Other or unknown,100,0,0
+education,Other or unknown,101,0,0
+education,Other or unknown,102,0,0
+education,Other or unknown,103,1,0
+education,Other or unknown,104,0,0
+education,Other or unknown,105,0,0
+education,Other or unknown,106,0,0
+education,Other or unknown,107,0,0
+education,Other or unknown,108,0,0
+education,Other or unknown,109,0,0
+education,Other or unknown,110,0,0
+education,Other or unknown,111,0,0
+education,Other or unknown,112,0,0
+education,Other or unknown,113,0,0
+education,Other or unknown,114,0,0
+education,Other or unknown,115,0,0
+education,Other or unknown,116,0,0
+education,Other or unknown,117,0,0
+education,Other or unknown,118,0,0
+education,Other or unknown,119,0,0
+education,Other or unknown,120,0,0
+education,Other or unknown,121,1,0
+education,Other or unknown,122,1,0
+education,Other or unknown,123,0,0
+education,Other or unknown,124,0,0
+education,Other or unknown,125,0,0
+education,Other or unknown,126,0,0
+education,Other or unknown,127,0,0
+education,Other or unknown,128,0,0
+education,Other or unknown,129,0,0
+education,Other or unknown,130,1,0
+education,Other or unknown,131,0,0
+education,Other or unknown,132,0,0
+education,Other or unknown,133,2,0
+education,Other or unknown,134,0,0
+education,Other or unknown,135,0,0
+education,Other or unknown,136,0,0
+education,Other or unknown,137,0,0
+education,Other or unknown,138,0,0
+education,Other or unknown,139,0,0
+education,Other or unknown,140,0,0
+education,Other or unknown,141,0,0
+education,Other or unknown,142,0,0
+education,Other or unknown,143,0,0
+education,Other or unknown,144,0,0
+education,Other or unknown,145,0,0
+education,Other or unknown,146,0,0
+education,Other or unknown,147,0,0
+education,Other or unknown,148,0,0
+education,Other or unknown,149,0,0
+education,Other or unknown,150,0,0
+education,Other or unknown,151,1,0
+education,Other or unknown,152,0,0
+education,Other or unknown,153,0,0
+education,Other or unknown,154,0,0
+education,Other or unknown,155,0,0
+education,Other or unknown,156,0,0
+education,Other or unknown,157,0,0
+education,Other or unknown,158,0,0
+education,Other or unknown,159,0,0
+education,Other or unknown,160,0,0
+education,Other or unknown,161,0,0
+education,Other or unknown,162,1,0
+education,Other or unknown,163,0,0
+education,Other or unknown,164,0,0
+education,Other or unknown,165,0,0
+education,Other or unknown,166,0,0
+education,Other or unknown,167,0,0
+education,Other or unknown,168,0,0
+education,Other or unknown,169,0,0
+education,Other or unknown,170,0,0
+education,Other or unknown,171,0,0
+education,Other or unknown,172,0,0
+education,Other or unknown,173,0,0
+education,Other or unknown,174,0,0
+education,Other or unknown,175,0,0
+education,Other or unknown,176,0,0
+education,Other or unknown,177,0,0
+education,Other or unknown,178,0,0
+education,Other or unknown,179,0,0
+education,Other or unknown,180,0,0
+education,Other or unknown,181,0,0
+education,Other or unknown,182,0,0
+education,Other or unknown,183,0,0
+education,Other or unknown,184,0,0
+education,Other or unknown,185,0,0
+education,Other or unknown,186,0,0
+education,Other or unknown,187,1,0
+education,Other or unknown,188,0,0
+education,Other or unknown,189,0,0
+education,Other or unknown,190,0,0
+education,Other or unknown,191,0,0
+education,Other or unknown,192,0,0
+education,Other or unknown,193,0,0
+education,Other or unknown,194,0,0
+education,Other or unknown,195,0,0
+education,Other or unknown,196,0,0
+education,Other or unknown,197,0,0
+education,Other or unknown,198,0,0
+education,Other or unknown,199,1,0
+education,Other or unknown,200,0,0
+education,Other or unknown,201,0,0
+education,Other or unknown,202,0,0
+education,Other or unknown,203,1,1
+education,Other or unknown,204,0,0
+education,Other or unknown,205,0,0
+education,Other or unknown,206,0,0
+education,Other or unknown,207,0,0
+education,Other or unknown,208,0,0
+education,Other or unknown,209,0,0
+education,Other or unknown,210,0,0
+education,Other or unknown,211,0,0
+education,Other or unknown,212,0,0
+education,Other or unknown,213,0,0
+education,Other or unknown,214,0,0
+education,Other or unknown,215,0,0
+education,Other or unknown,216,0,0
+education,Other or unknown,217,0,0
+education,Other or unknown,218,0,0
+education,Other or unknown,219,0,0
+education,Other or unknown,220,0,0
+education,Other or unknown,221,0,0
+education,Other or unknown,222,0,0
+education,Other or unknown,223,0,0
+education,Other or unknown,224,0,0
+education,Other or unknown,225,0,0
+education,Other or unknown,226,0,0
+education,Other or unknown,227,0,0
+education,Other or unknown,228,0,0
+education,Other or unknown,229,0,0
+education,Other or unknown,230,0,0
+education,Other or unknown,231,0,0
+education,Other or unknown,232,0,0
+education,Other or unknown,233,0,0
+education,Other or unknown,234,0,0
+education,Other or unknown,235,0,0
+education,Other or unknown,236,0,0
+education,Other or unknown,237,0,0
+education,Other or unknown,238,0,0
+education,Other or unknown,239,0,0
+education,Other or unknown,240,0,0
+education,Other or unknown,241,0,0
+education,Other or unknown,242,0,0
+education,Other or unknown,243,0,0
+education,Other or unknown,244,0,0
+education,Other or unknown,245,0,0
+education,Other or unknown,246,0,0
+education,Other or unknown,247,0,0
+education,Other or unknown,248,0,0
+education,Other or unknown,249,0,0
+education,Other or unknown,250,0,0
+education,Other or unknown,251,0,0
+education,Other or unknown,252,0,0
+education,Other or unknown,253,0,0
+education,Other or unknown,254,0,0
+education,Other or unknown,255,0,0
+education,Other or unknown,256,0,0
+education,Other or unknown,257,0,0
+education,Other or unknown,258,0,0
+education,Other or unknown,259,0,0
+education,Other or unknown,260,1,0
+education,University,0,0,0
+education,University,1,1,0
+education,University,2,0,0
+education,University,3,1,0
+education,University,4,3,1
+education,University,5,4,0
+education,University,6,5,0
+education,University,7,5,0
+education,University,8,1,0
+education,University,9,3,1
+education,University,10,11,1
+education,University,11,7,0
+education,University,12,11,1
+education,University,13,3,0
+education,University,14,11,0
+education,University,15,8,0
+education,University,16,7,0
+education,University,17,7,0
+education,University,18,22,1
+education,University,19,12,1
+education,University,20,1,0
+education,University,21,8,0
+education,University,22,18,0
+education,University,23,18,3
+education,University,24,8,0
+education,University,25,19,4
+education,University,26,22,0
+education,University,27,13,0
+education,University,28,20,1
+education,University,29,5,0
+education,University,30,25,3
+education,University,31,43,2
+education,University,32,33,3
+education,University,33,15,1
+education,University,34,24,3
+education,University,35,21,2
+education,University,36,60,9
+education,University,37,22,3
+education,University,38,14,1
+education,University,39,29,4
+education,University,40,21,0
+education,University,41,41,5
+education,University,42,89,6
+education,University,43,14,3
+education,University,44,13,1
+education,University,45,30,5
+education,University,46,76,7
+education,University,47,24,4
+education,University,48,24,7
+education,University,49,51,6
+education,University,50,14,0
+education,University,51,41,2
+education,University,52,44,8
+education,University,53,33,2
+education,University,54,21,7
+education,University,55,53,6
+education,University,56,11,2
+education,University,57,33,2
+education,University,58,24,1
+education,University,59,23,3
+education,University,60,35,5
+education,University,61,60,8
+education,University,62,14,1
+education,University,63,19,4
+education,University,64,53,9
+education,University,65,15,2
+education,University,66,26,1
+education,University,67,48,4
+education,University,68,19,5
+education,University,69,17,6
+education,University,70,126,30
+education,University,71,12,3
+education,University,72,5,2
+education,University,73,15,4
+education,University,74,9,2
+education,University,75,18,4
+education,University,76,66,16
+education,University,77,58,11
+education,University,78,7,2
+education,University,79,19,7
+education,University,80,34,6
+education,University,81,11,3
+education,University,82,36,7
+education,University,83,53,12
+education,University,84,6,1
+education,University,85,7,3
+education,University,86,16,5
+education,University,87,3,0
+education,University,88,4,0
+education,University,89,42,10
+education,University,90,11,1
+education,University,91,8,1
+education,University,92,9,1
+education,University,93,4,1
+education,University,94,1,1
+education,University,95,6,0
+education,University,96,8,1
+education,University,97,11,2
+education,University,98,9,3
+education,University,99,5,1
+education,University,100,4,0
+education,University,101,3,2
+education,University,102,12,3
+education,University,103,4,2
+education,University,104,10,2
+education,University,105,7,1
+education,University,106,6,0
+education,University,107,6,2
+education,University,108,7,1
+education,University,109,3,1
+education,University,110,4,2
+education,University,111,10,4
+education,University,112,5,0
+education,University,113,2,2
+education,University,114,6,2
+education,University,115,6,4
+education,University,116,5,1
+education,University,117,6,3
+education,University,118,3,1
+education,University,119,6,1
+education,University,120,3,0
+education,University,121,1,1
+education,University,122,3,0
+education,University,123,9,3
+education,University,124,8,5
+education,University,125,4,1
+education,University,126,8,2
+education,University,127,6,4
+education,University,128,11,5
+education,University,129,3,1
+education,University,130,1,0
+education,University,131,2,1
+education,University,132,8,4
+education,University,133,19,3
+education,University,134,0,0
+education,University,135,3,1
+education,University,136,3,0
+education,University,137,5,1
+education,University,138,2,1
+education,University,139,12,7
+education,University,140,1,0
+education,University,141,8,4
+education,University,142,2,1
+education,University,143,2,2
+education,University,144,3,2
+education,University,145,2,0
+education,University,146,2,1
+education,University,147,8,4
+education,University,148,7,4
+education,University,149,4,2
+education,University,150,3,1
+education,University,151,3,1
+education,University,152,4,1
+education,University,153,5,2
+education,University,154,3,2
+education,University,155,0,0
+education,University,156,3,1
+education,University,157,2,2
+education,University,158,3,2
+education,University,159,4,2
+education,University,160,12,5
+education,University,161,2,0
+education,University,162,4,3
+education,University,163,5,2
+education,University,164,1,1
+education,University,165,1,1
+education,University,166,6,2
+education,University,167,4,2
+education,University,168,4,2
+education,University,169,4,2
+education,University,170,7,2
+education,University,171,2,1
+education,University,172,6,5
+education,University,173,5,2
+education,University,174,2,1
+education,University,175,4,2
+education,University,176,4,4
+education,University,177,6,4
+education,University,178,8,4
+education,University,179,7,4
+education,University,180,6,5
+education,University,181,2,2
+education,University,182,4,1
+education,University,183,2,0
+education,University,184,4,4
+education,University,185,10,5
+education,University,186,6,4
+education,University,187,5,3
+education,University,188,5,3
+education,University,189,0,0
+education,University,190,5,4
+education,University,191,3,3
+education,University,192,6,3
+education,University,193,2,1
+education,University,194,4,3
+education,University,195,2,1
+education,University,196,6,6
+education,University,197,5,3
+education,University,198,7,4
+education,University,199,4,3
+education,University,200,4,2
+education,University,201,4,2
+education,University,202,6,5
+education,University,203,7,5
+education,University,204,2,2
+education,University,205,5,3
+education,University,206,6,2
+education,University,207,3,2
+education,University,208,0,0
+education,University,209,9,5
+education,University,210,2,1
+education,University,211,4,2
+education,University,212,2,1
+education,University,213,6,5
+education,University,214,0,0
+education,University,215,1,0
+education,University,216,6,4
+education,University,217,0,0
+education,University,218,5,4
+education,University,219,2,1
+education,University,220,0,0
+education,University,221,2,2
+education,University,222,6,6
+education,University,223,5,3
+education,University,224,8,5
+education,University,225,1,1
+education,University,226,2,2
+education,University,227,3,3
+education,University,228,5,4
+education,University,229,6,5
+education,University,230,1,1
+education,University,231,6,4
+education,University,232,1,1
+education,University,233,6,3
+education,University,234,7,6
+education,University,235,0,0
+education,University,236,3,2
+education,University,237,8,4
+education,University,238,1,1
+education,University,239,2,2
+education,University,240,2,0
+education,University,241,1,0
+education,University,242,0,0
+education,University,243,9,8
+education,University,244,1,1
+education,University,245,2,2
+education,University,246,1,1
+education,University,247,1,0
+education,University,248,6,5
+education,University,249,5,3
+education,University,250,1,1
+education,University,251,0,0
+education,University,252,20,17
+education,University,253,4,3
+education,University,254,1,1
+education,University,255,3,3
+education,University,256,0,0
+education,University,257,0,0
+education,University,258,1,1
+education,University,259,0,0
+education,University,260,7,5
+marriage,Married,0,1,0
+marriage,Married,1,4,1
+marriage,Married,2,3,0
+marriage,Married,3,1,0
+marriage,Married,4,2,0
+marriage,Married,5,3,0
+marriage,Married,6,3,0
+marriage,Married,7,7,0
+marriage,Married,8,4,0
+marriage,Married,9,7,1
+marriage,Married,10,9,1
+marriage,Married,11,20,1
+marriage,Married,12,16,1
+marriage,Married,13,4,0
+marriage,Married,14,17,0
+marriage,Married,15,8,0
+marriage,Married,16,11,0
+marriage,Married,17,7,0
+marriage,Married,18,28,2
+marriage,Married,19,21,3
+marriage,Married,20,4,0
+marriage,Married,21,7,1
+marriage,Married,22,22,0
+marriage,Married,23,21,0
+marriage,Married,24,10,0
+marriage,Married,25,20,3
+marriage,Married,26,23,1
+marriage,Married,27,23,2
+marriage,Married,28,22,0
+marriage,Married,29,5,1
+marriage,Married,30,28,3
+marriage,Married,31,42,3
+marriage,Married,32,34,2
+marriage,Married,33,13,1
+marriage,Married,34,22,4
+marriage,Married,35,28,3
+marriage,Married,36,52,8
+marriage,Married,37,36,8
+marriage,Married,38,12,1
+marriage,Married,39,30,6
+marriage,Married,40,22,1
+marriage,Married,41,33,3
+marriage,Married,42,72,6
+marriage,Married,43,12,3
+marriage,Married,44,18,3
+marriage,Married,45,27,5
+marriage,Married,46,71,5
+marriage,Married,47,30,5
+marriage,Married,48,18,4
+marriage,Married,49,52,7
+marriage,Married,50,14,1
+marriage,Married,51,25,1
+marriage,Married,52,35,4
+marriage,Married,53,26,3
+marriage,Married,54,20,6
+marriage,Married,55,60,6
+marriage,Married,56,13,3
+marriage,Married,57,24,0
+marriage,Married,58,18,2
+marriage,Married,59,24,3
+marriage,Married,60,34,6
+marriage,Married,61,37,3
+marriage,Married,62,11,2
+marriage,Married,63,26,5
+marriage,Married,64,53,10
+marriage,Married,65,14,1
+marriage,Married,66,17,3
+marriage,Married,67,56,3
+marriage,Married,68,15,4
+marriage,Married,69,14,4
+marriage,Married,70,101,24
+marriage,Married,71,8,0
+marriage,Married,72,8,2
+marriage,Married,73,15,2
+marriage,Married,74,11,3
+marriage,Married,75,31,13
+marriage,Married,76,57,9
+marriage,Married,77,59,11
+marriage,Married,78,5,1
+marriage,Married,79,15,5
+marriage,Married,80,49,13
+marriage,Married,81,10,1
+marriage,Married,82,33,5
+marriage,Married,83,28,6
+marriage,Married,84,7,2
+marriage,Married,85,5,2
+marriage,Married,86,8,1
+marriage,Married,87,3,0
+marriage,Married,88,7,0
+marriage,Married,89,25,5
+marriage,Married,90,6,2
+marriage,Married,91,14,3
+marriage,Married,92,7,2
+marriage,Married,93,9,2
+marriage,Married,94,1,0
+marriage,Married,95,4,0
+marriage,Married,96,8,1
+marriage,Married,97,10,1
+marriage,Married,98,8,5
+marriage,Married,99,3,1
+marriage,Married,100,4,1
+marriage,Married,101,2,2
+marriage,Married,102,11,5
+marriage,Married,103,2,1
+marriage,Married,104,8,1
+marriage,Married,105,1,0
+marriage,Married,106,10,2
+marriage,Married,107,6,2
+marriage,Married,108,6,2
+marriage,Married,109,4,1
+marriage,Married,110,5,2
+marriage,Married,111,7,3
+marriage,Married,112,11,4
+marriage,Married,113,2,2
+marriage,Married,114,10,3
+marriage,Married,115,6,4
+marriage,Married,116,4,1
+marriage,Married,117,6,3
+marriage,Married,118,2,0
+marriage,Married,119,6,3
+marriage,Married,120,2,1
+marriage,Married,121,4,1
+marriage,Married,122,3,0
+marriage,Married,123,6,2
+marriage,Married,124,5,2
+marriage,Married,125,3,1
+marriage,Married,126,5,1
+marriage,Married,127,0,0
+marriage,Married,128,19,10
+marriage,Married,129,9,2
+marriage,Married,130,3,0
+marriage,Married,131,4,2
+marriage,Married,132,3,2
+marriage,Married,133,33,10
+marriage,Married,134,1,0
+marriage,Married,135,2,0
+marriage,Married,136,3,1
+marriage,Married,137,5,2
+marriage,Married,138,2,1
+marriage,Married,139,14,4
+marriage,Married,140,1,0
+marriage,Married,141,5,3
+marriage,Married,142,10,3
+marriage,Married,143,3,2
+marriage,Married,144,2,1
+marriage,Married,145,2,0
+marriage,Married,146,2,1
+marriage,Married,147,2,0
+marriage,Married,148,7,3
+marriage,Married,149,6,4
+marriage,Married,150,3,1
+marriage,Married,151,6,2
+marriage,Married,152,4,2
+marriage,Married,153,4,3
+marriage,Married,154,3,2
+marriage,Married,155,0,0
+marriage,Married,156,4,1
+marriage,Married,157,1,1
+marriage,Married,158,4,3
+marriage,Married,159,1,1
+marriage,Married,160,5,1
+marriage,Married,161,4,2
+marriage,Married,162,5,3
+marriage,Married,163,4,1
+marriage,Married,164,2,1
+marriage,Married,165,2,2
+marriage,Married,166,4,1
+marriage,Married,167,3,1
+marriage,Married,168,3,3
+marriage,Married,169,5,3
+marriage,Married,170,1,1
+marriage,Married,171,0,0
+marriage,Married,172,3,1
+marriage,Married,173,6,5
+marriage,Married,174,1,1
+marriage,Married,175,3,0
+marriage,Married,176,3,2
+marriage,Married,177,5,4
+marriage,Married,178,6,3
+marriage,Married,179,4,3
+marriage,Married,180,6,6
+marriage,Married,181,2,2
+marriage,Married,182,5,2
+marriage,Married,183,1,0
+marriage,Married,184,2,2
+marriage,Married,185,11,7
+marriage,Married,186,1,0
+marriage,Married,187,6,4
+marriage,Married,188,4,2
+marriage,Married,189,0,0
+marriage,Married,190,3,2
+marriage,Married,191,5,4
+marriage,Married,192,6,2
+marriage,Married,193,3,2
+marriage,Married,194,1,1
+marriage,Married,195,1,1
+marriage,Married,196,5,5
+marriage,Married,197,2,0
+marriage,Married,198,3,2
+marriage,Married,199,5,3
+marriage,Married,200,6,3
+marriage,Married,201,6,4
+marriage,Married,202,0,0
+marriage,Married,203,6,4
+marriage,Married,204,4,4
+marriage,Married,205,2,2
+marriage,Married,206,5,2
+marriage,Married,207,1,1
+marriage,Married,208,1,1
+marriage,Married,209,10,6
+marriage,Married,210,0,0
+marriage,Married,211,2,1
+marriage,Married,212,1,1
+marriage,Married,213,5,4
+marriage,Married,214,1,0
+marriage,Married,215,1,1
+marriage,Married,216,7,5
+marriage,Married,217,1,1
+marriage,Married,218,3,3
+marriage,Married,219,2,1
+marriage,Married,220,3,1
+marriage,Married,221,2,2
+marriage,Married,222,9,8
+marriage,Married,223,9,6
+marriage,Married,224,4,2
+marriage,Married,225,2,2
+marriage,Married,226,1,0
+marriage,Married,227,2,1
+marriage,Married,228,3,3
+marriage,Married,229,4,4
+marriage,Married,230,0,0
+marriage,Married,231,4,3
+marriage,Married,232,2,2
+marriage,Married,233,4,3
+marriage,Married,234,9,7
+marriage,Married,235,1,1
+marriage,Married,236,4,2
+marriage,Married,237,8,5
+marriage,Married,238,1,1
+marriage,Married,239,2,1
+marriage,Married,240,6,5
+marriage,Married,241,1,0
+marriage,Married,242,0,0
+marriage,Married,243,5,5
+marriage,Married,244,0,0
+marriage,Married,245,3,3
+marriage,Married,246,2,2
+marriage,Married,247,1,0
+marriage,Married,248,5,4
+marriage,Married,249,3,2
+marriage,Married,250,2,2
+marriage,Married,251,0,0
+marriage,Married,252,7,6
+marriage,Married,253,5,5
+marriage,Married,254,1,1
+marriage,Married,255,7,7
+marriage,Married,256,0,0
+marriage,Married,257,0,0
+marriage,Married,258,1,1
+marriage,Married,259,1,1
+marriage,Married,260,4,2
+marriage,Other or unknown,0,0,0
+marriage,Other or unknown,1,0,0
+marriage,Other or unknown,2,0,0
+marriage,Other or unknown,3,0,0
+marriage,Other or unknown,4,0,0
+marriage,Other or unknown,5,0,0
+marriage,Other or unknown,6,0,0
+marriage,Other or unknown,7,0,0
+marriage,Other or unknown,8,0,0
+marriage,Other or unknown,9,0,0
+marriage,Other or unknown,10,0,0
+marriage,Other or unknown,11,0,0
+marriage,Other or unknown,12,0,0
+marriage,Other or unknown,13,0,0
+marriage,Other or unknown,14,2,0
+marriage,Other or unknown,15,0,0
+marriage,Other or unknown,16,1,0
+marriage,Other or unknown,17,0,0
+marriage,Other or unknown,18,0,0
+marriage,Other or unknown,19,0,0
+marriage,Other or unknown,20,0,0
+marriage,Other or unknown,21,1,0
+marriage,Other or unknown,22,0,0
+marriage,Other or unknown,23,0,0
+marriage,Other or unknown,24,0,0
+marriage,Other or unknown,25,0,0
+marriage,Other or unknown,26,0,0
+marriage,Other or unknown,27,0,0
+marriage,Other or unknown,28,0,0
+marriage,Other or unknown,29,1,1
+marriage,Other or unknown,30,0,0
+marriage,Other or unknown,31,0,0
+marriage,Other or unknown,32,1,0
+marriage,Other or unknown,33,0,0
+marriage,Other or unknown,34,0,0
+marriage,Other or unknown,35,0,0
+marriage,Other or unknown,36,0,0
+marriage,Other or unknown,37,0,0
+marriage,Other or unknown,38,0,0
+marriage,Other or unknown,39,1,0
+marriage,Other or unknown,40,0,0
+marriage,Other or unknown,41,0,0
+marriage,Other or unknown,42,0,0
+marriage,Other or unknown,43,0,0
+marriage,Other or unknown,44,0,0
+marriage,Other or unknown,45,1,0
+marriage,Other or unknown,46,2,0
+marriage,Other or unknown,47,1,0
+marriage,Other or unknown,48,1,1
+marriage,Other or unknown,49,2,0
+marriage,Other or unknown,50,0,0
+marriage,Other or unknown,51,0,0
+marriage,Other or unknown,52,2,1
+marriage,Other or unknown,53,1,0
+marriage,Other or unknown,54,0,0
+marriage,Other or unknown,55,3,0
+marriage,Other or unknown,56,0,0
+marriage,Other or unknown,57,0,0
+marriage,Other or unknown,58,3,0
+marriage,Other or unknown,59,1,1
+marriage,Other or unknown,60,1,0
+marriage,Other or unknown,61,2,0
+marriage,Other or unknown,62,1,0
+marriage,Other or unknown,63,1,0
+marriage,Other or unknown,64,2,0
+marriage,Other or unknown,65,1,0
+marriage,Other or unknown,66,4,1
+marriage,Other or unknown,67,2,0
+marriage,Other or unknown,68,1,0
+marriage,Other or unknown,69,0,0
+marriage,Other or unknown,70,2,0
+marriage,Other or unknown,71,0,0
+marriage,Other or unknown,72,1,0
+marriage,Other or unknown,73,1,0
+marriage,Other or unknown,74,0,0
+marriage,Other or unknown,75,0,0
+marriage,Other or unknown,76,0,0
+marriage,Other or unknown,77,1,0
+marriage,Other or unknown,78,0,0
+marriage,Other or unknown,79,0,0
+marriage,Other or unknown,80,0,0
+marriage,Other or unknown,81,0,0
+marriage,Other or unknown,82,0,0
+marriage,Other or unknown,83,2,0
+marriage,Other or unknown,84,0,0
+marriage,Other or unknown,85,0,0
+marriage,Other or unknown,86,1,0
+marriage,Other or unknown,87,0,0
+marriage,Other or unknown,88,0,0
+marriage,Other or unknown,89,1,1
+marriage,Other or unknown,90,0,0
+marriage,Other or unknown,91,0,0
+marriage,Other or unknown,92,1,0
+marriage,Other or unknown,93,0,0
+marriage,Other or unknown,94,1,0
+marriage,Other or unknown,95,0,0
+marriage,Other or unknown,96,0,0
+marriage,Other or unknown,97,0,0
+marriage,Other or unknown,98,0,0
+marriage,Other or unknown,99,0,0
+marriage,Other or unknown,100,0,0
+marriage,Other or unknown,101,0,0
+marriage,Other or unknown,102,0,0
+marriage,Other or unknown,103,1,1
+marriage,Other or unknown,104,0,0
+marriage,Other or unknown,105,0,0
+marriage,Other or unknown,106,0,0
+marriage,Other or unknown,107,0,0
+marriage,Other or unknown,108,1,0
+marriage,Other or unknown,109,0,0
+marriage,Other or unknown,110,0,0
+marriage,Other or unknown,111,0,0
+marriage,Other or unknown,112,0,0
+marriage,Other or unknown,113,0,0
+marriage,Other or unknown,114,0,0
+marriage,Other or unknown,115,0,0
+marriage,Other or unknown,116,0,0
+marriage,Other or unknown,117,0,0
+marriage,Other or unknown,118,0,0
+marriage,Other or unknown,119,0,0
+marriage,Other or unknown,120,0,0
+marriage,Other or unknown,121,0,0
+marriage,Other or unknown,122,1,0
+marriage,Other or unknown,123,0,0
+marriage,Other or unknown,124,0,0
+marriage,Other or unknown,125,1,1
+marriage,Other or unknown,126,0,0
+marriage,Other or unknown,127,2,1
+marriage,Other or unknown,128,0,0
+marriage,Other or unknown,129,0,0
+marriage,Other or unknown,130,0,0
+marriage,Other or unknown,131,0,0
+marriage,Other or unknown,132,1,0
+marriage,Other or unknown,133,0,0
+marriage,Other or unknown,134,0,0
+marriage,Other or unknown,135,0,0
+marriage,Other or unknown,136,0,0
+marriage,Other or unknown,137,0,0
+marriage,Other or unknown,138,0,0
+marriage,Other or unknown,139,0,0
+marriage,Other or unknown,140,0,0
+marriage,Other or unknown,141,0,0
+marriage,Other or unknown,142,0,0
+marriage,Other or unknown,143,0,0
+marriage,Other or unknown,144,0,0
+marriage,Other or unknown,145,0,0
+marriage,Other or unknown,146,0,0
+marriage,Other or unknown,147,1,0
+marriage,Other or unknown,148,0,0
+marriage,Other or unknown,149,0,0
+marriage,Other or unknown,150,0,0
+marriage,Other or unknown,151,0,0
+marriage,Other or unknown,152,1,1
+marriage,Other or unknown,153,0,0
+marriage,Other or unknown,154,0,0
+marriage,Other or unknown,155,0,0
+marriage,Other or unknown,156,0,0
+marriage,Other or unknown,157,0,0
+marriage,Other or unknown,158,0,0
+marriage,Other or unknown,159,0,0
+marriage,Other or unknown,160,0,0
+marriage,Other or unknown,161,0,0
+marriage,Other or unknown,162,0,0
+marriage,Other or unknown,163,0,0
+marriage,Other or unknown,164,0,0
+marriage,Other or unknown,165,0,0
+marriage,Other or unknown,166,0,0
+marriage,Other or unknown,167,0,0
+marriage,Other or unknown,168,0,0
+marriage,Other or unknown,169,0,0
+marriage,Other or unknown,170,0,0
+marriage,Other or unknown,171,0,0
+marriage,Other or unknown,172,1,1
+marriage,Other or unknown,173,0,0
+marriage,Other or unknown,174,0,0
+marriage,Other or unknown,175,0,0
+marriage,Other or unknown,176,0,0
+marriage,Other or unknown,177,0,0
+marriage,Other or unknown,178,0,0
+marriage,Other or unknown,179,0,0
+marriage,Other or unknown,180,0,0
+marriage,Other or unknown,181,0,0
+marriage,Other or unknown,182,0,0
+marriage,Other or unknown,183,0,0
+marriage,Other or unknown,184,1,1
+marriage,Other or unknown,185,0,0
+marriage,Other or unknown,186,1,0
+marriage,Other or unknown,187,0,0
+marriage,Other or unknown,188,0,0
+marriage,Other or unknown,189,1,0
+marriage,Other or unknown,190,0,0
+marriage,Other or unknown,191,0,0
+marriage,Other or unknown,192,0,0
+marriage,Other or unknown,193,0,0
+marriage,Other or unknown,194,0,0
+marriage,Other or unknown,195,0,0
+marriage,Other or unknown,196,0,0
+marriage,Other or unknown,197,0,0
+marriage,Other or unknown,198,0,0
+marriage,Other or unknown,199,0,0
+marriage,Other or unknown,200,1,0
+marriage,Other or unknown,201,0,0
+marriage,Other or unknown,202,0,0
+marriage,Other or unknown,203,0,0
+marriage,Other or unknown,204,0,0
+marriage,Other or unknown,205,1,0
+marriage,Other or unknown,206,0,0
+marriage,Other or unknown,207,0,0
+marriage,Other or unknown,208,0,0
+marriage,Other or unknown,209,0,0
+marriage,Other or unknown,210,0,0
+marriage,Other or unknown,211,0,0
+marriage,Other or unknown,212,0,0
+marriage,Other or unknown,213,0,0
+marriage,Other or unknown,214,0,0
+marriage,Other or unknown,215,0,0
+marriage,Other or unknown,216,0,0
+marriage,Other or unknown,217,0,0
+marriage,Other or unknown,218,0,0
+marriage,Other or unknown,219,0,0
+marriage,Other or unknown,220,0,0
+marriage,Other or unknown,221,0,0
+marriage,Other or unknown,222,0,0
+marriage,Other or unknown,223,0,0
+marriage,Other or unknown,224,0,0
+marriage,Other or unknown,225,0,0
+marriage,Other or unknown,226,0,0
+marriage,Other or unknown,227,0,0
+marriage,Other or unknown,228,0,0
+marriage,Other or unknown,229,0,0
+marriage,Other or unknown,230,0,0
+marriage,Other or unknown,231,0,0
+marriage,Other or unknown,232,0,0
+marriage,Other or unknown,233,0,0
+marriage,Other or unknown,234,1,1
+marriage,Other or unknown,235,0,0
+marriage,Other or unknown,236,0,0
+marriage,Other or unknown,237,0,0
+marriage,Other or unknown,238,0,0
+marriage,Other or unknown,239,0,0
+marriage,Other or unknown,240,0,0
+marriage,Other or unknown,241,0,0
+marriage,Other or unknown,242,0,0
+marriage,Other or unknown,243,0,0
+marriage,Other or unknown,244,0,0
+marriage,Other or unknown,245,1,1
+marriage,Other or unknown,246,0,0
+marriage,Other or unknown,247,0,0
+marriage,Other or unknown,248,0,0
+marriage,Other or unknown,249,1,1
+marriage,Other or unknown,250,0,0
+marriage,Other or unknown,251,0,0
+marriage,Other or unknown,252,1,1
+marriage,Other or unknown,253,0,0
+marriage,Other or unknown,254,0,0
+marriage,Other or unknown,255,0,0
+marriage,Other or unknown,256,0,0
+marriage,Other or unknown,257,0,0
+marriage,Other or unknown,258,0,0
+marriage,Other or unknown,259,0,0
+marriage,Other or unknown,260,0,0
+marriage,Single,0,0,0
+marriage,Single,1,2,0
+marriage,Single,2,5,0
+marriage,Single,3,1,1
+marriage,Single,4,3,1
+marriage,Single,5,4,0
+marriage,Single,6,5,0
+marriage,Single,7,9,0
+marriage,Single,8,2,0
+marriage,Single,9,6,0
+marriage,Single,10,12,0
+marriage,Single,11,5,0
+marriage,Single,12,8,0
+marriage,Single,13,2,0
+marriage,Single,14,26,0
+marriage,Single,15,14,0
+marriage,Single,16,17,0
+marriage,Single,17,6,0
+marriage,Single,18,24,3
+marriage,Single,19,16,0
+marriage,Single,20,2,0
+marriage,Single,21,18,0
+marriage,Single,22,29,1
+marriage,Single,23,37,6
+marriage,Single,24,11,0
+marriage,Single,25,29,6
+marriage,Single,26,30,1
+marriage,Single,27,13,0
+marriage,Single,28,26,1
+marriage,Single,29,8,0
+marriage,Single,30,33,3
+marriage,Single,31,43,2
+marriage,Single,32,39,2
+marriage,Single,33,22,2
+marriage,Single,34,27,3
+marriage,Single,35,33,3
+marriage,Single,36,65,3
+marriage,Single,37,33,4
+marriage,Single,38,14,1
+marriage,Single,39,37,1
+marriage,Single,40,28,0
+marriage,Single,41,37,4
+marriage,Single,42,91,5
+marriage,Single,43,15,1
+marriage,Single,44,25,1
+marriage,Single,45,39,4
+marriage,Single,46,78,6
+marriage,Single,47,22,0
+marriage,Single,48,33,6
+marriage,Single,49,57,5
+marriage,Single,50,14,1
+marriage,Single,51,37,4
+marriage,Single,52,43,6
+marriage,Single,53,36,5
+marriage,Single,54,27,7
+marriage,Single,55,55,8
+marriage,Single,56,21,2
+marriage,Single,57,40,4
+marriage,Single,58,25,5
+marriage,Single,59,23,2
+marriage,Single,60,45,6
+marriage,Single,61,56,9
+marriage,Single,62,13,1
+marriage,Single,63,14,4
+marriage,Single,64,62,6
+marriage,Single,65,13,2
+marriage,Single,66,34,4
+marriage,Single,67,43,6
+marriage,Single,68,16,4
+marriage,Single,69,21,6
+marriage,Single,70,122,17
+marriage,Single,71,13,4
+marriage,Single,72,13,2
+marriage,Single,73,26,3
+marriage,Single,74,8,0
+marriage,Single,75,33,9
+marriage,Single,76,57,13
+marriage,Single,77,58,12
+marriage,Single,78,8,2
+marriage,Single,79,21,6
+marriage,Single,80,37,7
+marriage,Single,81,11,4
+marriage,Single,82,34,6
+marriage,Single,83,56,10
+marriage,Single,84,15,5
+marriage,Single,85,6,3
+marriage,Single,86,16,7
+marriage,Single,87,6,1
+marriage,Single,88,5,0
+marriage,Single,89,47,8
+marriage,Single,90,11,0
+marriage,Single,91,11,1
+marriage,Single,92,12,4
+marriage,Single,93,5,2
+marriage,Single,94,3,2
+marriage,Single,95,10,1
+marriage,Single,96,5,1
+marriage,Single,97,9,2
+marriage,Single,98,14,3
+marriage,Single,99,8,1
+marriage,Single,100,3,2
+marriage,Single,101,6,2
+marriage,Single,102,12,1
+marriage,Single,103,5,0
+marriage,Single,104,8,2
+marriage,Single,105,12,2
+marriage,Single,106,6,2
+marriage,Single,107,6,2
+marriage,Single,108,5,0
+marriage,Single,109,2,0
+marriage,Single,110,2,0
+marriage,Single,111,13,6
+marriage,Single,112,8,1
+marriage,Single,113,5,3
+marriage,Single,114,4,0
+marriage,Single,115,8,3
+marriage,Single,116,6,2
+marriage,Single,117,6,1
+marriage,Single,118,9,2
+marriage,Single,119,5,0
+marriage,Single,120,6,1
+marriage,Single,121,4,1
+marriage,Single,122,7,2
+marriage,Single,123,9,4
+marriage,Single,124,9,4
+marriage,Single,125,5,0
+marriage,Single,126,8,2
+marriage,Single,127,4,3
+marriage,Single,128,15,6
+marriage,Single,129,6,1
+marriage,Single,130,1,0
+marriage,Single,131,5,0
+marriage,Single,132,10,3
+marriage,Single,133,22,4
+marriage,Single,134,0,0
+marriage,Single,135,5,3
+marriage,Single,136,2,1
+marriage,Single,137,4,2
+marriage,Single,138,5,2
+marriage,Single,139,14,9
+marriage,Single,140,1,1
+marriage,Single,141,7,3
+marriage,Single,142,7,1
+marriage,Single,143,5,3
+marriage,Single,144,1,1
+marriage,Single,145,4,0
+marriage,Single,146,1,0
+marriage,Single,147,9,5
+marriage,Single,148,10,5
+marriage,Single,149,3,3
+marriage,Single,150,2,0
+marriage,Single,151,2,1
+marriage,Single,152,4,2
+marriage,Single,153,8,4
+marriage,Single,154,1,1
+marriage,Single,155,1,0
+marriage,Single,156,0,0
+marriage,Single,157,2,2
+marriage,Single,158,5,2
+marriage,Single,159,8,4
+marriage,Single,160,13,5
+marriage,Single,161,1,0
+marriage,Single,162,5,4
+marriage,Single,163,9,6
+marriage,Single,164,2,1
+marriage,Single,165,1,0
+marriage,Single,166,5,2
+marriage,Single,167,1,1
+marriage,Single,168,4,1
+marriage,Single,169,3,2
+marriage,Single,170,10,5
+marriage,Single,171,4,2
+marriage,Single,172,5,4
+marriage,Single,173,4,1
+marriage,Single,174,4,2
+marriage,Single,175,7,3
+marriage,Single,176,6,4
+marriage,Single,177,7,3
+marriage,Single,178,4,2
+marriage,Single,179,10,4
+marriage,Single,180,3,2
+marriage,Single,181,3,3
+marriage,Single,182,1,1
+marriage,Single,183,1,0
+marriage,Single,184,4,4
+marriage,Single,185,10,6
+marriage,Single,186,8,4
+marriage,Single,187,8,5
+marriage,Single,188,5,3
+marriage,Single,189,1,1
+marriage,Single,190,7,7
+marriage,Single,191,0,0
+marriage,Single,192,4,3
+marriage,Single,193,1,1
+marriage,Single,194,4,3
+marriage,Single,195,2,1
+marriage,Single,196,7,5
+marriage,Single,197,7,5
+marriage,Single,198,5,3
+marriage,Single,199,2,0
+marriage,Single,200,1,1
+marriage,Single,201,2,0
+marriage,Single,202,9,8
+marriage,Single,203,8,6
+marriage,Single,204,2,2
+marriage,Single,205,6,3
+marriage,Single,206,6,4
+marriage,Single,207,4,2
+marriage,Single,208,0,0
+marriage,Single,209,6,2
+marriage,Single,210,2,1
+marriage,Single,211,4,2
+marriage,Single,212,3,2
+marriage,Single,213,5,3
+marriage,Single,214,1,1
+marriage,Single,215,2,1
+marriage,Single,216,6,2
+marriage,Single,217,1,1
+marriage,Single,218,6,4
+marriage,Single,219,1,1
+marriage,Single,220,1,1
+marriage,Single,221,0,0
+marriage,Single,222,2,1
+marriage,Single,223,6,5
+marriage,Single,224,10,6
+marriage,Single,225,0,0
+marriage,Single,226,3,2
+marriage,Single,227,5,4
+marriage,Single,228,3,2
+marriage,Single,229,10,7
+marriage,Single,230,3,1
+marriage,Single,231,10,8
+marriage,Single,232,0,0
+marriage,Single,233,7,5
+marriage,Single,234,4,3
+marriage,Single,235,0,0
+marriage,Single,236,2,0
+marriage,Single,237,4,2
+marriage,Single,238,0,0
+marriage,Single,239,2,2
+marriage,Single,240,4,3
+marriage,Single,241,1,0
+marriage,Single,242,2,2
+marriage,Single,243,13,9
+marriage,Single,244,1,1
+marriage,Single,245,0,0
+marriage,Single,246,1,1
+marriage,Single,247,0,0
+marriage,Single,248,6,5
+marriage,Single,249,3,2
+marriage,Single,250,0,0
+marriage,Single,251,1,1
+marriage,Single,252,19,16
+marriage,Single,253,4,1
+marriage,Single,254,0,0
+marriage,Single,255,1,1
+marriage,Single,256,1,0
+marriage,Single,257,1,1
+marriage,Single,258,0,0
+marriage,Single,259,1,1
+marriage,Single,260,7,5

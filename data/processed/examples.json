@@ -1,0 +1,80 @@
+[
+  {
+    "label": "Riskier than 90% of accounts",
+    "score": 415,
+    "probability": 0.5523260677075214,
+    "defaulted": 1,
+    "status_sep": 2,
+    "limit": 80000,
+    "bill_sep": 44507,
+    "reasons": [
+      {
+        "feature": "Repayment status, September",
+        "bin": "2 or more",
+        "points_lost": 121
+      },
+      {
+        "feature": "Total paid, six months",
+        "bin": "14,301 to 22,400",
+        "points_lost": 21
+      },
+      {
+        "feature": "Credit used, six-month average",
+        "bin": "over 0.503 up to 0.802",
+        "points_lost": 15
+      }
+    ]
+  },
+  {
+    "label": "In the middle",
+    "score": 529,
+    "probability": 0.14611581264243304,
+    "defaulted": 0,
+    "status_sep": 0,
+    "limit": 100000,
+    "bill_sep": 95160,
+    "reasons": [
+      {
+        "feature": "Total paid, six months",
+        "bin": "7,100 or less",
+        "points_lost": 37
+      },
+      {
+        "feature": "Credit limit",
+        "bin": "70,001 to 140,000",
+        "points_lost": 11
+      },
+      {
+        "feature": "Credit used, six-month average",
+        "bin": "over 0.287 up to 0.503",
+        "points_lost": 9
+      }
+    ]
+  },
+  {
+    "label": "Safer than 90% of accounts",
+    "score": 567,
+    "probability": 0.08136932168981324,
+    "defaulted": 0,
+    "status_sep": 0,
+    "limit": 360000,
+    "bill_sep": 20328,
+    "reasons": [
+      {
+        "feature": "Total paid, six months",
+        "bin": "14,301 to 22,400",
+        "points_lost": 21
+      },
+      {
+        "feature": "Payment, September",
+        "bin": "1 to 3,900",
+        "points_lost": 7
+      },
+      {
+        "feature": "Share of the previous bill paid, September",
+        "bin": "over 0 up to 0.234",
+        "points_lost": 1
+      }
+    ]
+  }
+]

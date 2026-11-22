@@ -1,0 +1,53 @@
+{
+  "rows": 30000,
+  "default_rate": 0.2212,
+  "defaults": 6636,
+  "education_codes_before": {
+    "0": 14,
+    "1": 10585,
+    "2": 14030,
+    "3": 4917,
+    "4": 123,
+    "5": 280,
+    "6": 51
+  },
+  "marriage_codes_before": {
+    "0": 54,
+    "1": 13659,
+    "2": 15964,
+    "3": 323
+  },
+  "education_recoded": 345,
+  "marriage_recoded": 54,
+  "rows_in_repeated_groups": 108,
+  "extra_copies": 56,
+  "repeated_rows_dormant": 97,
+  "accounts_with_a_negative_bill": 1930,
+  "over_limit_in_september": 2115,
+  "no_bills_in_six_months": 866,
+  "no_payments_in_six_months": 1432,
+  "late_share_by_month": {
+    "sep": 0.22726666666666667,
+    "aug": 0.14793333333333333,
+    "jul": 0.14043333333333333,
+    "jun": 0.117,
+    "may": 0.09893333333333333,
+    "apr": 0.10263333333333333
+  },
+  "status_one_by_month": {
+    "sep": 3688,
+    "aug": 28,
+    "jul": 4,
+    "jun": 2,
+    "may": 0,
+    "apr": 0
+  },
+  "status_two_by_month": {
+    "sep": 2667,
+    "aug": 3927,
+    "jul": 3819,
+    "jun": 3159,
+    "may": 2626,
+    "apr": 2766
+  }
+}
