@@ -40,7 +40,7 @@ def test_cross_validation_folds_use_every_account_once_per_repeat_and_keep_twins
     frame, _ = accounts
     y, groups = frame["default"].to_numpy(), frame["group"].to_numpy()
     seen = {}
-    for repeat, fold, train, valid in models.cv_splits(y, groups, folds=4, repeats=2):
+    for repeat, _fold, train, valid in models.cv_splits(y, groups, folds=4, repeats=2):
         assert set(train).isdisjoint(valid) and set(groups[train]).isdisjoint(groups[valid])
         seen.setdefault(repeat, []).extend(valid)
     assert all(sorted(v) == list(range(len(frame))) for v in seen.values()) and len(seen) == 2
