@@ -169,70 +169,222 @@ Gradient boosting ranks better by 0.023 AUC (95% range 0.017 to 0.031), a differ
 
 ## 8. Fairness audit
 
-Sex, age, education and marital status are not inputs to the scorecard or the challenger. They are used only to look at what the decisions do. At the cut-off, for each group: the **approval rate**; the **disparate-impact ratio** (approval rate over that of the best-treated group; under 0.80 is flagged, the "four-fifths" screening rule, which is not a Pakistani legal test); the share of **defaulters declined** and of **good accounts declined**; and **calibration** (average predicted probability over the observed default rate). Groups under 100 hold-out accounts are shown but not judged. At the break-even cut-off, 4 of 11 groups are approved at under four-fifths of the best-treated group's rate: age: 21-29, age: 50 and over, education: High school and education: University; for every one of them the whole 95% bootstrap range of the ratio is under 0.80, so the gaps are unlikely to be chance.
+Sex, age, education and marital status are not inputs to the scorecard or the challenger. They are used only to look at what the decisions do. At the cut-off, for each group: the **approval rate**; the **disparate-impact ratio** (approval rate over that of the best-treated group; under 0.80 is flagged, the "four-fifths" screening rule, which is not a Pakistani legal test); the share of **defaulters declined** and of **good accounts declined**; and **calibration** (average predicted probability over the observed default rate). Groups under 100 hold-out accounts are shown but not judged. At the break-even cut-off, 3 of 11 groups are approved at under four-fifths of the best-treated group's rate: age: 21-29, age: 50 and over and education: High school; for education: High school the whole 95% bootstrap range of the ratio is under 0.80, for the rest it reaches above it.
 
 | Group (hold-out) | Accounts | Default rate | Predicted | Predicted ÷ observed | Approved | Default rate of approved | Disparate impact | 95% range of the ratio |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Sex: Female | 3,645 | 20.9% | 20.8% | 1.00 | 30% | 8.2% | 1.00 | 1.00 to 1.00 |
-| Sex: Male | 2,355 | 24.1% | 23.6% | 0.98 | 26% | 6.4% | 0.85 | 0.78 to 0.92 |
-| Age: 21-29 | 1,936 | 23.1% | 23.6% | 1.02 | 23% | 5.7% | 0.66 **flag** | 0.59 to 0.73 |
-| Age: 30-39 | 2,222 | 20.1% | 20.2% | 1.01 | 34% | 7.6% | 1.00 | 1.00 to 1.00 |
-| Age: 40-49 | 1,283 | 22.7% | 21.5% | 0.95 | 29% | 8.5% | 0.86 | 0.77 to 0.95 |
-| Age: 50 and over | 559 | 25.4% | 23.5% | 0.93 | 23% | 10.9% | 0.67 **flag** | 0.57 to 0.79 |
-| Education: Graduate school | 2,082 | 18.9% | 19.1% | 1.01 | 37% | 6.7% | 1.00 | 1.00 to 1.00 |
-| Education: High school | 991 | 25.6% | 25.9% | 1.01 | 18% | 7.9% | 0.48 **flag** | 0.41 to 0.55 |
-| Education: Other or unknown | 93 | 5.4% | 16.4% | 3.05 | 42% | 7.7% |  |  |
-| Education: University | 2,834 | 23.8% | 22.7% | 0.96 | 25% | 8.4% | 0.68 **flag** | 0.62 to 0.74 |
-| Marital status: Married | 2,718 | 23.4% | 21.9% | 0.93 | 29% | 9.3% | 1.00 | 0.94 to 1.00 |
-| Marital status: Other or unknown | 69 | 23.2% | 24.4% | 1.05 | 10% | 14.3% |  |  |
-| Marital status: Single | 3,213 | 21.0% | 21.9% | 1.04 | 28% | 6.0% | 0.98 | 0.91 to 1.00 |
+| Sex: Female | 3,645 | 20.9% | 20.8% | 1.00 | 47% | 9.4% | 1.00 | 1.00 to 1.00 |
+| Sex: Male | 2,355 | 24.1% | 23.6% | 0.98 | 41% | 8.8% | 0.86 | 0.82 to 0.92 |
+| Age: 21-29 | 1,936 | 23.1% | 23.6% | 1.02 | 39% | 9.3% | 0.77 **flag** | 0.71 to 0.82 |
+| Age: 30-39 | 2,222 | 20.1% | 20.2% | 1.01 | 51% | 8.3% | 1.00 | 1.00 to 1.00 |
+| Age: 40-49 | 1,283 | 22.7% | 21.5% | 0.95 | 46% | 10.0% | 0.90 | 0.84 to 0.97 |
+| Age: 50 and over | 559 | 25.4% | 23.5% | 0.93 | 38% | 10.7% | 0.76 **flag** | 0.67 to 0.84 |
+| Education: Graduate school | 2,082 | 18.9% | 19.1% | 1.01 | 52% | 8.3% | 1.00 | 1.00 to 1.00 |
+| Education: High school | 991 | 25.6% | 25.9% | 1.01 | 34% | 9.8% | 0.65 **flag** | 0.59 to 0.72 |
+| Education: Other or unknown | 93 | 5.4% | 16.4% | 3.05 | 62% | 6.9% |  |  |
+| Education: University | 2,834 | 23.8% | 22.7% | 0.96 | 42% | 9.9% | 0.81 | 0.76 to 0.85 |
+| Marital status: Married | 2,718 | 23.4% | 21.9% | 0.93 | 45% | 10.2% | 1.00 | 0.95 to 1.00 |
+| Marital status: Other or unknown | 69 | 23.2% | 24.4% | 1.05 | 33% | 13.0% |  |  |
+| Marital status: Single | 3,213 | 21.0% | 21.9% | 1.04 | 45% | 8.2% | 1.00 | 0.94 to 1.00 |
 
 Could the inputs act as a stand-in? A model that tries to tell the groups apart from the scorecard's inputs reaches an AUC of 0.60 for sex, 0.58 for being 40 or over and 0.61 for a university education (0.5 means the inputs say nothing about it). A model can be calibrated for every group and still approve groups at different rates when their true default rates differ; the audit shows both so that the two are not confused. This is a screening exercise, not legal advice.
 
 ## 9. The economics
 
-Over one billing month, per unit of balance: an account that **pays** earns `margin = (yield − funding − running cost) ÷ 12`, and an account that **defaults** loses `loss`. The **yield** is the card APR times the share of balances that revolve; the APR is 44% (MCB's published retail markup, 3.67% a month, "an APR of up to 44%", July to December 2026, [source](https://www.mcb.com.pk/assets/documents/Credit-card-Summary-Box-1-July-to-Dec-16-Sep-2026-Font-11-English.pdf)), and 88% of balances are left unpaid after the next month's payment in this file (measured on the development accounts, over the five month pairs), so the yield is 38.8%. The **funding cost** is the policy rate (12% on 27 October 2026): money lent on a card is money not put in government paper. **Running cost** (5% a year) and **loss** (15% of the balance) are assumptions. The margin is 1.82% a month (21.8% a year).
+Over one billing month, per unit of balance: an account that **pays** earns `margin = (yield − funding − running cost) ÷ 12`, and an account that **defaults** loses `loss`. The **yield** is the card APR times the share of balances that revolve; the APR is 44% (MCB's published retail markup, 3.67% a month, "an APR of up to 44%", July to December 2026, [source](https://www.mcb.com.pk/assets/documents/Credit-card-Summary-Box-1-July-to-Dec-16-Sep-2026-Font-11-English.pdf)), and 88% of balances are left unpaid after the next month's payment in this file (measured on the development accounts, over the five month pairs), so the yield is 38.8%. The **funding cost** is the policy rate (12% on 27 October 2026): money lent on a card is money not put in government paper. **Running cost** (5% a year) is an assumption. The **loss** (11.8% of the balance on an account that misses a payment) is measured from the roll rates of the repayment history (section 10), with two assumptions of its own. The margin is 1.82% a month (21.8% a year).
 
-An account with probability of default p is worth `(1 − p) × margin − p × loss` per unit of balance, which is positive only while `p < margin ÷ (margin + loss)`: **10.8%**. A bad account costs 8.2 good accounts' monthly profit. With calibrated probabilities, approving every account at or below the break-even probability maximises expected profit, whatever the balances. The check on the data: the cut-off that earns most on the development accounts (out-of-fold predictions) is 10.3%, close to the break-even probability of 10.8%; it is the break-even probability that is reported, because it does not depend on a noisy peak.
+An account with probability of default p is worth `(1 − p) × margin − p × loss` per unit of balance, which is positive only while `p < margin ÷ (margin + loss)`: **13.4%**. A bad account costs 6.5 good accounts' monthly profit. With calibrated probabilities, approving every account at or below the break-even probability maximises expected profit, whatever the balances. The check on the data: the cut-off that earns most on the development accounts (out-of-fold predictions) is 14.8%, close to the break-even probability of 13.4%; it is the break-even probability that is reported, because it does not depend on a noisy peak.
 
 Balances are the September statement, never below zero. Profit is on the hold-out accounts' real outcomes, per account in the whole portfolio (declined accounts earn nothing), with bootstrap ranges:
 
 | Rule | Approved | Default rate of approved | Profit per account a month | 95% range | Better than approving everyone by |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Approve everyone | 100% | 22.1% | -NT$807 | -NT$972 to -NT$658 |  |
-| Approve if not late last month (status 0 or better) | 78% | 14.2% | -NT$70 | -NT$193 to NT$43 | NT$738 (NT$643 to NT$842) |
-| Scorecard, at the break-even probability | 28% | 7.6% | NT$42 | -NT$57 to NT$138 | NT$850 (NT$730 to NT$986) |
-| Gradient boosting, at the break-even probability | 34% | 6.8% | NT$146 | NT$81 to NT$209 | NT$953 (NT$815 to NT$1,103) |
+| Approve everyone | 100% | 22.1% | -NT$473 | -NT$607 to -NT$354 |  |
+| Approve if not late last month (status 0 or better) | 78% | 14.2% | NT$89 | -NT$9 to NT$179 | NT$562 (NT$488 to NT$645) |
+| Scorecard, at the break-even probability | 45% | 9.2% | NT$154 | NT$65 to NT$236 | NT$627 (NT$539 to NT$722) |
+| Gradient boosting, at the break-even probability | 44% | 7.9% | NT$191 | NT$121 to NT$254 | NT$663 (NT$559 to NT$769) |
 
 **Policy-rate scenarios.** The same calculation with the funding cost set to the policy rate on six dates, and with the first date's cut-off kept and tried under each later date's costs:
 
 | Policy rate on | Rate | Margin a month | Break-even probability | Approved | Default rate of approved | Profit per account a month | If the Oct 2021 cut-off were kept |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 October 2021 | 7.25% | 2.21% | 12.9% | 42% | 9.1% | NT$156 | NT$156 |
-| 8 July 2022 | 15% | 1.57% | 9.5% | 18% | 6.5% | -NT$11 | -NT$28 |
-| 27 June 2023 | 22% | 0.99% | 6.2% | 1% | 5.1% | NT$4 | -NT$194 |
-| 17 December 2024 | 13% | 1.74% | 10.4% | 25% | 7.5% | NT$7 | NT$20 |
-| 16 December 2025 | 10.5% | 1.94% | 11.5% | 33% | 7.8% | NT$85 | NT$79 |
-| 27 October 2026 | 12% | 1.82% | 10.8% | 28% | 7.6% | NT$42 | NT$43 |
+| 1 October 2021 | 7.25% | 2.21% | 15.9% | 56% | 10.2% | NT$263 | NT$263 |
+| 8 July 2022 | 15% | 1.57% | 11.8% | 36% | 8.3% | NT$74 | NT$51 |
+| 27 June 2023 | 22% | 0.99% | 7.7% | 7% | 4.0% | NT$23 | -NT$141 |
+| 17 December 2024 | 13% | 1.74% | 12.9% | 42% | 9.1% | NT$122 | NT$106 |
+| 16 December 2025 | 10.5% | 1.94% | 14.2% | 49% | 9.5% | NT$183 | NT$174 |
+| 27 October 2026 | 12% | 1.82% | 13.4% | 45% | 9.2% | NT$154 | NT$133 |
 
-**Sensitivity.** Share of accounts worth approving and the break-even probability, for combinations of APR and loss on a default, at the current policy rate:
+**Sensitivity.** Share of accounts worth approving and the break-even probability, for combinations of APR and loss on a missed payment, at the current policy rate:
 
-| Card APR, loss on a default: | 10% | 15% | 20% | 30% | 40% |
+| Card APR, loss on a missed payment: | 4.8% | 6.8% | 11.8% | 15.0% | 30.0% |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| 44% | 55% (under 15.4%) | 28% (under 10.8%) | 11% (under 8.3%) | 0% (under 5.7%) | 0% (under 4.3%) |
-| 36% | 28% (under 11.0%) | 6% (under 7.6%) | 0% (under 5.8%) | 0% (under 3.9%) | 0% (under 3.0%) |
-| 30% | 6% (under 7.3%) | 0% (under 5.0%) | 0% (under 3.8%) | 0% (under 2.6%) | 0% (under 1.9%) |
+| 44% | 79% (under 27.6%) | 74% (under 21.0%) | 45% (under 13.4%) | 28% (under 10.8%) | 0% (under 5.7%) |
+| 36% | 72% (under 20.5%) | 55% (under 15.3%) | 18% (under 9.5%) | 6% (under 7.6%) | 0% (under 3.9%) |
+| 30% | 49% (under 14.2%) | 25% (under 10.4%) | 2% (under 6.3%) | 0% (under 5.0%) | 0% (under 2.6%) |
 
-## 10. Limits of the method
+## 10. Roll rates and the loss on a missed payment
+
+The label is a missed payment, so the loss on it cannot be read from the data. [`creditrisk/rollrates.py`](../creditrisk/rollrates.py) estimates it from how accounts move between repayment statuses.
+
+- **States.** The five months April to August are the ones coded on one basis (a status of 1 hardly appears in them). A status of 0 or below is "current"; the late statuses 2, 3, 4, 5 and 6-or-more are five further states (a status of 1 joins 2).
+- **Transition matrix.** Counting every account's move from one month to the next over the four month pairs gives 96,000 moves, and from them the chance of going from each state to each other state.
+
+| This month, next month: | Current | Late 2 | Late 3 | Late 4 | Late 5 | Late 6+ | Moves |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Current | 95% | 5% |  |  |  |  | 84,974 |
+| Late 2 | 30% | 64% | 6% |  |  |  | 9,901 |
+| Late 3 | 17% | 37% | 16% | 30% |  |  | 614 |
+| Late 4 | 4% | 26% | 7% | 33% | 31% |  | 239 |
+| Late 5 | 3% | 21% | 7% | 9% | 15% | 45% | 75 |
+| Late 6+ | 1% | 25% | 2% | 1% | 1% | 71% | 197 |
+
+- **From a missed payment to a write-off.** Treating the matrix as steady, raising it to the power of the number of months gives the chance that an account that starts in a given state reaches a given status within 12 months, counting it once it gets there.
+- **Where the chain starts.** The label is a missed payment in October, so every account that defaulted is late in October, whatever it was in September (48% of them were current, 47% at the first late level, 5% deeper). Starting the chain from September's state would treat the current ones as not having missed yet, and let the late ones cure in the very step the label says they did not. Instead each is moved one month on, using the matrix's own odds of each late state from where it stood with the odds of being current set aside and the rest scaled up to one (`october_entry`): a current account lands on the first late level; a late one stays or gets worse. That puts 93% of the missed payments on the first late level, 5% one level deeper and 2% at or beyond the write-off line, and the chain runs from there. The 95% ranges resample accounts, so they cover the uncertainty of both the matrix and the starting point. The method is checked on simulated accounts that follow a known chain, where the true chance of a write-off after a missed payment can be counted (`tests/test_rollrates.py`).
+- **A check against September.** The matrix was estimated on April to August, so the step from September to October is one it has not seen. Accounts at status 2 in September did not default 31% of the time, close to the 30% of late accounts that recovered in a month between April and August. Accounts at status 1 did not default 66% of the time: that status hardly appears before September, so the matrix has little to say about it. And accounts that were not late in September defaulted 13.8% of the time, against the 5.0% of current accounts that became late in an average month before. Either the crisis deepened in October or September's codes count lateness differently from the earlier months; the data cannot separate the two. Either way the roll rates of April to August probably understate how bad things got, which is one more reason to read the loss as a floor.
+- **Loss.** loss = (share never recovered) x (chance of write-off) + (cost of collection and of the income lost while late). The share never recovered (85%) and the cost (2% of the balance) are assumptions; the chance is measured.
+
+| Written off at | Chance within 12 months | 95% range | Loss | 95% range |
+| --- | ---: | ---: | ---: | ---: |
+| Status 4 or worse (base case) | 11.5% | 10.1% to 12.9% | 11.8% | 10.6% to 13.0% |
+| Status 5 or worse | 5.7% | 4.5% to 6.8% | 6.8% | 5.8% to 7.8% |
+| Status 6 or worse | 3.3% | 2.3% to 4.3% | 4.8% | 4.0% to 5.7% |
+
+The loss depends on where the account stood. A first missed payment (an account that was current in September, 48% of the missed payments) is written off within 12 months 7.9% of the time, a loss of 8.7%; an account that was already late (52%), 14.8% of the time, a loss of 14.6%. The base case is the mix of the two, so a book of mostly current accounts would sit nearer the first figure.
+
+| Where the account stood in September | Share of missed payments | Written off at status 4+ (loss) | Written off at status 5+ (loss) | Written off at status 6+ (loss) | 95% range, status 4+ |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Current in September | 48% | 7.9% (8.7%) | 3.6% (5.1%) | 1.9% (3.6%) | 6.9% to 9.0% |
+| Late in September | 52% | 14.8% (14.6%) | 7.6% (8.5%) | 4.5% (5.8%) | 13.1% to 16.6% |
+
+The base case uses the conservative line (status 4) because the codes are not documented in months and the history is the start of a crisis, when roll rates were rising. 15%, the placeholder used before this was measured, is kept as a stress case. What each loss does to the cut-off, on the hold-out accounts:
+
+| Loss case | Loss | Break-even probability | Scorecard approves | Scorecard profit per account a month (95% range) | Approving everyone | Gradient boosting |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Roll rates, written off at status 6 | 4.8% | 27.6% | 79% | NT$441 (NT$388 to NT$489) | NT$248 | NT$434 |
+| Roll rates, written off at status 5 | 6.8% | 21.0% | 74% | NT$337 (NT$273 to NT$398) | NT$36 | NT$338 |
+| Roll rates, written off at status 4 (base case) | 11.8% | 13.4% | 45% | NT$154 (NT$65 to NT$236) | -NT$473 | NT$191 |
+| Stress: 15% of the balance | 15.0% | 10.8% | 28% | NT$42 (-NT$57 to NT$138) | -NT$807 | NT$146 |
+| Stress: 30% of the balance | 30.0% | 5.7% | 0% | -NT$2 (-NT$13 to NT$5) | -NT$2,354 | NT$71 |
+
+At the lowest loss the roll rates support (4.8%), approving everyone earns NT$248 per account a month and the break-even probability is 27.6%, so 79% of accounts are worth approving; at the base case (11.8%) approving everyone loses NT$473 and 45% are worth approving; at the 15% stress loss only 28% are.
+
+## 11. An explainable boosting model
+
+LightGBM can be told that a feature may only push the probability of default one way. The constraints are in `config.MONOTONE`: credit limit, payments and the share of the bill paid can only lower the probability as they rise; months late, recent late months and the worst status can only raise it. Repayment statuses are codes and credit used is U-shaped at the low end, so they are left free. The same settings as the free model are used and the probabilities are recalibrated the same way. Whether the model obeys is checked, not assumed: for a sample of accounts each constrained feature is moved across its range with everything else fixed, and any move of the probability the wrong way is counted.
+
+| Model | AUC (95% range) | KS | Brier | Calibration slope | Profit per account at the break-even cut-off (95% range) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Scorecard | 0.768 (0.752 to 0.783) | 0.402 | 0.1373 | 1.00 | NT$154 (NT$65 to NT$236) |
+| Monotone boosting | 0.792 (0.777 to 0.806) | 0.455 | 0.1331 | 1.02 | NT$185 (NT$118 to NT$246) |
+| Gradient boosting | 0.792 (0.777 to 0.806) | 0.443 | 0.1332 | 1.01 | NT$191 (NT$121 to NT$254) |
+
+A boosting model told which way 19 features must push the probability reaches an AUC of 0.792: level with free boosting's (95% range of the gap -0.0015 to +0.0016; within the noise) and 0.023 above the scorecard's (+0.0173 to +0.0304; a real gap). At the break-even cut-off it earns NT$185 per account a month: NT$31 more than the scorecard's NT$154 (95% range of the gap -NT$27 to NT$93; a difference that could be chance on a test this size), against NT$191 for free boosting. Moving each constrained feature across its range for 300 sampled accounts (5,700 account-and-feature checks), free boosting moved the wrong way somewhere along the range in 4,191 of them (74%) and the monotone model in none; where free boosting did, the probability fell below an earlier level by 0.6 percentage points on average and by as much as 9.2 percentage points.
+
+## 12. Swap sets
+
+A swap-set analysis, standard in model validation, compares two models by the accounts on which they disagree. At the break-even cut-off, each account is approved by both models, by one, or by neither; for each group the table shows how many, how many defaulted, their average balance, and what approving them would have earned (realised, per account of the whole portfolio).
+
+**Scorecard against gradient boosting**
+
+| Who approves | Accounts | Defaulted | Average balance | Profit if approved |
+| --- | ---: | ---: | ---: | ---: |
+| Both approve | 37.6% | 7.6% | NT$65,534 | NT$183 |
+| Only scorecard approves | 7.1% | 17.3% | NT$113,995 | -NT$29 |
+| Only gradient boosting approves | 6.6% | 9.6% | NT$34,703 | NT$8 |
+| Neither approves | 48.7% | 35.7% | NT$32,639 | -NT$634 |
+
+**Scorecard against monotone boosting**
+
+| Who approves | Accounts | Defaulted | Average balance | Profit if approved |
+| --- | ---: | ---: | ---: | ---: |
+| Both approve | 37.0% | 7.6% | NT$64,404 | NT$177 |
+| Only scorecard approves | 7.6% | 16.8% | NT$116,198 | -NT$23 |
+| Only monotone boosting approves | 5.3% | 9.8% | NT$36,334 | NT$8 |
+| Neither approves | 50.0% | 35.0% | NT$32,522 | -NT$634 |
+
+**Monotone boosting against gradient boosting**
+
+| Who approves | Accounts | Defaulted | Average balance | Profit if approved |
+| --- | ---: | ---: | ---: | ---: |
+| Both approve | 41.4% | 7.8% | NT$60,947 | NT$195 |
+| Only monotone boosting approves | 0.9% | 11.1% | NT$59,225 | -NT$10 |
+| Only gradient boosting approves | 2.8% | 9.7% | NT$60,628 | -NT$4 |
+| Neither approves | 54.9% | 33.7% | NT$42,768 | -NT$653 |
+
+The scorecard and gradient boosting decide alike on 86% of accounts. Of the 13.7% they split on, those only gradient boosting approves defaulted at 9.6% and carry an average balance of NT$34,703, against 17.3% and NT$113,995 for those only the scorecard approves; approving the first group would have earned NT$8 per account of the portfolio, the second -NT$29.
+
+## 13. Stress tests
+
+A stress test asks what a shock does to profit. Defaults are raised by multiplying every account's odds of default by a factor (for small probabilities this is close to multiplying the probability), money gets dearer by taking the funding cost from the policy rate at its 2023 peak, or both. For each scenario the expected profit per account is worked out from the scorecard's own probabilities for the accounts approved under two policies: the cut-off kept where it is, and the cut-off re-set to the scenario's break-even. These are expected values, not outcomes: the file has no accounts that lived through a different year.
+
+| Scenario | Policy rate | Average default probability | Cut-off kept: approved | Kept: expected profit | Re-set: approved | Re-set: expected profit |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Base case | 12% | 21.9% | 45% | NT$161 | 45% | NT$161 |
+| Defaults 25% higher | 12% | 25.1% | 45% | NT$66 | 30% | NT$81 |
+| Defaults 50% higher | 12% | 27.9% | 45% | -NT$25 | 17% | NT$35 |
+| Defaults double | 12% | 32.7% | 45% | -NT$194 | 5% | NT$5 |
+| Policy rate at its 2023 peak | 22% | 21.9% | 45% | -NT$85 | 7% | NT$5 |
+| 2023 peak rate and defaults 50% higher | 22% | 27.9% | 45% | -NT$260 | 0% | NT$0 |
+
+With defaults 50% higher and the cut-off kept, expected profit goes from NT$161 to -NT$25 a month; re-setting the cut-off gives NT$35 on 17% of accounts. At the 2023 peak policy rate the kept cut-off gives -NT$85 and a re-set one NT$5; with defaults 50% higher as well, -NT$260 against NT$0.
+
+## 14. Risk-based pricing
+
+The same arithmetic can be turned round. The margin on a good account must cover the expected loss, p x loss / (1 - p), so the APR that makes approving a group break even is (12 x that margin + funding + running cost) / (share of balances that revolve). For each tenth of accounts, from the safest:
+
+| Tenth (1 = safest) | Average default probability | Average balance | Break-even APR | Pays at the current APR | Expected profit per account a month |
+| ---: | ---: | ---: | ---: | --- | ---: |
+| 1 | 7.1% | NT$75,014 | 32% | yes | NT$624 |
+| 2 | 9.0% | NT$80,734 | 35% | yes | NT$482 |
+| 3 | 10.4% | NT$78,836 | 38% | yes | NT$329 |
+| 4 | 11.7% | NT$67,675 | 41% | yes | NT$159 |
+| 5 | 13.5% | NT$43,356 | 44% | no | NT$1 |
+| 6 | 15.5% | NT$35,856 | 49% | no | -NT$97 |
+| 7 | 17.8% | NT$18,423 | 54% | no | -NT$109 |
+| 8 | 23.1% | NT$20,864 | 67% | no | -NT$265 |
+| 9 | 40.6% | NT$36,734 | 129% | no | -NT$1,537 |
+| 10 | 70.1% | NT$51,873 | 394% | no | -NT$3,873 |
+
+At the current card APR of 44%, approving pays for the safest 4 of 10 tenths of accounts. The other 6 would need APRs from 44% to 394% to break even. The riskiest need prices far above the one card rate checked here (MCB's published 44%), so for them the choice is to decline or to limit the exposure, not to price for risk.
+
+## 15. Moving the scorecard to another lender
+
+A scorecard fitted on accounts that miss a payment at one rate can be used on a lender whose accounts miss at another. The ranking is kept; every log-odds moves by logit(new rate) - logit(old rate), the usual correction for a change in the base rate (it assumes the way the features relate to risk is the same, which is the part that needs a local test). The break-even cut-off, in the original probabilities, is then the break-even probability moved back by the same amount.
+
+| Monthly missed-payment rate of the lender's accounts | Cut-off score | Share approved | Expected default rate of approved | Expected profit per account a month |
+| ---: | ---: | ---: | ---: | ---: |
+| 5.0% | 438 | 87% | 3.4% | NT$638 |
+| 8.0% | 467 | 82% | 4.8% | NT$546 |
+| 12.0% | 493 | 77% | 6.7% | NT$431 |
+| 22.1% (this file) | 535 | 45% | 9.9% | NT$161 |
+
+A lender whose accounts miss a payment 8.0% of the time, instead of 22.1%, would put the cut-off at 467 points instead of 535 and approve 82% of accounts instead of 45%, with the same economics and the same ranking.
+
+## 16. What drives the approval gaps
+
+The scorecard is a sum of points, so the gap in average score between a group and the best-treated group of its attribute is the sum of the gaps in the points each feature gives. The table covers every group that is flagged or within 10 points of the four-fifths line (disparate impact under 0.90) and lists the three features that contribute most to its gap.
+
+| Group | Approved | Reference approved | Disparate impact | Average points gap | Biggest contributors (points) |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Sex: Male against Female | 41% | 47% | 0.86 | -8.8 | Repayment status, September (-4.0); Credit used, six-month average (-1.2); Credit limit (-0.9) |
+| Age: 21-29 against 30-39 | 39% | 51% | 0.77 | -12.6 | Credit limit (-3.6); Repayment status, September (-3.0); Total paid, six months (-2.7) |
+| Age: 50 and over against 30-39 | 38% | 51% | 0.76 | -12.0 | Repayment status, September (-4.8); Total paid, six months (-2.2); Credit used, six-month average (-2.1) |
+| Education: High school against Graduate school | 34% | 52% | 0.65 | -22.9 | Repayment status, September (-6.8); Credit limit (-4.2); Total paid, six months (-3.3) |
+| Education: University against Graduate school | 42% | 52% | 0.81 | -12.7 | Credit limit (-3.1); Repayment status, September (-2.4); Credit used, six-month average (-2.3) |
+
+The biggest single contributor to each group's gap is sex Male: Repayment status, September (-4.0 of -8.8 points); age 21-29: Credit limit (-3.6 of -12.6 points); age 50 and over: Repayment status, September (-4.8 of -12.0 points); education High school: Repayment status, September (-6.8 of -22.9 points); education University: Credit limit (-3.1 of -12.7 points). No single feature accounts for more than 46% of any of these gaps: they build up across the card.
+
+## 17. Limits of the method
 
 - The cardholders are not Pakistani and the book is from a crisis period; nothing here measures how Pakistani cardholders behave.
-- "Default" is a missed payment. The loss on a default, the running cost and (to some degree) the APR that applies are assumptions.
+- "Default" is a missed payment. The loss on it comes from roll rates over five months at the start of a crisis, with two assumptions (the share never recovered, the cost of collection); the running cost and (to some degree) the APR that applies are assumptions too. The re-anchoring to another lender assumes the features relate to risk in the same way there.
 - One cohort: no out-of-time test, no view of behaviour through a cycle.
 - Selection: only accounts the bank had approved are in the data.
 - One month of margin is counted, which understates the value of an account that keeps paying.
 - The fairness audit looks at four groups on the information in the file; it does not cover other groups or other notions of fairness, and it is not legal advice.
 - The statistical ranges describe sampling noise in a 6,000-account test, not uncertainty about the assumptions.
 
-## 11. Reproducibility
+## 18. Reproducibility
 
 A fixed seed (42) drives the split, the cross-validation, the tuning and the bootstrap. Library versions are pinned in `requirements.txt`. Raw files are checked against `data/raw/MANIFEST.json` by `python -m creditrisk verify`. The tests check each function on made-up portfolios with known answers (weight of evidence, points, the break-even cut-off), run the whole analysis on a sample, and check that the committed results, documents, dashboard and notebook agree with each other.

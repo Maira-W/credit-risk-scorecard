@@ -1,0 +1,37 @@
+from_state,to_state,moves,probability
+Current,Current,80764,0.9504554334266953
+Current,"Late, status 2",4210,0.04954456657330478
+Current,"Late, status 3",0,0.0
+Current,"Late, status 4",0,0.0
+Current,"Late, status 5",0,0.0
+Current,"Late, status 6 or more",0,0.0
+"Late, status 2",Current,2973,0.30027269972730025
+"Late, status 2","Late, status 2",6324,0.6387233612766388
+"Late, status 2","Late, status 3",604,0.061003938996061005
+"Late, status 2","Late, status 4",0,0.0
+"Late, status 2","Late, status 5",0,0.0
+"Late, status 2","Late, status 6 or more",0,0.0
+"Late, status 3",Current,102,0.16612377850162866
+"Late, status 3","Late, status 2",226,0.36807817589576547
+"Late, status 3","Late, status 3",100,0.16286644951140064
+"Late, status 3","Late, status 4",186,0.30293159609120524
+"Late, status 3","Late, status 5",0,0.0
+"Late, status 3","Late, status 6 or more",0,0.0
+"Late, status 4",Current,9,0.03765690376569038
+"Late, status 4","Late, status 2",61,0.25523012552301255
+"Late, status 4","Late, status 3",16,0.06694560669456066
+"Late, status 4","Late, status 4",80,0.33472803347280333
+"Late, status 4","Late, status 5",73,0.3054393305439331
+"Late, status 4","Late, status 6 or more",0,0.0
+"Late, status 5",Current,2,0.02666666666666667
+"Late, status 5","Late, status 2",16,0.21333333333333335
+"Late, status 5","Late, status 3",5,0.06666666666666667
+"Late, status 5","Late, status 4",7,0.09333333333333334
+"Late, status 5","Late, status 5",11,0.14666666666666667
+"Late, status 5","Late, status 6 or more",34,0.4533333333333333
+"Late, status 6 or more",Current,2,0.01015228426395939
+"Late, status 6 or more","Late, status 2",50,0.25380710659898476
+"Late, status 6 or more","Late, status 3",3,0.015228426395939087
+"Late, status 6 or more","Late, status 4",1,0.005076142131979695
+"Late, status 6 or more","Late, status 5",2,0.01015228426395939
+"Late, status 6 or more","Late, status 6 or more",139,0.7055837563451777

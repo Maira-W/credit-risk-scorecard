@@ -153,17 +153,54 @@
       "log_loss_std": 0.003428515446737252
     }
   },
+  "rollrates": {
+    "months": [
+      "apr",
+      "may",
+      "jun",
+      "jul",
+      "aug"
+    ],
+    "transitions": 96000,
+    "p_current_to_late": 0.04954456657330475,
+    "p_cure_from_first_late": 0.30027269972730025,
+    "p_stay_first_late": 0.6387233612766388,
+    "p_worse_from_first_late": 0.061003938996061005,
+    "entry": [
+      0.47975136560557546,
+      0.4710868336786589,
+      0.036353362215106426,
+      0.007534375588623093,
+      0.0015068751177246186,
+      0.0037671877943115466
+    ],
+    "entry_october": [
+      0.0,
+      0.9291087642018266,
+      0.04885606729124874,
+      0.015990961031926203,
+      0.002657046492954614,
+      0.0033871609820437997
+    ],
+    "write_off_status": 4,
+    "horizon": 12,
+    "lgd": 0.85,
+    "collection_cost": 0.02,
+    "base_probability": 0.11474255119183914,
+    "base_loss": 0.11753116851306326,
+    "loss_stress": 0.15
+  },
   "economics": {
     "apr": 0.44,
     "revolve_share": 0.8823230556774445,
     "yield": 0.38822214449807557,
     "funding": 0.12,
     "opex": 0.05,
-    "loss": 0.15,
+    "loss": 0.11753116851306326,
     "margin_month": 0.018185178708172964,
-    "break_even_pd": 0.10812592909704032,
-    "cutoff_score": 549,
-    "cost_ratio": 8.248475442948795,
+    "break_even_pd": 0.13399401826316937,
+    "cutoff_score": 535,
+    "cost_ratio": 6.463019715073861,
     "mean_balance": 50936.419,
     "share_no_balance": 0.0855,
     "policy_rate_date": "2026-10-27"
@@ -172,11 +209,16 @@
     "flagged": [
       "age_band: 21-29",
       "age_band: 50 and over",
-      "education: High school",
-      "education: University"
+      "education: High school"
     ],
-    "lowest_disparate_impact": 0.4816849050783476,
+    "lowest_disparate_impact": 0.6520725093333112,
     "worst_calibration_ratio": 1.0731339272626765
+  },
+  "monotone": {
+    "features_constrained": 19,
+    "violations": 0,
+    "violations_unconstrained": 4191,
+    "accounts_checked": 300
   },
   "pakistan": {
     "rate_now": 12.0,

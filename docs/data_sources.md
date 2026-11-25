@@ -58,6 +58,7 @@ Every file the analysis reads, where it came from, and what was done to it. All 
 - Repayment status: a status of 1 ("one month late") appears 3,688 times in September and 28 times in August, but only 6 times in the four months before, while 2 is common in every month. The older months look to be coded on another basis, so the code is read as "late" (1 or more) and not as an exact number of months. The share of accounts that were late goes from 10.3% in April to 14.8% in August and 22.7% in September.
 - 1,930 accounts have a negative bill in some month (a credit balance), 2,115 are over their limit in September, 866 had no bill in any of the six months and 1,432 made no payment in any of them. Nothing is dropped; credit used is floored at 0 and capped at 150% of the limit.
 - The documentation does not say exactly what "default payment next month" means. It is read as missing the payment due next month, not as a charge-off.
+- The roll rates use only the five months April to August, which are coded on one basis; September, where a status of 1 suddenly appears, is used only to say where the accounts that missed their payment stood.
 
 ## Pakistan: the policy rate
 
@@ -103,6 +104,6 @@ The yield on the card is set from MCB's published credit card summary box, effec
 ## What I could not get
 
 - Public borrower-level data from Pakistan, or any Pakistani card portfolio's default or loss rates.
-- Loss given default and recoveries for cards, anywhere: the loss on a default in the economics is an assumption, shown with a range.
+- Loss given default and recoveries for cards, anywhere: the loss in the economics is built from the roll rates of the file's own repayment history, with two assumptions (the share of a written-off balance never recovered, the cost of collection), and shown with a range.
 - The State Bank of Pakistan's own tables by script: its site returns an error to automated requests, so its figures come from news reports of its announcements.
 - Any data after October 2005 for the cardholders, so there is no out-of-time test.

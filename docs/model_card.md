@@ -51,6 +51,10 @@ A short, standard description of the model: what it is for, how well it works, f
 | High (25% to 50%) | 11% | 36.5% | 19% |
 | Very high (50% and over) | 12% | 66.9% | 35% |
 
+**An explainable alternative.** A boosting model told which way 19 features must push the probability reaches an AUC of 0.792: level with free boosting's (95% range of the gap -0.0015 to +0.0016; within the noise) and 0.023 above the scorecard's (+0.0173 to +0.0304; a real gap). At the break-even cut-off it earns NT$185 per account a month: NT$31 more than the scorecard's NT$154 (95% range of the gap -NT$27 to NT$93; a difference that could be chance on a test this size), against NT$191 for free boosting. Moving each constrained feature across its range for 300 sampled accounts (5,700 account-and-feature checks), free boosting moved the wrong way somewhere along the range in 4,191 of them (74%) and the monotone model in none; where free boosting did, the probability fell below an earlier level by 0.6 percentage points on average and by as much as 9.2 percentage points.
+
+**Where the scorecard and gradient boosting disagree.** The scorecard and gradient boosting decide alike on 86% of accounts. Of the 13.7% they split on, those only gradient boosting approves defaulted at 9.6% and carry an average balance of NT$34,703, against 17.3% and NT$113,995 for those only the scorecard approves; approving the first group would have earned NT$8 per account of the portfolio, the second -NT$29.
+
 Three hold-out accounts and the reasons the card gave:
 
 | Hold-out account | Score | Probability of default | Defaulted? | Reasons (points lost against the best bin) |
@@ -61,38 +65,40 @@ Three hold-out accounts and the reasons the card gave:
 
 ## Fairness
 
-Sex, age, education and marital status are **not** inputs. They are audited at the cut-off (549, a probability of 10.8%):
+Sex, age, education and marital status are **not** inputs. They are audited at the cut-off (535, a probability of 13.4%):
 
 | Group (hold-out) | Accounts | Default rate | Predicted | Predicted ÷ observed | Approved | Default rate of approved | Disparate impact | 95% range of the ratio |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Sex: Female | 3,645 | 20.9% | 20.8% | 1.00 | 30% | 8.2% | 1.00 | 1.00 to 1.00 |
-| Sex: Male | 2,355 | 24.1% | 23.6% | 0.98 | 26% | 6.4% | 0.85 | 0.78 to 0.92 |
-| Age: 21-29 | 1,936 | 23.1% | 23.6% | 1.02 | 23% | 5.7% | 0.66 **flag** | 0.59 to 0.73 |
-| Age: 30-39 | 2,222 | 20.1% | 20.2% | 1.01 | 34% | 7.6% | 1.00 | 1.00 to 1.00 |
-| Age: 40-49 | 1,283 | 22.7% | 21.5% | 0.95 | 29% | 8.5% | 0.86 | 0.77 to 0.95 |
-| Age: 50 and over | 559 | 25.4% | 23.5% | 0.93 | 23% | 10.9% | 0.67 **flag** | 0.57 to 0.79 |
-| Education: Graduate school | 2,082 | 18.9% | 19.1% | 1.01 | 37% | 6.7% | 1.00 | 1.00 to 1.00 |
-| Education: High school | 991 | 25.6% | 25.9% | 1.01 | 18% | 7.9% | 0.48 **flag** | 0.41 to 0.55 |
-| Education: Other or unknown | 93 | 5.4% | 16.4% | 3.05 | 42% | 7.7% |  |  |
-| Education: University | 2,834 | 23.8% | 22.7% | 0.96 | 25% | 8.4% | 0.68 **flag** | 0.62 to 0.74 |
-| Marital status: Married | 2,718 | 23.4% | 21.9% | 0.93 | 29% | 9.3% | 1.00 | 0.94 to 1.00 |
-| Marital status: Other or unknown | 69 | 23.2% | 24.4% | 1.05 | 10% | 14.3% |  |  |
-| Marital status: Single | 3,213 | 21.0% | 21.9% | 1.04 | 28% | 6.0% | 0.98 | 0.91 to 1.00 |
+| Sex: Female | 3,645 | 20.9% | 20.8% | 1.00 | 47% | 9.4% | 1.00 | 1.00 to 1.00 |
+| Sex: Male | 2,355 | 24.1% | 23.6% | 0.98 | 41% | 8.8% | 0.86 | 0.82 to 0.92 |
+| Age: 21-29 | 1,936 | 23.1% | 23.6% | 1.02 | 39% | 9.3% | 0.77 **flag** | 0.71 to 0.82 |
+| Age: 30-39 | 2,222 | 20.1% | 20.2% | 1.01 | 51% | 8.3% | 1.00 | 1.00 to 1.00 |
+| Age: 40-49 | 1,283 | 22.7% | 21.5% | 0.95 | 46% | 10.0% | 0.90 | 0.84 to 0.97 |
+| Age: 50 and over | 559 | 25.4% | 23.5% | 0.93 | 38% | 10.7% | 0.76 **flag** | 0.67 to 0.84 |
+| Education: Graduate school | 2,082 | 18.9% | 19.1% | 1.01 | 52% | 8.3% | 1.00 | 1.00 to 1.00 |
+| Education: High school | 991 | 25.6% | 25.9% | 1.01 | 34% | 9.8% | 0.65 **flag** | 0.59 to 0.72 |
+| Education: Other or unknown | 93 | 5.4% | 16.4% | 3.05 | 62% | 6.9% |  |  |
+| Education: University | 2,834 | 23.8% | 22.7% | 0.96 | 42% | 9.9% | 0.81 | 0.76 to 0.85 |
+| Marital status: Married | 2,718 | 23.4% | 21.9% | 0.93 | 45% | 10.2% | 1.00 | 0.95 to 1.00 |
+| Marital status: Other or unknown | 69 | 23.2% | 24.4% | 1.05 | 33% | 13.0% |  |  |
+| Marital status: Single | 3,213 | 21.0% | 21.9% | 1.04 | 45% | 8.2% | 1.00 | 0.94 to 1.00 |
 
-At the break-even cut-off, 4 of 11 groups are approved at under four-fifths of the best-treated group's rate: age: 21-29, age: 50 and over, education: High school and education: University; for every one of them the whole 95% bootstrap range of the ratio is under 0.80, so the gaps are unlikely to be chance. The flagged groups have higher default rates in this file than the best-treated group of the same attribute, and the model is calibrated for them (predicted ÷ observed between 0.93 and 1.02), so the gaps in approval mostly follow gaps in observed default rates, not a model that is harsher than the data on those groups. That does not make the gaps acceptable: under the four-fifths screening rule they would need a closer look, for example whether a different feature set or cut-off narrows them at a small cost. Women default less than men in this file (20.8% against 24.2%) and are approved more often (30% against 26%); the model is calibrated for both (predicted ÷ observed 1.00 for women, 0.98 for men).
+At the break-even cut-off, 3 of 11 groups are approved at under four-fifths of the best-treated group's rate: age: 21-29, age: 50 and over and education: High school; for education: High school the whole 95% bootstrap range of the ratio is under 0.80, for the rest it reaches above it. The flagged groups have higher default rates in this file than the best-treated group of the same attribute, and the model is calibrated for them (predicted ÷ observed between 0.93 and 1.02), so the gaps in approval mostly follow gaps in observed default rates, not a model that is harsher than the data on those groups. That does not make the gaps acceptable: under the four-fifths screening rule they would need a closer look, for example whether a different feature set or cut-off narrows them at a small cost. Women default less than men in this file (20.8% against 24.2%) and are approved more often (47% against 41%); the model is calibrated for both (predicted ÷ observed 1.00 for women, 0.98 for men).
 
 Could the inputs act as a stand-in for the protected attributes? A model that tries to tell the groups apart from the scorecard's inputs reaches an AUC of 0.60 for sex, 0.58 for being 40 or over and 0.61 for a university education (0.5 is no information): the inputs carry some signal about each, as behaviour usually does. Adding sex, age, education and marital status changes the scorecard's hold-out AUC by +0.0004 (95% range -0.0012 to +0.0020) and the gradient-boosting model's by +0.0010 (-0.0009 to +0.0028), so leaving them out costs almost nothing.
+
+What lies behind the gaps: the scorecard is a sum of points, so a group's gap splits by feature (looked at here for the groups that are flagged or within 10 points of the line, disparate impact under 0.90). The biggest single contributor to each group's gap is sex Male: Repayment status, September (-4.0 of -8.8 points); age 21-29: Credit limit (-3.6 of -12.6 points); age 50 and over: Repayment status, September (-4.8 of -12.0 points); education High school: Repayment status, September (-6.8 of -22.9 points); education University: Credit limit (-3.1 of -12.7 points). No single feature accounts for more than 46% of any of these gaps: they build up across the card.
 
 This is a screening exercise on one data set, not legal advice, and the four-fifths rule is a US convention, not a Pakistani legal test.
 
 ## Limits and risks
 
 - **Not Pakistani data**, and from a crisis-era book (22.1% missed a payment in one month).
-- **"Default" is a missed payment.** The economics assume what a default costs; the data cannot say.
+- **"Default" is a missed payment.** The loss on it is estimated from roll rates over five months at the start of a crisis (a floor, not a forecast), with two assumptions; the data cannot say more.
 - **One cohort, no out-of-time test.** The population stability index between development and hold-out is 0.002, which only shows the split is random.
 - **Selection.** Only accounts the bank had approved are in the data; applicants it rejected are not.
 - **Repayment codes** are only partly documented (see data sources).
-- **The cut-off depends on assumptions** about yield, cost and loss that are not in the data. Across the sensitivity grid the break-even probability runs from 1.9% to 15.4%.
+- **The cut-off depends on assumptions** about yield, cost and loss that are not in the data. Across the sensitivity grid the break-even probability runs from 2.6% to 27.6%.
 
 ## Monitoring if it were deployed
 
@@ -103,3 +109,5 @@ This is a screening exercise on one data set, not legal advice, and the four-fif
 | AUC and KS on matured accounts | quarterly | fall of more than 0.03 | refit |
 | Approval rate and default rate by group | whenever the cut-off changes | any group under four-fifths of the best group's approval rate | review features and cut-off |
 | Cut-off against the policy rate | whenever the State Bank changes its rate | the break-even probability moves by 1 percentage point or more | reset the cut-off |
+| Roll rates behind the loss | quarterly | the chance that a missed payment reaches status 4 within a year moves by 2 percentage points or more from 11.5% | re-estimate the loss, then reset the cut-off |
+| Directions of the explainable model | at every refit | any account whose probability moves the wrong way in the check of `advanced.monotone_violations` | do not deploy until it passes |
