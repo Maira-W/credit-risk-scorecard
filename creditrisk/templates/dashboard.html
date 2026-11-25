@@ -258,7 +258,7 @@
     <div class="card"><h2>Stability</h2><p class="sub">Population stability index of the development accounts against the hold-out: under 0.10 is stable. The split is random, so values near 0 only show that nothing is broken; there is no later period in the file to test against.</p>
       <table><tr><th class='l'>Item</th><th>PSI</th></tr>${D.psi.map(r => `<tr><td class="l">${r.item === "Score" ? "Scorecard score" : (D.featureNames[r.item] || r.item)}</td><td>${r.psi.toFixed(4)}</td></tr>`).join("")}</table></div>`;
     Plotly.newPlot("q-cmp", ["auc", "ks"].map((k, i) => ({ type: "scatter", mode: "markers", name: k.toUpperCase(), xaxis: i ? "x2" : "x", yaxis: "y",
-      x: order.map(o => m[o][k]), y: order.map(o => NAME[o]), marker: { color: order.map(o => COL[o]), size: 10 },
+      x: order.map(o => m[o][k]), y: order.map(o => NAME[o].replace(" sex, age, education, marriage", " demographics")), marker: { color: order.map(o => COL[o]), size: 10 },
       error_x: { type: "data", symmetric: false, array: order.map(o => m[o][k + "_high"] - m[o][k]), arrayminus: order.map(o => m[o][k] - m[o][k + "_low"]), color: GREY },
       hovertemplate: "%{y}: %{x:.3f}<extra>" + k.toUpperCase() + "</extra>" })),
       layout({ showlegend: false, margin: { t: 24, r: 10, b: 40, l: 190 }, xaxis: { domain: [0, 0.46], gridcolor: grid, title: "AUC" }, xaxis2: { domain: [0.54, 1], gridcolor: grid, title: "KS", anchor: "y" },
@@ -338,7 +338,8 @@
   // ------------------------------------------------------------------ fairness
   renderers.fair = function () {
     const titles = { sex: "Sex", age_band: "Age", education: "Education", marriage: "Marital status" };
-    $("fair").innerHTML = `<div class="callout"><b>None of sex, age, education or marital status is an input to the scorecard or the challenger.</b> They are used only here, to check what the decisions do to each group at the cut-off set in the explorer (${"<span id='f-cut'></span>"}). ${S.fairness.flagged.length ? "Groups under four-fifths of the best group's approval rate: " + S.fairness.flagged.join("; ") + " (at the base case)." : "No group falls under four-fifths of the best group's approval rate at the base case."}</div>
+    const pretty = g => { const i = g.indexOf(": "); return (titles[g.slice(0, i)] || g.slice(0, i)) + g.slice(i); };
+    $("fair").innerHTML = `<div class="callout"><b>None of sex, age, education or marital status is an input to the scorecard or the challenger.</b> They are used only here, to check what the decisions do to each group at the cut-off set in the explorer (${"<span id='f-cut'></span>"}). ${S.fairness.flagged.length ? "Groups under four-fifths of the best group's approval rate: " + S.fairness.flagged.map(pretty).join("; ") + " (at the base case)." : "No group falls under four-fifths of the best group's approval rate at the base case."}</div>
       <div class="card"><h2>Approval rate by group</h2><p class="sub">Orange: under four-fifths (80%) of the best-treated group's approval rate, a screening rule from US lending and employment practice, not a Pakistani legal test. Grey: fewer than 100 hold-out accounts, shown but not judged.</p><div id="f-chart" style="height:430px"></div></div>
       <div class="card"><h2>The detail</h2><table id="f-table"></table><p class="note">Approval rate, default rate among the approved and the disparate-impact ratio move with the cut-off; the default rate, the average predicted probability and the calibration ratio (predicted ÷ observed) do not. A model can be well calibrated for every group and still approve groups at different rates, when their true default rates differ.</p></div>
       <div class="card"><h2>Could the model infer who is who?</h2><p class="sub">AUC of a model that tries to tell the group apart using only the inputs the scorecard may use (0.5 means the inputs say nothing about it).</p><table>${"<tr><th class='l'>Attribute</th><th>AUC</th></tr>" + D.proxy.map(r => `<tr><td class="l">${r.attribute}</td><td>${r.auc.toFixed(3)}</td></tr>`).join("")}</table>
@@ -350,12 +351,13 @@
       const rows = D.fairBins.map(g => { const n = g.accounts.reduce((s, v) => s + v, 0); let a = 0, b = 0; for (let i = 0; i <= idx; i++) { a += g.accounts[i]; b += g.defaults[i]; }
         const stat = D.fairGroups.find(r => r.attribute === g.attribute && r.group === g.group);
         return { attribute: g.attribute, group: g.group, n, approval: n ? a / n : 0, badRate: a ? b / a : null, stat, judged: n >= 100 }; });
-      const topRate = Math.max(...rows.filter(r => r.judged).map(r => r.approval));
-      rows.forEach(r => { r.di = r.judged && topRate > 0 ? r.approval / topRate : null; r.flag = r.di != null && r.di < 0.8; });
+      const topRate = {};                                           // the best-treated group of each attribute is its own reference
+      rows.filter(r => r.judged).forEach(r => { topRate[r.attribute] = Math.max(topRate[r.attribute] || 0, r.approval); });
+      rows.forEach(r => { r.di = r.judged && topRate[r.attribute] > 0 ? r.approval / topRate[r.attribute] : null; r.flag = r.di != null && r.di < 0.8; });
       const order = ["sex", "age_band", "education", "marriage"], sorted = rows.slice().sort((a, b) => order.indexOf(a.attribute) - order.indexOf(b.attribute) || String(a.group).localeCompare(String(b.group)));
       Plotly.react("f-chart", [{ type: "bar", orientation: "h", y: sorted.map(r => titles[r.attribute] + ": " + r.group), x: sorted.map(r => r.approval),
         marker: { color: sorted.map(r => !r.judged ? GREY : r.flag ? ORANGE : primary) }, text: sorted.map(r => pc(r.approval, 0)), textposition: "outside", hovertemplate: "%{y}: %{x:.1%}<extra></extra>" }],
-        layout({ margin: { t: 10, r: 40, b: 40, l: 190 }, xaxis: { gridcolor: grid, tickformat: ".0%", title: "approval rate at the cut-off" }, yaxis: { autorange: "reversed" } }), cfg);
+        layout({ margin: { t: 10, r: 40, b: 40, l: 240 }, xaxis: { gridcolor: grid, tickformat: ".0%", title: "approval rate at the cut-off" }, yaxis: { autorange: "reversed" } }), cfg);
       $("f-table").innerHTML = "<tr><th class='l'>Group</th><th>Accounts</th><th>Default rate</th><th>Predicted probability</th><th>Predicted ÷ observed</th><th>Approved</th><th>Default rate of approved</th><th>Disparate impact</th></tr>" +
         sorted.map(r => `<tr class="${r.judged ? "" : "dim"}"><td class="l">${titles[r.attribute]}: ${r.group}</td><td>${num(r.n)}</td><td>${pc(r.stat.default_rate)}</td><td>${pc(r.stat.mean_probability)}</td><td>${r.stat.calibration_ratio == null ? "–" : r.stat.calibration_ratio.toFixed(2)}</td>
           <td>${pc(r.approval, 0)}</td><td>${pc(r.badRate)}</td><td>${r.di == null ? "–" : r.di.toFixed(2)}${r.flag ? ' <span class="pill bad">flag</span>' : ""}</td></tr>`).join("");

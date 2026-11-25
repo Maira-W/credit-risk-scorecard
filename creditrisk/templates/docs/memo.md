@@ -4,7 +4,7 @@
 
 ## Recommendation
 
-- **Score every account with the {{n_features}}-feature points scorecard and approve only those scoring {{cutoff_score}} or more**, which under the base-case assumptions means a probability of default under {{break_even}}. On the {{n_hold:,}} hold-out accounts that approves {{approved_share}} of them; {{bad_rate_approved}} of the approved accounts defaulted the next month, against {{default_rate_hold_pct}} of all accounts.
+- **Score every account with the {{n_features}}-feature points scorecard and approve only those scoring {{cutoff_score}} or more**, which under the base-case assumptions means a probability of default under {{break_even}}. On the {{n_hold:,}} hold-out accounts that approves {{approved_share}} of them; {{bad_rate_approved}} of the approved accounts defaulted the next month, against {{default_rate_hold_pct}} of all accounts. {{scorecard_profit_verdict}} (see "Why" below).
 - **Keep the gradient-boosting model as a challenger, not the decision-maker.** Its AUC is {{auc_challenger:.3f}} against {{auc_scorecard:.3f}} ({{gap_verdict}}) and at the same break-even cut-off it earns {{ch_vs_sc_phrase}} (95% range {{ch_vs_sc_lo}} to {{ch_vs_sc_hi}}; {{ch_vs_sc_verdict}}). But the scorecard keeps {{share_of_lift}} of its lead over chance, can be read and explained line by line, and gives a reason for every decline. If a regulator or committee is content with a model it cannot read, that trade-off is worth revisiting.
 - **Re-set the cut-off whenever the policy rate moves.** The break-even probability was {{scen_first_be}} at {{scen_first_rate}} ({{scen_first_date}}) and {{scen_peak_be}} at {{scen_peak_rate}} ({{scen_peak_date}}). At the peak, {{scen_peak_verdict}}.
 - **Leave sex, age, education and marital status out of the model, and audit decisions by those groups every time the cut-off changes.** They are not inputs now, and leaving them out costs {{demo_cost}}.
@@ -29,7 +29,7 @@
 
 {{scenarios_table}}
 
-At {{scen_peak_rate}} the margin on a card balance is thin, so only the safest accounts are worth holding ({{scen_peak_share}} of the book); at {{scen_first_rate}} {{scen_first_share}} are. At the peak, {{scen_peak_verdict}} ({{scen_peak_kept}} per account a month, against {{scen_peak_profit}} with the cut-off reset).
+At {{scen_peak_rate}} the margin on a card balance is thin, so only the safest accounts are worth holding ({{scen_peak_share}} of the book); at {{scen_first_rate}} {{scen_first_share}} are. At the peak, {{scen_peak_verdict}} ({{scen_peak_kept}} per account a month, against {{scen_peak_profit}} with the cut-off reset). {{scen_note}}
 
 ## What could be wrong
 

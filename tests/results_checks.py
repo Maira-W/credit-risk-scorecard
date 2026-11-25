@@ -140,7 +140,7 @@ def check_results(folder: Path) -> dict:
         assert ((judged["di_low"] - SLACK <= judged["disparate_impact"]) & (judged["disparate_impact"] <= judged["di_high"] + SLACK)).all()
         assert ((judged["di_low"] <= judged["di_high"]) & (judged["di_high"] <= 1.0 + 1e-9)).all()
         if len(judged) and judged["approval_rate"].max() > 0:
-            assert (judged["disparate_impact"] == pytest.approx(judged["approval_rate"] / judged["approval_rate"].max()))
+            assert np.allclose(judged["disparate_impact"], judged["approval_rate"] / judged["approval_rate"].max())
             assert (judged["flagged"] == (judged["disparate_impact"] < config.DISPARATE_IMPACT_MIN)).all()
         assert part.loc[part["accounts"] < config.MIN_GROUP_SIZE, "flagged"].eq(False).all()
     proxy = read(folder, "fairness_proxy.csv")
@@ -150,7 +150,7 @@ def check_results(folder: Path) -> dict:
     seg = read(folder, "segments.csv")
     for variable, part in seg.groupby("variable"):
         assert part["share"].sum() == pytest.approx(1.0, abs=1e-9), variable
-        assert (part["default_rate"] == pytest.approx(part["defaults"] / part["accounts"]))
+        assert np.allclose(part["default_rate"], part["defaults"] / part["accounts"])
         assert ((part["ci_low"] <= part["default_rate"]) & (part["default_rate"] <= part["ci_high"])).all()
     subsets = read(folder, "subset_metrics.csv")
     assert len(subsets) == 6 and subsets.groupby("subset")["accounts"].first().sum() == n_hold

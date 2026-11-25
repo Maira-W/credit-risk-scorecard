@@ -181,8 +181,7 @@ def score_distribution() -> None:
     ax.bar(h["score_from"] + width / 2, h["good"], width=width * 0.92, color=TEAL, alpha=0.9, label="paid next month")
     ax.bar(h["score_from"] + width / 2, h["bad"], width=width * 0.92, bottom=h["good"], color=ORANGE, alpha=0.95, label="defaulted next month")
     if cutoff:
-        ax.axvline(cutoff, color=NAVY, lw=1.5, ls="--")
-        ax.text(cutoff + 2, ax.get_ylim()[1] * 0.93, f"cut-off {cutoff}: approve this score and above", color=NAVY, fontsize=9)
+        ax.axvline(cutoff, color=NAVY, lw=1.5, ls="--", label=f"cut-off {cutoff}: approve this score and above")
     ax.set_xlabel("scorecard points (higher is safer)")
     ax.set_ylabel("accounts in the hold-out")
     ax.set_title(f"Scores separate the two groups (KS {s['metrics']['scorecard']['ks']:.2f})")

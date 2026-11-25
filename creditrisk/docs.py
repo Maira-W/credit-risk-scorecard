@@ -348,7 +348,7 @@ def values() -> dict:
     v.update(n_features=sc["n_features"], n_bins=sc["n_bins"], n_candidates=sc["candidates"], base_score=sc["base_score"], base_odds=sc["base_odds"], pdo=sc["pdo"], score_min=sc["score_min"],
              score_max=sc["score_max"], top_feature_1=config.feature_name(top_features[0]), top_feature_2=config.feature_name(top_features[1]), top_feature_3=config.feature_name(top_features[2]),
              top_range_1=sc["points_range"][top_features[0]], top_range_2=sc["points_range"][top_features[1]], top_range_3=sc["points_range"][top_features[2]],
-             features_list=_join(config.feature_name(f) for f in sc["features"]), n_dropped=sc["candidates"] - sc["n_features"], psi_score=s["psi"]["score"], psi_max=s["psi"]["max_feature"])
+             features_list="; ".join(config.feature_name(f) for f in sc["features"]), n_dropped=sc["candidates"] - sc["n_features"], psi_score=s["psi"]["score"], psi_max=s["psi"]["max_feature"])
     screening = r["scorecard_screening"]
     cal_sc = r["calibration"][r["calibration"]["model"] == "scorecard"]
     v["cal_gap_pp"] = f"{(cal_sc['predicted'] - cal_sc['observed']).abs().max() * 100:.1f}"
@@ -410,6 +410,19 @@ def values() -> dict:
              scen_last_be=_p(last["break_even_pd"]), scen_last_share=_p(last["approved_share"], 0))
     v["scen_peak_verdict"] = ("keeping the earlier cut-off would have lost money on the accounts it approved" if peak["profit_per_account_first_cutoff_kept"] < 0 else
                               "keeping the earlier cut-off would have earned less than resetting it")
+    later = scen.iloc[1:]
+    better = int((later["profit_per_account"] > later["profit_per_account_first_cutoff_kept"]).sum())
+    worse = later[later["profit_per_account"] < later["profit_per_account_first_cutoff_kept"]]
+    interval_width = sc_row["high"] - sc_row["low"]
+    note = f"The reset cut-off earned more than the {_month(first['date'])} one on {better} of the {len(later)} later dates"
+    if len(worse):
+        gap_most = float((worse["profit_per_account_first_cutoff_kept"] - worse["profit_per_account"]).max())
+        note += (f"; on the other {len(worse)} the kept cut-off earned up to {_nt(gap_most)} more per account a month, "
+                 + (f"a gap smaller than the 95% range around the base-case profit itself ({_nt(interval_width)} wide), so it is not evidence that resetting does not pay."
+                    if gap_most < interval_width else f"a gap larger than the 95% range around the base-case profit ({_nt(interval_width)} wide), which deserves a closer look."))
+    else:
+        note += "."
+    v["scen_note"] = note
     v.update(sens_be_min=_p(sens["break_even_pd"].min()), sens_be_max=_p(sens["break_even_pd"].max()), sens_share_min=_p(sens["approved_share"].min(), 0),
              sens_share_max=_p(sens["approved_share"].max(), 0))
 
@@ -422,9 +435,13 @@ def values() -> dict:
     v["flagged_groups"] = _join(flagged)
     v["n_flagged"] = len(flagged)
     if flagged:
-        v["fairness_headline"] = (f"At the break-even cut-off, {len(flagged)} of {len(judged)} groups are approved at under four-fifths of the best-treated group's rate: {_join(flagged)}"
-                                  + (f"; for {_join(sure)} the whole 95% bootstrap range of the ratio is under 0.80, for the rest it reaches above it." if sure else
-                                     "; for none of them is the whole 95% bootstrap range of the ratio under 0.80, so each could be chance on a test this size."))
+        if sure and len(sure) == len(flagged):
+            tail = "; for every one of them the whole 95% bootstrap range of the ratio is under 0.80, so the gaps are unlikely to be chance."
+        elif sure:
+            tail = f"; for {_join(sure)} the whole 95% bootstrap range of the ratio is under 0.80, for the rest it reaches above it."
+        else:
+            tail = "; for none of them is the whole 95% bootstrap range of the ratio under 0.80, so each could be chance on a test this size."
+        v["fairness_headline"] = (f"At the break-even cut-off, {len(flagged)} of {len(judged)} groups are approved at under four-fifths of the best-treated group's rate: {_join(flagged)}" + tail)
     else:
         v["fairness_headline"] = f"At the break-even cut-off, none of the {len(judged)} groups is approved at under four-fifths of the best-treated group's rate."
     cal = (judged["calibration_ratio"] - 1).abs()

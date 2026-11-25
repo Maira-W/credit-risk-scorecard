@@ -15,7 +15,7 @@ def values():
 
 
 def test_render_fills_placeholders_and_formats():
-    assert docs.render("{{a}} and {{ b : .1f }} and {{c:,}}", {"a": "x", "b": 2.345, "c": 12345}) == "x and 2.3 and 12,345"
+    assert docs.render("{{a}} and {{ b :.1f }} and {{c:,}}", {"a": "x", "b": 2.345, "c": 12345}) == "x and 2.3 and 12,345"
 
 
 def test_a_placeholder_with_no_value_is_an_error():
@@ -48,7 +48,8 @@ def test_no_placeholder_or_missing_number_is_left_in_a_document():
     for target in docs.outputs().values():
         text = target.read_text(encoding="utf-8")
         assert "{{" not in text and "}}" not in text, target.name
-        assert not re.search(r"\bnan\b|NaN|\bNone\b|inf%|-inf", text), (target.name, re.findall(r".{20}(?:\bnan\b|NaN|\bNone\b).{20}", text)[:3])
+        bad = r"\bnan\b|NaN|inf%|-inf|None%|NT\$None|: None\b|\(None\)"
+        assert not re.search(bad, text), (target.name, re.findall(r".{20}(?:" + bad + r").{20}", text)[:3])
 
 
 def test_every_relative_link_and_image_points_at_something_that_exists():

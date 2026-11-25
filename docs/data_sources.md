@@ -18,6 +18,8 @@ Every file the analysis reads, where it came from, and what was done to it. All 
 
 **Why this dataset.** I looked for public borrower-level credit data for Pakistan and found none, so the borrowers are a foreign stand-in. It is a well-known, documented, citable file with a real default outcome and enough history per account to build behavioural features. Its age (2005) and place (Taiwan, at the start of a card-debt crisis) are its main limits: see the README.
 
+**The period.** April to October 2005 is the start of Taiwan's card-debt crisis: banks had issued cards widely, and an editorial in the Taipei Times of 27 December 2005 already describes tens of thousands of people deep in credit-card debt ("Like 'go west,' credit debt's a threat", [link](https://www.taipeitimes.com/News/editorials/archives/2005/12/27/2003286251)). That helps explain why 22.1% of these accounts missed a payment in a single month: treat that as a crisis-era rate, not a typical one.
+
 **The columns.** The file calls them X1 to X23 and Y. The names in the first column below come from UCI's variable table, and `tests/test_data.py` checks them against the saved metadata. Month 1 in the paper's numbering is September (the paper's `PAY_0`).
 
 | File column | UCI name | Name here | Meaning |

@@ -83,7 +83,7 @@ def payload() -> dict:
         "policy": _records(policy[["effective_date", "policy_rate_pct"]], 2),
         "scenarioDates": list(config.POLICY_SCENARIOS),
         "aprChecks": list(config.APR_CHECKS), "lossChecks": list(config.LOSS_CHECKS),
-        "featureNames": {c: config.feature_name(c) for c in set(points["feature"]) | set(importance["feature"])},
+        "featureNames": {c: config.feature_name(c) for c in sorted(set(points["feature"]) | set(importance["feature"]))},
         "statusMeaning": {str(k): v for k, v in config.STATUS_MEANING.items()},
         "source": {"mcb": config.MCB_CARD_URL, "uci": config.UCI_PAGE},
     })
