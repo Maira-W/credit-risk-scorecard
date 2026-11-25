@@ -1,10 +1,14 @@
 # Credit card default scorecard
 
+[![tests](https://github.com/Maira-W/credit-risk-scorecard/actions/workflows/ci.yml/badge.svg)](https://github.com/Maira-W/credit-risk-scorecard/actions/workflows/ci.yml)
+![python 3.11](https://img.shields.io/badge/python-3.11-blue)
+[![licence: MIT](https://img.shields.io/badge/licence-MIT-green)](LICENSE)
+
 **Who will miss next month's card payment, and where should a lender draw the line?**
 
 A points scorecard of the kind banks use, built on {{accounts:,}} credit card accounts, tested against a gradient-boosting model, checked for calibration and fairness, and priced with Pakistan's policy rate: the dearer money gets, the safer an account has to be to be worth approving.
 
-[**Interactive dashboard**](dashboard/dashboard.html) (open it in a browser; no server needed) · [Recommendation memo](docs/recommendation_memo.md) · [Method](docs/methodology.md) · [Model card](docs/model_card.md) · [Data sources](docs/data_sources.md) · [Walkthrough notebook](notebooks/credit_risk_walkthrough.ipynb)
+[**Interactive dashboard**](https://maira-w.github.io/credit-risk-scorecard/) (the same page is in `dashboard/dashboard.html`: open it in a browser, no server needed) · [Recommendation memo](docs/recommendation_memo.md) · [Method](docs/methodology.md) · [Model card](docs/model_card.md) · [Data sources](docs/data_sources.md) · [Walkthrough notebook](notebooks/credit_risk_walkthrough.ipynb)
 
 > **Read this first.** The cardholders are {{accounts:,}} accounts of one bank in Taiwan in 2005, not Pakistani borrowers (I found no public borrower-level credit data for Pakistan). "Default" means *missing next month's payment*, not a loan written off. What is Pakistani is the cost of money (the State Bank of Pakistan's policy rate, {{rate_now}} on {{rate_now_date}}) and the card pricing (MCB's published markup). The running cost is an assumption and the loss on a missed payment is estimated from this file's own roll rates, with two assumptions of its own; the answer moves a lot with them. This is a method demonstration, not lending advice.
 
