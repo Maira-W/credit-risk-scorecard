@@ -32,6 +32,10 @@ A short, standard description of the model: what it is for, how well it works, f
 
 {{risk_bands_table}}
 
+**An explainable alternative.** {{mono_sentence}}
+
+**Where the scorecard and gradient boosting disagree.** {{swap_sentence}}
+
 Three hold-out accounts and the reasons the card gave:
 
 {{examples_table}}
@@ -42,16 +46,18 @@ Sex, age, education and marital status are **not** inputs. They are audited at t
 
 {{fairness_table}}
 
-{{fairness_headline}} {{fairness_reading}} That does not make the gaps acceptable: under the four-fifths screening rule they would need a closer look, for example whether a different feature set or cut-off narrows them at a small cost. {{sex_sentence}}
+{{fairness_headline}} {{fairness_reading}} {{fairness_caveat}} {{sex_sentence}}
 
 Could the inputs act as a stand-in for the protected attributes? A model that tries to tell the groups apart from the scorecard's inputs reaches an AUC of {{proxy_sex:.2f}} for sex, {{proxy_age:.2f}} for being 40 or over and {{proxy_edu:.2f}} for a university education (0.5 is no information): the inputs carry some signal about each, as behaviour usually does. {{demographics_sentence}}.
+
+What lies behind the gaps: the scorecard is a sum of points, so a group's gap splits by feature (looked at here for the groups that are flagged or within 10 points of the line, disparate impact under {{watch_below}}). {{drivers_sentence}}
 
 This is a screening exercise on one data set, not legal advice, and the four-fifths rule is a US convention, not a Pakistani legal test.
 
 ## Limits and risks
 
 - **Not Pakistani data**, and from a crisis-era book ({{default_rate_pct}} missed a payment in one month).
-- **"Default" is a missed payment.** The economics assume what a default costs; the data cannot say.
+- **"Default" is a missed payment.** The loss on it is estimated from roll rates over five months at the start of a crisis (a floor, not a forecast), with two assumptions; the data cannot say more.
 - **One cohort, no out-of-time test.** The population stability index between development and hold-out is {{psi_score:.3f}}, which only shows the split is random.
 - **Selection.** Only accounts the bank had approved are in the data; applicants it rejected are not.
 - **Repayment codes** are only partly documented (see data sources).
@@ -66,3 +72,5 @@ This is a screening exercise on one data set, not legal advice, and the four-fif
 | AUC and KS on matured accounts | quarterly | fall of more than 0.03 | refit |
 | Approval rate and default rate by group | whenever the cut-off changes | any group under four-fifths of the best group's approval rate | review features and cut-off |
 | Cut-off against the policy rate | whenever the State Bank changes its rate | the break-even probability moves by 1 percentage point or more | reset the cut-off |
+| Roll rates behind the loss | quarterly | the chance that a missed payment reaches status {{writeoff_status}} within a year moves by 2 percentage points or more from {{p_wo_base}} | re-estimate the loss, then reset the cut-off |
+| Directions of the explainable model | at every refit | any account whose probability moves the wrong way in the check of `advanced.monotone_violations` | do not deploy until it passes |

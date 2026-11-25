@@ -37,6 +37,7 @@ def test_the_refit_in_the_notebook_reproduced_the_committed_numbers(nb):
     printed = "\n".join(o.get("text", "") for cell in nb.cells if cell.cell_type == "code" for o in cell.outputs if o.output_type == "stream")
     assert f"{summary['metrics']['scorecard']['auc']:.4f} in the results" in printed
     assert f"{summary['data']['accounts']:,} accounts" in printed and f"{summary['economics']['break_even_pd']:.2%}" in printed
+    assert f"{summary['rollrates']['base_probability']:.2%} in the results" in printed and f"= {summary['economics']['loss']:.2%}" in printed       # the roll-rate loss was recomputed
 
 
 def test_the_notebook_has_the_plots_it_describes(nb):

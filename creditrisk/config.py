@@ -161,6 +161,7 @@ CHALLENGER_THREADS = 2
 # ---------------------------------------------------------------------------
 PROTECTED = ("sex", "age_band", "education", "marriage")
 DISPARATE_IMPACT_MIN = 0.80      # the "four-fifths" screening rule: a group approved at under 80% of the best-treated group's rate is flagged
+DISPARATE_IMPACT_WATCH = 0.90    # groups between the line and this value are not flagged, but are the ones whose approval gaps the second layer takes apart
 MIN_GROUP_SIZE = 100             # a group with fewer accounts in the hold-out is shown but not judged
 
 # ---------------------------------------------------------------------------
@@ -169,11 +170,31 @@ MIN_GROUP_SIZE = 100             # a group with fewer accounts in the hold-out i
 # ---------------------------------------------------------------------------
 ECON_APR = 0.44                  # MCB's published retail markup: 3.67% a month, "an APR of up to 44%" (July to December 2026)
 ECON_OPEX = 0.05                 # servicing, collection and fraud costs, a year, as a share of balances: an assumption
-ECON_LOSS = 0.15                 # loss on an account that defaults, as a share of its balance: an assumption (see docs/methodology.md)
-LOSS_CHECKS = (0.10, 0.15, 0.20, 0.30, 0.40)
+# The loss on an account that misses a payment is not in the data (the label is a missed payment, not a write-off), so it is built from
+# the roll rates of the repayment history (creditrisk/rollrates.py): the chance that a missed payment grows into a write-off within
+# ECON_HORIZON months, times the share of the balance never recovered, plus a cost of collection and of income lost while the account is late.
+ECON_WRITEOFF_STATUS = 4         # base case: written off once the status reaches 4 (the conservative end of the evidence; 5 and 6 are also tried)
+WRITEOFF_CHECKS = (4, 5, 6)
+ECON_HORIZON = 12                # months in which a missed payment may turn into a write-off
+ECON_LGD = 0.85                  # share of a written-off balance that is never recovered: an assumption
+ECON_COLLECTION_COST = 0.02      # collection cost and income lost while the account is late, as a share of its balance: an assumption
+ECON_LOSS_STRESS = 0.15          # the loss assumed before the roll rates were measured, kept as a stress value
+STRESS_LOSSES = (0.15, 0.30)
 APR_CHECKS = (0.30, 0.36, 0.44)
 # The policy-rate dates shown as scenarios: the low before the 2021-23 tightening, the rate in mid-2022, the peak, the easing, now.
 POLICY_SCENARIOS = ("2021-10-01", "2022-07-08", "2023-06-27", "2024-12-17", "2025-12-16", "2026-10-27")
+
+# Stress tests: (name, factor applied to the odds of default, policy-rate date to take the funding cost from, or None for the current rate)
+STRESS_SCENARIOS = (("Base case", 1.0, None), ("Defaults 25% higher", 1.25, None), ("Defaults 50% higher", 1.5, None), ("Defaults double", 2.0, None),
+                    ("Policy rate at its 2023 peak", 1.0, "2023-06-27"), ("2023 peak rate and defaults 50% higher", 1.5, "2023-06-27"))
+LOCAL_DEFAULT_RATES = (0.05, 0.08, 0.12)         # monthly missed-payment rates of another lender's book, for re-anchoring the scorecard
+PRICING_GROUPS = 10                              # the scorecard probability cut into this many equal groups for the pricing table
+
+# What the gradient-boosting model may be told about each feature, for the monotone version: +1 more of it never means less risk, -1 never more.
+# Repayment statuses are codes, not quantities, and credit used is U-shaped at the low end, so neither is constrained.
+MONOTONE = {"limit": -1, "paid_sep": -1, "paid_aug": -1, "paid_jul": -1, "paid_jun": -1, "paid_may": -1, "paid_apr": -1, "paid_total": -1,
+            "n_delinquent": 1, "n_delinquent_recent": 1, "months_since_delinquent": -1, "worst_status": 1,
+            "pay_ratio_sep": -1, "pay_ratio_aug": -1, "pay_ratio_jul": -1, "pay_ratio_jun": -1, "pay_ratio_may": -1, "pay_ratio_avg": -1, "pay_ratio_total": -1}
 
 # ---------------------------------------------------------------------------
 # Palette shared by the figures and the dashboard

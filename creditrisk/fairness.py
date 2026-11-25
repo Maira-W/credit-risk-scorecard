@@ -93,3 +93,16 @@ def proxy_strength(X: pd.DataFrame, target, columns, folds: int = 3, seed: int =
                                    random_state=seed, verbose=-1).fit(X.iloc[train][list(columns)], target[train])
         p[valid] = model.predict_proba(X.iloc[valid][list(columns)])[:, 1]
     return validation.auc(target, p)
+
+
+def point_gaps(points: pd.DataFrame, groups: pd.Series, reference, others) -> pd.DataFrame:
+    """What lies behind a gap in approval: the average points each group gets from each feature of the scorecard, against a reference
+    group's. The scorecard adds up points, so the gaps add up to the gap in the average score; a negative gap means the group gets fewer
+    points than the reference from that feature."""
+    mean = points.groupby(np.asarray(groups)).mean()
+    rows = []
+    for group in others:
+        gap = mean.loc[group] - mean.loc[reference]
+        rows += [{"group": group, "reference": reference, "feature": feature, "points_gap": float(value), "total_points_gap": float(gap.sum())}
+                 for feature, value in gap.items()]
+    return pd.DataFrame(rows)

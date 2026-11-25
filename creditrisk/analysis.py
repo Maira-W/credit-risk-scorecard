@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from . import build, config, economics, fairness, macro, models, scorecard, validation
+from . import advanced, build, config, economics, fairness, macro, models, rollrates, scorecard, validation
 
 MODEL_NAMES = {
     "naive": "Naive: last month's status only",
@@ -107,7 +107,7 @@ def segment_table(df: pd.DataFrame) -> pd.DataFrame:
 # ---------------------------------------------------------------------------
 # Fitting and validating
 # ---------------------------------------------------------------------------
-def holdout_table(y, preds: dict, draws: int) -> tuple[pd.DataFrame, pd.DataFrame]:
+def holdout_table(y, preds: dict, draws: int, comparisons=COMPARISONS) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Hold-out metrics of every model with bootstrap intervals, and the paired differences between models."""
     boots = {name: validation.bootstrap(func, y, preds, draws) for name, func in
              (("auc", validation.auc), ("ks", validation.ks), ("brier", validation.brier))}
@@ -122,7 +122,7 @@ def holdout_table(y, preds: dict, draws: int) -> tuple[pd.DataFrame, pd.DataFram
         row["capture_top_decile"], row["capture_top_3_deciles"] = float(lift["capture"].iloc[0]), float(lift["capture"].iloc[2])
         rows.append(row)
     pairs = []
-    for a, b in COMPARISONS:
+    for a, b in comparisons:
         for metric, draws_table in boots.items():
             diff = draws_table[a] - draws_table[b]
             low, high = validation.interval(diff)
@@ -323,9 +323,25 @@ def run(settings: Settings | None = None) -> dict:
     importance["share"] = importance["mean_abs_shap"] / importance["mean_abs_shap"].sum()
     importance.sort_values("mean_abs_shap", ascending=False).to_csv(out / "challenger_importance.csv", index=False, lineterminator="\n")
 
+    # --- the loss on a missed payment, from the roll rates of the development accounts' own repayment history
+    evidence_table, roll = rollrates.evidence(dev, y_dev, draws=settings.bootstrap_draws)
+    evidence_table.to_csv(out / "rollrates_evidence.csv", index=False, lineterminator="\n")
+    rollrates.matrix_table(roll["counts"]).to_csv(out / "rollrates_matrix.csv", index=False, lineterminator="\n")
+    rollrates.horizon_table(roll["matrix"], roll["entry_october"]).to_csv(out / "rollrates_horizons.csv", index=False, lineterminator="\n")
+    roll["split"].to_csv(out / "rollrates_split.csv", index=False, lineterminator="\n")
+    base_evidence = evidence_table[evidence_table["write_off_status"] == config.ECON_WRITEOFF_STATUS].iloc[0]
+    summary["rollrates"] = {
+        "months": list(rollrates.MONTHS), "transitions": int(roll["counts"].sum()), "p_current_to_late": roll["p_current_to_late"],
+        "p_cure_from_first_late": roll["p_cure_from_first_late"], "p_stay_first_late": roll["p_stay_first_late"],
+        "p_worse_from_first_late": roll["p_worse_from_first_late"], "entry": roll["entry"].tolist(), "entry_october": roll["entry_october"].tolist(),
+        "write_off_status": config.ECON_WRITEOFF_STATUS,
+        "horizon": config.ECON_HORIZON, "lgd": config.ECON_LGD, "collection_cost": config.ECON_COLLECTION_COST,
+        "base_probability": float(base_evidence["probability"]), "base_loss": float(base_evidence["loss"]), "loss_stress": config.ECON_LOSS_STRESS}
+
     # --- the economics: the cut-off the data support, and what it earns
     policy = macro.policy_rate()
-    base = economics.Economics(revolve_share=economics.revolve_share(dev), funding=economics.policy_rate_on(str(policy.iloc[-1]["effective_date"].date()), policy))
+    base = economics.Economics(revolve_share=economics.revolve_share(dev), funding=economics.policy_rate_on(str(policy.iloc[-1]["effective_date"].date()), policy),
+                               loss=float(base_evidence["loss"]))
     balance_dev = economics.exposure(dev)
     tables_hold = {name: economics.threshold_table(y_hold, preds[name], balance_hold) for name in DECISION_MODELS}
     tables_dev = {name: economics.threshold_table(y_dev, oof[name], balance_dev) for name in DECISION_MODELS}
@@ -346,8 +362,18 @@ def run(settings: Settings | None = None) -> dict:
     pd.concat(curves).to_csv(out / "profit_curve.csv", index=False, lineterminator="\n")
     scen = economics.scenarios(tables_hold["scorecard"], base, config.POLICY_SCENARIOS, policy)
     scen.to_csv(out / "scenarios.csv", index=False, lineterminator="\n")
-    sens = economics.sensitivity(tables_hold["scorecard"], base, config.LOSS_CHECKS, config.APR_CHECKS)
+    loss_checks = sorted(float(v) for v in evidence_table["loss"]) + list(config.STRESS_LOSSES)
+    sens = economics.sensitivity(tables_hold["scorecard"], base, loss_checks, config.APR_CHECKS)
     sens.to_csv(out / "sensitivity.csv", index=False, lineterminator="\n")
+
+    labels = {float(r.loss): f"Roll rates, written off at status {int(r.write_off_status)}" + (" (base case)" if int(r.write_off_status) == config.ECON_WRITEOFF_STATUS else "")
+              for r in evidence_table.itertuples()} | {float(v): f"Stress: {v:.0%} of the balance" for v in config.STRESS_LOSSES}
+    case_rows = []
+    for loss in loss_checks:
+        case = base.with_(loss=loss)
+        case_approvals = {"approve_all": np.ones(len(hold), dtype=bool), "scorecard": preds["scorecard"] <= case.break_even, "challenger": preds["challenger"] <= case.break_even}
+        case_rows.append(strategy_profits(y_hold, balance_hold, case_approvals, case, settings.bootstrap_draws).assign(case=labels[loss], loss=loss, break_even=case.break_even))
+    pd.concat(case_rows).to_csv(out / "loss_cases.csv", index=False, lineterminator="\n")
 
     cutoff_score = int(math.ceil(float(card.scaling.score(base.break_even)))) if base.break_even > 0 else None
     approvals = {"approve_all": np.ones(len(hold), dtype=bool),
@@ -392,6 +418,46 @@ def run(settings: Settings | None = None) -> dict:
     summary["fairness"] = {"flagged": [f"{r.attribute}: {r.group}" for r in judged.itertuples() if r.flagged],
                            "lowest_disparate_impact": float(judged["disparate_impact"].min()),
                            "worst_calibration_ratio": float((judged["calibration_ratio"] - 1).abs().max() + 1)}
+
+    # --- what drives the approval gaps: the scorecard adds up points, so each group's gap splits by feature
+    points_hold = card.points(hold)
+    driver_rows = []
+    for attribute in config.PROTECTED:
+        part = fair[(fair["model"] == "scorecard") & (fair["attribute"] == attribute) & (fair["accounts"] >= config.MIN_GROUP_SIZE)]
+        reference = part.loc[part["approval_rate"].idxmax()]
+        gaps = fairness.point_gaps(points_hold, hold[attribute], reference["group"], [g for g in part["group"] if g != reference["group"]])
+        gaps = gaps.merge(part[["group", "approval_rate", "disparate_impact", "default_rate", "flagged"]], on="group")
+        driver_rows.append(gaps.assign(attribute=attribute, reference_approval_rate=reference["approval_rate"], reference_default_rate=reference["default_rate"]))
+    pd.concat(driver_rows).to_csv(out / "fairness_drivers.csv", index=False, lineterminator="\n")
+
+    # --- the second layer: an explainable boosting model, swap sets, stress tests, pricing and re-anchoring to another lender
+    def mono_make() -> models.Challenger:
+        return models.Challenger(build.BEHAVIOUR, params, monotone=config.MONOTONE)
+
+    oof_mono = models.out_of_fold(mono_make, dev, y_dev, dev["group"].to_numpy(), settings.cv_folds)
+    platt_mono = models.Platt().fit(oof_mono, y_dev)
+    mono = mono_make().fit(dev, y_dev)
+    preds_mono = np.round(platt_mono.predict(mono.predict_proba(hold)), PROBABILITY_DECIMALS)
+    adv_preds = {"scorecard": preds["scorecard"], "monotone": preds_mono, "challenger": preds["challenger"]}
+    adv_metrics, adv_comparisons = holdout_table(y_hold, adv_preds, settings.bootstrap_draws, comparisons=(("monotone", "scorecard"), ("challenger", "monotone")))
+    adv_metrics.to_csv(out / "advanced_models.csv", index=False, lineterminator="\n")
+    adv_comparisons.to_csv(out / "advanced_comparisons.csv", index=False, lineterminator="\n")
+    adv_approvals = {"approve_all": np.ones(len(hold), dtype=bool), **{name: adv_preds[name] <= base.break_even for name in adv_preds}}
+    strategy_profits(y_hold, balance_hold, adv_approvals, base, settings.bootstrap_draws).to_csv(out / "advanced_profits.csv", index=False, lineterminator="\n")
+    violations = pd.concat([advanced.monotone_violations(mono, hold, config.MONOTONE).assign(model="monotone"),
+                            advanced.monotone_violations(fitted["challenger"], hold, config.MONOTONE).assign(model="challenger")])
+    violations.to_csv(out / "monotone_check.csv", index=False, lineterminator="\n")
+    summary["monotone"] = {"features_constrained": len(config.MONOTONE), "violations": int(violations.loc[violations["model"] == "monotone", "violations"].sum()),
+                           "violations_unconstrained": int(violations.loc[violations["model"] == "challenger", "violations"].sum()),
+                           "accounts_checked": int(violations["accounts"].iloc[0])}
+    pair_names = {"scorecard": "scorecard", "monotone": "monotone boosting", "challenger": "gradient boosting"}
+    swaps = [advanced.swap_sets(y_hold, balance_hold, adv_approvals[a], adv_approvals[b], base, (pair_names[a], pair_names[b])).assign(pair=f"{pair_names[a]} against {pair_names[b]}")
+             for a, b in (("scorecard", "challenger"), ("scorecard", "monotone"), ("monotone", "challenger"))]
+    pd.concat(swaps).to_csv(out / "swap_sets.csv", index=False, lineterminator="\n")
+    advanced.stress_table(preds["scorecard"], balance_hold, base, config.STRESS_SCENARIOS, policy).to_csv(out / "stress.csv", index=False, lineterminator="\n")
+    advanced.pricing_table(preds["scorecard"], balance_hold, base).to_csv(out / "pricing.csv", index=False, lineterminator="\n")
+    advanced.local_rate_table(preds["scorecard"], balance_hold, base, card.scaling, config.LOCAL_DEFAULT_RATES, float(y_dev.mean())).to_csv(
+        out / "local_rate.csv", index=False, lineterminator="\n")
 
     # --- Pakistan context
     npl, credit = macro.npl_ratio(), macro.private_credit()

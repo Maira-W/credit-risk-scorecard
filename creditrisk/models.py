@@ -65,14 +65,20 @@ class Platt:
 class Challenger:
     """Gradient-boosted trees (LightGBM) on the columns it is given."""
 
-    def __init__(self, columns, params: dict | None = None, seed: int = config.SEED, threads: int = config.CHALLENGER_THREADS):
+    def __init__(self, columns, params: dict | None = None, seed: int = config.SEED, threads: int = config.CHALLENGER_THREADS, monotone: dict | None = None):
         self.columns = list(columns)
         self.params = {**config.CHALLENGER_PARAMS, **(params or {})}
         self.seed, self.threads = seed, threads
+        self.monotone = monotone
 
     def fit(self, X: pd.DataFrame, y) -> Challenger:
         import lightgbm as lgb
-        self.model_ = lgb.LGBMClassifier(**self.params, n_jobs=self.threads, random_state=self.seed, verbose=-1,
+        params = dict(self.params)
+        if self.monotone:
+            # a feature marked +1 can only push the probability of default up as it rises, -1 only down; 0 (or absent) is left free
+            params["monotone_constraints"] = [int(self.monotone.get(c, 0)) for c in self.columns]
+            params["monotone_constraints_method"] = "intermediate"
+        self.model_ = lgb.LGBMClassifier(**params, n_jobs=self.threads, random_state=self.seed, verbose=-1,
                                          deterministic=True, force_row_wise=True)
         self.model_.fit(X[self.columns], np.asarray(y))
         return self

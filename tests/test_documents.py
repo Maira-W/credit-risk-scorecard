@@ -95,11 +95,59 @@ def test_the_fairness_headline_lists_exactly_the_flagged_groups(values):
     names = {"sex": "sex", "age_band": "age", "education": "education", "marriage": "marital status"}
     flagged = [f"{names[r.attribute]}: {r.group}" for r in f.itertuples() if r.flagged]
     assert values["n_flagged"] == len(flagged)
-    for name in flagged:
-        assert name in values["fairness_headline"]
-    for r in f.itertuples():
-        if not r.flagged:
-            assert f"{names[r.attribute]}: {r.group}" not in values["fairness_headline"]
+    headline = values["fairness_headline"]
+    if flagged:
+        for name in flagged:
+            assert name in headline
+        for r in f.itertuples():
+            if not r.flagged:
+                assert f"{names[r.attribute]}: {r.group}" not in headline
+    else:                                                                    # nobody flagged: it says so, and names the two groups closest to the line
+        assert f"none of the {len(f)} groups" in headline
+        for r in f.sort_values("disparate_impact").head(2).itertuples():
+            assert f"{names[r.attribute]}: {r.group} ({r.disparate_impact:.2f})" in headline
+
+
+def test_the_fairness_caveats_follow_the_flags_and_the_ranges(values):
+    f = pd.read_csv(config.PROCESSED / "fairness_groups.csv")
+    f = f[(f["model"] == "scorecard") & (f["accounts"] >= config.MIN_GROUP_SIZE)]
+    names = {"sex": "sex", "age_band": "age", "education": "education", "marriage": "marital status"}
+    if f["flagged"].any():
+        assert "acceptable" in values["fairness_caveat"] and "acceptable" in values["fairness_close"]
+    else:
+        assert "does not make the gaps zero" in values["fairness_caveat"] and "clean bill of health" in values["fairness_close"]
+        for r in f.itertuples():                                              # a group whose 95% range reaches under the line is named, and only such a group
+            named = f"{names[r.attribute]}: {r.group}" in values["fairness_caveat"]
+            assert named == (r.di_low < config.DISPARATE_IMPACT_MIN), (r.attribute, r.group)
+
+
+def test_the_drivers_table_covers_the_flagged_and_the_close_groups_and_no_others(values):
+    d = pd.read_csv(config.PROCESSED / "fairness_drivers.csv")
+    shown = d["flagged"] | (d["disparate_impact"] < config.DISPARATE_IMPACT_WATCH)
+    for (attribute, group), part in d.groupby(["attribute", "group"]):
+        line = f"{docs.TITLES[attribute]}: {group} against "
+        assert (line in values["drivers_table"]) == bool(shown[part.index].all()), (attribute, group)
+
+
+def test_the_roll_rate_sentences_quote_the_results(values):
+    split = pd.read_csv(config.PROCESSED / "rollrates_split.csv")
+    base = split[split["write_off_status"] == config.ECON_WRITEOFF_STATUS].set_index("group")
+    first, late = base.loc["Current in September"], base.loc["Late in September"]
+    assert values["loss_current"] == docs._p(first["loss"], 1) and values["loss_late"] == docs._p(late["loss"], 1)
+    assert values["loss_current"] in values["split_sentence"] and values["loss_late"] in values["split_sentence"]
+    assert docs._p(first["share"], 0) in values["split_sentence"] and values["split_table"].count("\n") == 3          # header, rule and one line for each group
+    mixed = float(first["share"] * first["loss"] + late["share"] * late["loss"])                           # the loss is linear in where the accounts start
+    assert values["loss_base"] == docs._p(mixed, 1)
+
+
+def test_the_explainable_model_sentence_quotes_the_check(values):
+    check = pd.read_csv(config.PROCESSED / "monotone_check.csv")
+    free = check[check["model"] == "challenger"]
+    checks = (check["model"] == "monotone").sum() * int(check["accounts"].iloc[0])
+    text = values["mono_sentence"]
+    assert f"{int(free['violations'].sum()):,} of them" in text and f"({checks:,} account-and-feature checks)" in text
+    assert f"{free['largest_fall'].max() * 100:.1f}" in text
+    assert ("the monotone model in none" in text) == (check[check["model"] == "monotone"]["violations"].sum() == 0)
 
 
 def test_the_sex_sentence_says_which_way_the_difference_goes(values):

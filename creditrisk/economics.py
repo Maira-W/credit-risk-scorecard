@@ -26,7 +26,7 @@ class Economics:
     revolve_share: float = 1.0       # the share of balances that earn the APR: the rest is repaid within the interest-free period
     funding: float = 0.12            # a year, as a share of balances
     opex: float = config.ECON_OPEX
-    loss: float = config.ECON_LOSS
+    loss: float = config.ECON_LOSS_STRESS
 
     @property
     def yield_(self) -> float:

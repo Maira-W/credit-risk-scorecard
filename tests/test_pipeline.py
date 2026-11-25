@@ -51,7 +51,7 @@ def test_the_documents_and_figures_can_be_made_from_the_results(fast_run, tmp_pa
                         ("ROOT", tmp_path)):
         monkeypatch.setattr(config, name, value)
     report.run()
-    assert len(list((tmp_path / "docs" / "figures").glob("*.png"))) == 14
+    assert len(list((tmp_path / "docs" / "figures").glob("*.png"))) == 20
     assert (tmp_path / "dashboard" / "dashboard.html").stat().st_size > 50_000 and (tmp_path / "index.html").exists()
     readme = (tmp_path / "README.md").read_text(encoding="utf-8")
     assert "{{" not in readme and "Credit card default scorecard" in readme

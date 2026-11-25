@@ -91,7 +91,9 @@ def load() -> dict:
          "policy": macro.policy_rate()}
     for name in ("segments", "scorecard_points", "scorecard_screening", "scorecard_variants", "holdout_metrics", "holdout_comparisons", "cv_summary", "calibration",
                  "lift", "risk_bands", "stability_psi", "challenger_importance", "cutoffs", "strategies", "scenarios", "sensitivity", "fairness_groups",
-                 "fairness_proxy", "subset_metrics", "challenger_tuning"):
+                 "fairness_proxy", "subset_metrics", "challenger_tuning", "rollrates_matrix", "rollrates_evidence", "rollrates_horizons", "loss_cases",
+                 "advanced_models", "advanced_comparisons", "advanced_profits", "monotone_check", "swap_sets", "stress", "pricing", "local_rate",
+                 "fairness_drivers", "rollrates_split"):
         r[name] = pd.read_csv(p / f"{name}.csv")
     return r
 
@@ -170,7 +172,7 @@ def sensitivity_table(r: dict) -> str:
     for apr in sorted(s["apr"].unique(), reverse=True):
         part = s[s["apr"] == apr].set_index("loss")
         rows.append([_p(apr, 0)] + [f"{_p(part.loc[x, 'approved_share'], 0)} (under {_p(part.loc[x, 'break_even_pd'])})" for x in losses])
-    return _table(["Card APR, loss on a default:"] + [_p(x, 0) for x in losses], rows, "l" + "r" * len(losses))
+    return _table(["Card APR, loss on a missed payment:"] + [_p(x, 1) for x in losses], rows, "l" + "r" * len(losses))
 
 
 def fairness_table(r: dict, model: str = "scorecard") -> str:
@@ -264,8 +266,244 @@ def policy_table(r: dict) -> str:
 
 
 # ---------------------------------------------------------------------------
+# The second layer: tables
+# ---------------------------------------------------------------------------
+TITLES = {"sex": "Sex", "age_band": "Age", "education": "Education", "marriage": "Marital status"}
+
+
+def rollrates_matrix_table(r: dict) -> str:
+    m = r["rollrates_matrix"]
+    names = list(dict.fromkeys(m["from_state"]))
+    short = {n: n.replace("Late, status ", "Late ").replace(" or more", "+") for n in names}
+    rows = []
+    for a in names:
+        part = m[m["from_state"] == a].set_index("to_state")
+        rows.append([short[a]] + [_p(part.loc[b, "probability"], 0) if part.loc[b, "probability"] >= 0.005 else "" for b in names] + [f"{int(part['moves'].sum()):,}"])
+    return _table(["This month, next month:"] + [short[n] for n in names] + ["Moves"], rows, "l" + "r" * (len(names) + 1))
+
+
+def evidence_table(r: dict) -> str:
+    e = r["rollrates_evidence"]
+    rows = [[f"Status {int(t.write_off_status)} or worse" + (" (base case)" if int(t.write_off_status) == config.ECON_WRITEOFF_STATUS else ""), _p(t.probability), f"{_p(t.low)} to {_p(t.high)}",
+             _p(t.loss), f"{_p(t.loss_low)} to {_p(t.loss_high)}"] for t in e.itertuples()]
+    return _table(["Written off at", f"Chance within {int(e['months'].iloc[0])} months", "95% range", "Loss", "95% range"], rows, "lrrrr")
+
+
+def split_table(r: dict) -> str:
+    s = r["rollrates_split"]
+    rows = []
+    for group in dict.fromkeys(s["group"]):
+        part = s[s["group"] == group]
+        base = part[part["write_off_status"] == config.ECON_WRITEOFF_STATUS].iloc[0]
+        rows.append([group, _p(part["share"].iloc[0], 0)] + [f"{_p(t.probability)} ({_p(t.loss)})" for t in part.sort_values("write_off_status").itertuples()]
+                    + [f"{_p(base['low'])} to {_p(base['high'])}"])
+    lines = sorted(int(x) for x in s["write_off_status"].unique())
+    return _table(["Where the account stood in September", "Share of missed payments"] + [f"Written off at status {x}+ (loss)" for x in lines] + [f"95% range, status {config.ECON_WRITEOFF_STATUS}+"],
+                  rows, "lr" + "r" * (len(lines) + 1))
+
+
+def loss_cases_table(r: dict) -> str:
+    c = r["loss_cases"]
+    rows = []
+    for case in dict.fromkeys(c["case"]):
+        part = c[c["case"] == case].set_index("rule")
+        sc, al, ch = part.loc["scorecard"], part.loc["approve_all"], part.loc["challenger"]
+        rows.append([case, _p(sc["loss"]), _p(sc["break_even"]), _p(sc["approved_share"], 0), f"{_nt(sc['profit_per_account'])} ({_nt(sc['low'])} to {_nt(sc['high'])})",
+                     _nt(al["profit_per_account"]), _nt(ch["profit_per_account"])])
+    return _table(["Loss case", "Loss", "Break-even probability", "Scorecard approves", "Scorecard profit per account a month (95% range)", "Approving everyone",
+                   "Gradient boosting"], rows, "lrrrrrr")
+
+
+def advanced_models_table(r: dict) -> str:
+    m, p = r["advanced_models"].set_index("model"), r["advanced_profits"].set_index("rule")
+    names = {"scorecard": "Scorecard", "monotone": "Monotone boosting", "challenger": "Gradient boosting"}
+    rows = [[names[k], f"{m.loc[k, 'auc']:.3f} ({m.loc[k, 'auc_low']:.3f} to {m.loc[k, 'auc_high']:.3f})", f"{m.loc[k, 'ks']:.3f}", f"{m.loc[k, 'brier']:.4f}",
+             f"{m.loc[k, 'calibration_slope']:.2f}", f"{_nt(p.loc[k, 'profit_per_account'])} ({_nt(p.loc[k, 'low'])} to {_nt(p.loc[k, 'high'])})"] for k in names]
+    return _table(["Model", "AUC (95% range)", "KS", "Brier", "Calibration slope", "Profit per account at the break-even cut-off (95% range)"], rows, "lrrrrr")
+
+
+def swap_table(r: dict) -> str:
+    t = r["swap_sets"]
+    blocks = []
+    for pair in dict.fromkeys(t["pair"]):
+        rows = [[x.cell, _p(x.share), "" if pd.isna(x.default_rate) else _p(x.default_rate), "" if pd.isna(x.mean_balance) else _nt(x.mean_balance), _nt(x.profit_if_approved)]
+                for x in t[t["pair"] == pair].itertuples()]
+        blocks.append(f"**{pair[0].upper() + pair[1:]}**\n\n" + _table(["Who approves", "Accounts", "Defaulted", "Average balance", "Profit if approved"], rows, "lrrrr"))
+    return "\n\n".join(blocks)
+
+
+def stress_table(r: dict) -> str:
+    rows = [[x.scenario, _rate(x.policy_rate), _p(x.mean_probability), _p(x.approved_kept, 0), _nt(x.profit_kept), _p(x.approved_reset, 0), _nt(x.profit_reset)]
+            for x in r["stress"].itertuples()]
+    return _table(["Scenario", "Policy rate", "Average default probability", "Cut-off kept: approved", "Kept: expected profit", "Re-set: approved", "Re-set: expected profit"],
+                  rows, "lrrrrrr")
+
+
+def pricing_table(r: dict) -> str:
+    rows = [[int(x.group), _p(x.mean_probability), _nt(x.mean_balance), _p(x.required_apr, 0), "yes" if x.pays_at_current_apr else "no", _nt(x.expected_profit_per_account)]
+            for x in r["pricing"].itertuples()]
+    return _table(["Tenth (1 = safest)", "Average default probability", "Average balance", "Break-even APR", "Pays at the current APR", "Expected profit per account a month"],
+                  rows, "rrrrlr")
+
+
+def local_rate_table(r: dict) -> str:
+    rows = [[_p(x.local_default_rate) + (" (this file)" if abs(x.log_odds_shift) < 1e-9 else ""), x.cutoff_score, _p(x.approved_share, 0), _p(x.expected_default_rate_approved),
+             _nt(x.expected_profit_per_account)] for x in r["local_rate"].itertuples()]
+    return _table(["Monthly missed-payment rate of the lender's accounts", "Cut-off score", "Share approved", "Expected default rate of approved", "Expected profit per account a month"],
+                  rows, "rrrrr")
+
+
+def _watched(d: pd.DataFrame) -> pd.DataFrame:
+    """The groups whose approval gap is taken apart: flagged by the four-fifths rule, or within 10 points of it."""
+    return d[d["flagged"] | (d["disparate_impact"] < config.DISPARATE_IMPACT_WATCH)]
+
+
+def drivers_table(r: dict) -> str:
+    d = _watched(r["fairness_drivers"])
+    rows = []
+    for (attribute, group), part in d.groupby(["attribute", "group"], sort=False):
+        top = part.reindex(part["points_gap"].abs().sort_values(ascending=False).index).head(3)
+        rows.append([f"{TITLES[attribute]}: {group} against {part['reference'].iloc[0]}", _p(part["approval_rate"].iloc[0], 0), _p(part["reference_approval_rate"].iloc[0], 0),
+                     f"{part['disparate_impact'].iloc[0]:.2f}", f"{part['total_points_gap'].iloc[0]:+.1f}",
+                     "; ".join(f"{config.feature_name(f.feature)} ({f.points_gap:+.1f})" for f in top.itertuples())])
+    return (_table(["Group", "Approved", "Reference approved", "Disparate impact", "Average points gap", "Biggest contributors (points)"], rows, "lrrrrl") if rows
+            else "No group is flagged or close to the line.")
+
+
+# ---------------------------------------------------------------------------
 # The values every template may use
 # ---------------------------------------------------------------------------
+def advanced_values(r: dict, v: dict) -> dict:
+    """The sentences and numbers of the second layer, worded from the results."""
+    s, rr = r["summary"], r["summary"]["rollrates"]
+    ev = r["rollrates_evidence"].set_index("write_off_status")
+    base_row = ev.loc[rr["write_off_status"]]
+    out: dict = {"roll_months": "April to August", "roll_moves": f"{rr['transitions']:,}", "roll_cure": _p(rr["p_cure_from_first_late"], 0), "roll_stay": _p(rr["p_stay_first_late"], 0),
+                 "roll_worse": _p(rr["p_worse_from_first_late"], 0), "roll_into_late": _p(rr["p_current_to_late"], 1), "p_wo_base": _p(rr["base_probability"], 1),
+                 "loss_base": _p(rr["base_loss"], 1), "lgd_pct": _p(rr["lgd"], 0), "collection_pct": _p(rr["collection_cost"], 0), "writeoff_status": rr["write_off_status"],
+                 "horizon_months": rr["horizon"], "loss_stress_pct": _p(rr["loss_stress"], 0), "loss_low_pct": _p(ev["loss"].min(), 1), "loss_high_pct": _p(ev["loss"].max(), 1),
+                 "p_wo_base_range": f"{_p(base_row['low'], 1)} to {_p(base_row['high'], 1)}", "loss_base_range": f"{_p(base_row['loss_low'], 1)} to {_p(base_row['loss_high'], 1)}",
+                 "entry_current": _p(rr["entry"][0], 0), "entry_first_late": _p(rr["entry"][1], 0), "entry_deeper": _p(sum(rr["entry"][2:]), 0)}
+    landing = rr["entry_october"]
+    base_split = r["rollrates_split"][r["rollrates_split"]["write_off_status"] == rr["write_off_status"]].set_index("group")
+    first_miss, already_late = base_split.loc["Current in September"], base_split.loc["Late in September"]
+    out.update(landing_first=_p(landing[1], 0), landing_second=_p(landing[2], 0), landing_line=_p(sum(landing[rr["write_off_status"] - 1:]), 0),
+               share_current=_p(first_miss["share"], 0), share_late=_p(already_late["share"], 0), p_current=_p(first_miss["probability"], 1), p_late=_p(already_late["probability"], 1),
+               loss_current=_p(first_miss["loss"], 1), loss_late=_p(already_late["loss"], 1))
+    out["split_sentence"] = (
+        f"The loss depends on where the account stood. A first missed payment (an account that was current in September, {_p(first_miss['share'], 0)} of the missed payments) is written off "
+        f"within {rr['horizon']} months {_p(first_miss['probability'])} of the time, a loss of {_p(first_miss['loss'])}; an account that was already late ({_p(already_late['share'], 0)}), "
+        f"{_p(already_late['probability'])} of the time, a loss of {_p(already_late['loss'])}. The base case is the mix of the two, so a book of mostly current accounts would sit nearer the first figure.")
+    cases = r["loss_cases"]
+    scorecard_cases = cases[cases["rule"] == "scorecard"].sort_values("loss")
+    low = scorecard_cases.iloc[0]
+    stress = scorecard_cases[(scorecard_cases["loss"] - config.ECON_LOSS_STRESS).abs() < 1e-9].iloc[0]
+    all_low = cases[(cases["case"] == low["case"]) & (cases["rule"] == "approve_all")].iloc[0]
+    all_base = cases[(cases["loss"].sub(rr["base_loss"]).abs() < 1e-9) & (cases["rule"] == "approve_all")].iloc[0]
+    out["loss_cases_sentence"] = (
+        f"At the lowest loss the roll rates support ({_p(low['loss'])}), approving everyone {'earns' if all_low['profit_per_account'] > 0 else 'loses'} {_nt(abs(all_low['profit_per_account']))} "
+        f"per account a month and the break-even probability is {_p(low['break_even'])}, so {_p(low['approved_share'], 0)} of accounts are worth approving; at the base case "
+        f"({_p(rr['base_loss'])}) approving everyone {'earns' if all_base['profit_per_account'] > 0 else 'loses'} {_nt(abs(all_base['profit_per_account']))} and {_p(v_approved_base(r), 0)} are worth approving; "
+        f"at the {_p(stress['loss'], 0)} stress loss only {_p(stress['approved_share'], 0)} are.")
+
+    # --- explainable boosting
+    am, ap, ac, mc = r["advanced_models"].set_index("model"), r["advanced_profits"].set_index("rule"), r["advanced_comparisons"], r["monotone_check"]
+    def pick(model: str, against: str):
+        return ac[(ac["model"] == model) & (ac["against"] == against) & (ac["metric"] == "auc")].iloc[0]
+
+    def real(row) -> bool:
+        return bool(row["low"] > 0 or row["high"] < 0)
+
+    def sg(x: float) -> str:
+        return f"{x:+.4f}"
+
+    mono_vs_sc, free_vs_mono = pick("monotone", "scorecard"), pick("challenger", "monotone")
+    mono_violations, free_violations = int(mc[mc["model"] == "monotone"]["violations"].sum()), int(mc[mc["model"] == "challenger"]["violations"].sum())
+    out.update(mono_auc=am.loc["monotone", "auc"], mono_auc_lo=am.loc["monotone", "auc_low"], mono_auc_hi=am.loc["monotone", "auc_high"],
+               mono_profit=_nt(ap.loc["monotone", "profit_per_account"]), mono_profit_lo=_nt(ap.loc["monotone", "low"]), mono_profit_hi=_nt(ap.loc["monotone", "high"]),
+               mono_violations=mono_violations, free_violations=free_violations, violation_accounts=int(mc["accounts"].iloc[0]), mono_features=int((mc["model"] == "monotone").sum()),
+               mono_constraints=len(config.MONOTONE))
+    gap_free = float(free_vs_mono["difference"])
+    vs_free = "level with" if abs(gap_free) < 0.0005 else f"{abs(gap_free):.3f} {'below' if gap_free > 0 else 'above'}"
+    mono_row = ap.loc["monotone"]
+    profit_gap = float(mono_row["versus_scorecard"])
+    profit_real = mono_row["versus_scorecard_low"] > 0 or mono_row["versus_scorecard_high"] < 0
+    free_rows = mc[mc["model"] == "challenger"]
+    checks = int((mc["model"] == "monotone").sum() * mc["accounts"].iloc[0])
+    wrong_way = (f"free boosting moved the wrong way somewhere along the range in {free_violations:,} of them ({free_violations / checks:.0%}) and the monotone model in "
+                 f"{'none' if mono_violations == 0 else f'{mono_violations:,}'}")
+    if free_violations:
+        average_fall = float((free_rows["average_fall"] * free_rows["violations"]).sum() / free_violations) * 100
+        wrong_way += f"; where free boosting did, the probability fell below an earlier level by {average_fall:.1f} percentage points on average and by as much as {free_rows['largest_fall'].max() * 100:.1f} percentage points"
+    out["mono_sentence"] = (
+        f"A boosting model told which way {len(config.MONOTONE)} features must push the probability reaches an AUC of {am.loc['monotone', 'auc']:.3f}: "
+        f"{vs_free} free boosting's (95% range of the gap {sg(free_vs_mono['low'])} to {sg(free_vs_mono['high'])}; {'a real gap' if real(free_vs_mono) else 'within the noise'}) "
+        f"and {abs(mono_vs_sc['difference']):.3f} {'above' if mono_vs_sc['difference'] > 0 else 'below'} the scorecard's ({sg(mono_vs_sc['low'])} to {sg(mono_vs_sc['high'])}; "
+        f"{'a real gap' if real(mono_vs_sc) else 'within the noise'}). At the break-even cut-off it earns {_nt(mono_row['profit_per_account'])} per account a month: "
+        f"{_nt(abs(profit_gap))} {'more' if profit_gap > 0 else 'less'} than the scorecard's {_nt(ap.loc['scorecard', 'profit_per_account'])} (95% range of the gap "
+        f"{_nt(mono_row['versus_scorecard_low'])} to {_nt(mono_row['versus_scorecard_high'])}; {'a real difference' if profit_real else 'a difference that could be chance on a test this size'}), "
+        f"against {_nt(ap.loc['challenger', 'profit_per_account'])} for free boosting. Moving each constrained feature across its range for {int(mc['accounts'].iloc[0])} sampled accounts "
+        f"({checks:,} account-and-feature checks), {wrong_way}.")
+
+    # --- swap sets
+    sw = r["swap_sets"]
+    pair = sw[sw["pair"] == "scorecard against gradient boosting"].set_index("cell")
+    both, only_s, only_g, neither = pair.loc["Both approve"], pair.loc["Only scorecard approves"], pair.loc["Only gradient boosting approves"], pair.loc["Neither approves"]
+    out["swap_sentence"] = (
+        f"The scorecard and gradient boosting decide alike on {_p(both['share'] + neither['share'], 0)} of accounts. Of the {_p(only_s['share'] + only_g['share'], 1)} they split on, "
+        f"those only gradient boosting approves defaulted at {_p(only_g['default_rate'])} and carry an average balance of {_nt(only_g['mean_balance'])}, against {_p(only_s['default_rate'])} and "
+        f"{_nt(only_s['mean_balance'])} for those only the scorecard approves; approving the first group would have earned {_nt(only_g['profit_if_approved'])} per account of the portfolio, "
+        f"the second {_nt(only_s['profit_if_approved'])}.")
+
+    # --- stress tests
+    st = r["stress"].set_index("scenario")
+    names = [x[0] for x in config.STRESS_SCENARIOS]
+    base_s, up50, peak, peak50 = st.loc[names[0]], st.loc[names[2]], st.loc[names[4]], st.loc[names[5]]
+    out["stress_sentence"] = (
+        f"With defaults 50% higher and the cut-off kept, expected profit goes from {_nt(base_s['profit_kept'])} to {_nt(up50['profit_kept'])} a month; re-setting the cut-off gives "
+        f"{_nt(up50['profit_reset'])} on {_p(up50['approved_reset'], 0)} of accounts. At the 2023 peak policy rate the kept cut-off gives {_nt(peak['profit_kept'])} and a re-set one "
+        f"{_nt(peak['profit_reset'])}; with defaults 50% higher as well, {_nt(peak50['profit_kept'])} against {_nt(peak50['profit_reset'])}.")
+
+    # --- pricing
+    pr = r["pricing"]
+    pays = int(pr["pays_at_current_apr"].sum())
+    no = pr[~pr["pays_at_current_apr"]]
+    out["pricing_sentence"] = (
+        f"At the current card APR of {_p(s['economics']['apr'], 0)}, approving pays for the safest {pays} of {len(pr)} tenths of accounts. "
+        + (f"The other {len(no)} would need APRs from {_p(no['required_apr'].min(), 0)} to {_p(no['required_apr'].max(), 0)} to break even. "
+           + ("The riskiest need prices far above the one card rate checked here (MCB's published 44%), so for them the choice is to decline or to limit the exposure, not to price for risk."
+              if no["required_apr"].max() > 2 * s["economics"]["apr"] else "That is above the card rate used here, so pricing for risk would have to go beyond it.")
+           if len(no) else "Every tenth pays at the current APR."))
+
+    # --- re-anchoring to another lender
+    lr = r["local_rate"]
+    mid = lr.iloc[min(1, len(lr) - 1)]
+    own = lr.iloc[-1]
+    out["local_sentence"] = (
+        f"A lender whose accounts miss a payment {_p(mid['local_default_rate'])} of the time, instead of {_p(own['local_default_rate'])}, would put the cut-off at {int(mid['cutoff_score'])} points "
+        f"instead of {int(own['cutoff_score'])} and approve {_p(mid['approved_share'], 0)} of accounts instead of {_p(own['approved_share'], 0)}, with the same economics and the same ranking.")
+
+    # --- what drives the approval gaps
+    d = _watched(r["fairness_drivers"])
+    bits, shares = [], []
+    for (attribute, group), part in d.groupby(["attribute", "group"], sort=False):
+        top = part.loc[part["points_gap"].abs().idxmax()]
+        total = float(part["total_points_gap"].iloc[0])
+        bits.append(f"{TITLES[attribute].lower()} {group}: {config.feature_name(top['feature'])} ({top['points_gap']:+.1f} of {total:+.1f} points)")
+        shares.append(float(top["points_gap"]) / total if total and top["points_gap"] * total > 0 else 0.0)
+    if bits:
+        spread = (f"No single feature accounts for more than {max(shares):.0%} of any of these gaps: they build up across the card." if max(shares) < 0.5 else
+                  f"The largest single feature accounts for {max(shares):.0%} of its group's gap.")
+        out["drivers_sentence"] = "The biggest single contributor to each group's gap is " + "; ".join(bits) + ". " + spread
+    else:
+        out["drivers_sentence"] = "No group is flagged or close to the line, so there is no gap to split."
+    return out
+
+
+def v_approved_base(r: dict) -> float:
+    return float(r["strategies"].set_index("rule").loc["scorecard", "approved_share"])
+
+
 def values() -> dict:
     r = load()
     s, q = r["summary"], r["quality"]
@@ -299,6 +537,10 @@ def values() -> dict:
     status = seg[seg["variable"] == "Repayment status last month (September)"].set_index("group")
     v.update(rate_status_ok=_p(status.loc["Paid the minimum", "default_rate"]), rate_status_one=_p(status.loc["1 month late", "default_rate"], 0),
              rate_status_two=_p(status.loc["2 months late", "default_rate"], 0), rate_status_three=_p(status.loc["3 or more months late", "default_rate"], 0))
+    not_late = status.loc[["No spending", "Paid in full", "Paid the minimum"]]
+    v.update(sep_one_pays=_p(1 - status.loc["1 month late", "default_rate"], 0), sep_two_pays=_p(1 - status.loc["2 months late", "default_rate"], 0),
+             sep_not_late_default=_p(not_late["defaults"].sum() / not_late["accounts"].sum()))
+    v["sep_two_vs_cure"] = "close to" if abs((1 - status.loc["2 months late", "default_rate"]) - s["rollrates"]["p_cure_from_first_late"]) <= 0.05 else "against"
     sex = seg[seg["variable"] == "Sex"].set_index("group")
     v.update(rate_female=_p(sex.loc["Female", "default_rate"]), rate_male=_p(sex.loc["Male", "default_rate"]))
     limit = seg[seg["variable"] == "Credit limit"].sort_values("position")
@@ -381,7 +623,7 @@ def values() -> dict:
     sc_row, ch_row, all_row, ok_row = strat.loc["scorecard"], strat.loc["challenger"], strat.loc["approve_all"], strat.loc["last_month_on_time"]
     emp = cuts[(cuts["model"] == "scorecard") & (cuts["rule"] == "best on the development accounts")].iloc[0]
     v["emp_phrase"] = "close to" if abs(emp["cutoff"] - e["break_even_pd"]) < 0.02 else "different from"
-    v.update(apr=_p(e["apr"], 0), revolve_pct=_p(e["revolve_share"], 0), yield_pct=_p(e["yield"]), funding_pct=_rate(e["funding"]), opex_pct=_p(e["opex"], 0), loss_pct=_p(e["loss"], 0),
+    v.update(apr=_p(e["apr"], 0), revolve_pct=_p(e["revolve_share"], 0), yield_pct=_p(e["yield"]), funding_pct=_rate(e["funding"]), opex_pct=_p(e["opex"], 0), loss_pct=_p(e["loss"], 1),
              margin_month_pct=_p(e["margin_month"], 2), margin_year_pct=_p(e["margin_month"] * 12), break_even=_p(e["break_even_pd"]), break_even_value=e["break_even_pd"],
              cost_ratio=e["cost_ratio"], cutoff_score=e["cutoff_score"], policy_date=_date(e["policy_rate_date"]), mean_balance=_nt(e["mean_balance"]),
              approved_share=_p(sc_row["approved_share"], 0), approved_share_precise=_p(sc_row["approved_share"]), bad_rate_approved=_p(sc_row["default_rate_approved"]),
@@ -417,7 +659,8 @@ def values() -> dict:
     note = f"The reset cut-off earned more than the {_month(first['date'])} one on {better} of the {len(later)} later dates"
     if len(worse):
         gap_most = float((worse["profit_per_account_first_cutoff_kept"] - worse["profit_per_account"]).max())
-        note += (f"; on the other {len(worse)} the kept cut-off earned up to {_nt(gap_most)} more per account a month, "
+        amount = "less than NT$1" if gap_most < 0.5 else f"up to {_nt(gap_most)}"
+        note += (f"; on the other {len(worse)} the kept cut-off earned {amount} more per account a month, "
                  + (f"a gap smaller than the 95% range around the base-case profit itself ({_nt(interval_width)} wide), so it is not evidence that resetting does not pay."
                     if gap_most < interval_width else f"a gap larger than the 95% range around the base-case profit ({_nt(interval_width)} wide), which deserves a closer look."))
     else:
@@ -443,7 +686,10 @@ def values() -> dict:
             tail = "; for none of them is the whole 95% bootstrap range of the ratio under 0.80, so each could be chance on a test this size."
         v["fairness_headline"] = (f"At the break-even cut-off, {len(flagged)} of {len(judged)} groups are approved at under four-fifths of the best-treated group's rate: {_join(flagged)}" + tail)
     else:
-        v["fairness_headline"] = f"At the break-even cut-off, none of the {len(judged)} groups is approved at under four-fifths of the best-treated group's rate."
+        lowest = judged.sort_values("disparate_impact").head(2)
+        closest = _join([f"{label[t.attribute]}: {t.group} ({t.disparate_impact:.2f})" for t in lowest.itertuples()])
+        v["fairness_headline"] = (f"At the break-even cut-off, none of the {len(judged)} groups is approved at under four-fifths of the best-treated group's rate; "
+                                  f"the closest are {closest}.")
     cal = (judged["calibration_ratio"] - 1).abs()
     v.update(worst_calibration=_p(cal.max(), 0), worst_calibration_group=f"{label[judged.loc[cal.idxmax(), 'attribute']]}: {judged.loc[cal.idxmax(), 'group']}",
              min_di=f"{judged['disparate_impact'].min():.2f}", calibration_min=f"{judged['calibration_ratio'].min():.2f}", calibration_max=f"{judged['calibration_ratio'].max():.2f}")
@@ -457,20 +703,34 @@ def values() -> dict:
                          if lower_female else
                          f"Women default more than men in this file ({v['rate_female']} against {v['rate_male']}) and are approved {'more' if more_female else 'less'} often "
                          f"({v['approval_female']} against {v['approval_male']}); predicted ÷ observed is {v['cal_female']} for women and {v['cal_male']} for men.")
-    if flagged_rows:
+    focus = flagged_rows or [t for t in judged.itertuples() if t.disparate_impact < config.DISPARATE_IMPACT_WATCH]            # flagged, or else the groups closest to the line
+    who = "The flagged groups" if flagged_rows else "The groups closest to the line"
+    if focus:
         higher, ratios = [], []
-        for t in flagged_rows:
+        for t in focus:
             peers = judged[judged["attribute"] == t.attribute]
             best_treated = peers.loc[peers["approval_rate"].idxmax()]
             higher.append(t.default_rate > best_treated["default_rate"])
             ratios.append(t.calibration_ratio)
         v["fairness_reading"] = (
-            f"The flagged groups have higher default rates in this file than the best-treated group of the same attribute, and the model is calibrated for them (predicted ÷ observed "
+            f"{who} have higher default rates in this file than the best-treated group of the same attribute, and the model is calibrated for them (predicted ÷ observed "
             f"between {min(ratios):.2f} and {max(ratios):.2f}), so the gaps in approval mostly follow gaps in observed default rates, not a model that is harsher than the data on those groups."
             if all(higher) and min(ratios) > 0.85 and max(ratios) < 1.15 else
-            f"The gaps do not all follow gaps in observed default rates and calibration (predicted ÷ observed for the flagged groups runs from {min(ratios):.2f} to {max(ratios):.2f}): see the table.")
+            f"The gaps do not all follow gaps in observed default rates and calibration (predicted ÷ observed for {who.lower()} runs from {min(ratios):.2f} to {max(ratios):.2f}): see the table.")
     else:
-        v["fairness_reading"] = "No group is flagged."
+        v["fairness_reading"] = f"Every group is approved at {_p(config.DISPARATE_IMPACT_WATCH, 0)} or more of the best-treated group's rate."
+    unsure = [f"{label[t.attribute]}: {t.group}" for t in judged.itertuples() if not t.flagged and t.di_low < config.DISPARATE_IMPACT_MIN]
+    if flagged:
+        v["fairness_caveat"] = ("That does not make the gaps acceptable: under the four-fifths screening rule they would need a closer look, for example whether a different "
+                                "feature set or cut-off narrows them at a small cost.")
+        v["fairness_close"] = "None of this makes the gaps acceptable: they are the reason to review features and cut-off by group at every re-set."
+    else:
+        reach = (f"For {_join(unsure)} the 95% range of the ratio reaches below 0.80, so a gap under the line cannot be ruled out on a test this size." if unsure else "")
+        near = ("The closest groups are within 10 points of the line, so the audit has to be repeated whenever the cut-off or the book changes." if focus
+                else "No group is within 10 points of the line.")
+        v["fairness_caveat"] = " ".join(x for x in ("That does not make the gaps zero.", reach, near) if x)
+        v["fairness_close"] = " ".join(x for x in ("Passing the screening rule is not a clean bill of health.", reach, "Review the audit by group at every re-set of the cut-off.") if x)
+    v["watch_below"] = f"{config.DISPARATE_IMPACT_WATCH:.2f}"
     proxy = r["fairness_proxy"].set_index("attribute")["auc"]
     v.update(proxy_sex=proxy["Sex (female)"], proxy_age=proxy["Age 40 or over"], proxy_edu=proxy["University or higher"])
     ages = fair_sc[fair_sc["attribute"] == "age_band"]
@@ -483,7 +743,13 @@ def values() -> dict:
              npl_first=f"{pk['npl_first']:.1f}%", npl_first_year=pk["npl_first_year"], credit_latest=f"{pk['credit_latest']:.1f}%", credit_latest_year=pk["credit_latest_year"],
              n_policy_rows=len(r["policy"]))
 
+    sens_losses, sens_aprs = sens["loss"], sens["apr"]
+    v["sens_range"] = f"APR {_p(sens_aprs.min(), 0)} to {_p(sens_aprs.max(), 0)}, loss {_p(sens_losses.min(), 1)} to {_p(sens_losses.max(), 0)}"
+    v.update(advanced_values(r, v))
     # --- tables and blocks
+    v.update(rollrates_matrix_table=rollrates_matrix_table(r), evidence_table=evidence_table(r), split_table=split_table(r), loss_cases_table=loss_cases_table(r),
+             advanced_models_table=advanced_models_table(r),
+             swap_table=swap_table(r), stress_table=stress_table(r), pricing_table=pricing_table(r), local_rate_table=local_rate_table(r), drivers_table=drivers_table(r))
     v.update(metrics_table=metrics_table(r), comparisons_table=comparisons_table(r), scorecard_table=scorecard_table(r), scorecard_top_table=scorecard_table(r, 3), screening_table=screening_table(r),
              strategies_table=strategies_table(r), scenarios_table=scenarios_table(r), sensitivity_table=sensitivity_table(r), fairness_table=fairness_table(r),
              importance_table=importance_table(r), subsets_table=subsets_table(r), risk_bands_table=risk_bands_table(r), examples_table=examples_table(r),

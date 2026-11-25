@@ -30,11 +30,24 @@ def test_the_split_is_80_20_and_stratified(summary):
 
 
 def test_the_economics_use_the_documented_assumptions(summary):
-    e = summary["economics"]
-    assert (e["apr"], e["opex"], e["loss"]) == (config.ECON_APR, config.ECON_OPEX, config.ECON_LOSS)
+    e, roll = summary["economics"], summary["rollrates"]
+    assert (e["apr"], e["opex"]) == (config.ECON_APR, config.ECON_OPEX)
+    assert (roll["write_off_status"], roll["horizon"], roll["lgd"], roll["collection_cost"]) == (
+        config.ECON_WRITEOFF_STATUS, config.ECON_HORIZON, config.ECON_LGD, config.ECON_COLLECTION_COST)
+    assert e["loss"] == pytest.approx(config.ECON_LGD * roll["base_probability"] + config.ECON_COLLECTION_COST)      # measured from roll rates, not guessed
+    assert roll["loss_stress"] == config.ECON_LOSS_STRESS
     policy = pd.read_csv(config.POLICY_RATE_FILE, parse_dates=["effective_date"])
     assert e["funding"] == pytest.approx(policy.iloc[-1]["policy_rate_pct"] / 100) and e["policy_rate_date"] == str(policy.iloc[-1]["effective_date"].date())
     assert 0.8 < e["revolve_share"] < 0.95
+
+
+def test_the_roll_rates_say_what_the_documents_claim(summary):
+    split = pd.read_csv(config.PROCESSED / "rollrates_split.csv")
+    base = split[split["write_off_status"] == config.ECON_WRITEOFF_STATUS].set_index("group")
+    assert base.loc["Late in September", "loss"] > base.loc["Current in September", "loss"]            # an account that is already late costs more than a first missed payment
+    r = summary["rollrates"]
+    assert r["p_cure_from_first_late"] > 0.2 and r["p_stay_first_late"] > r["p_worse_from_first_late"]
+    assert base.loc["Current in September", "loss"] <= summary["economics"]["loss"] <= base.loc["Late in September", "loss"]      # the base case is the mix of the two
 
 
 def test_the_scorecard_is_a_readable_size_and_leaves_out_the_protected_attributes(summary):

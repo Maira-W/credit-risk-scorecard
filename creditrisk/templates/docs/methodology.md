@@ -82,7 +82,7 @@ Could the inputs act as a stand-in? A model that tries to tell the groups apart 
 
 ## 9. The economics
 
-Over one billing month, per unit of balance: an account that **pays** earns `margin = (yield − funding − running cost) ÷ 12`, and an account that **defaults** loses `loss`. The **yield** is the card APR times the share of balances that revolve; the APR is {{apr}} (MCB's published retail markup, 3.67% a month, "an APR of up to 44%", July to December 2026, [source]({{mcb_url}})), and {{revolve_pct}} of balances are left unpaid after the next month's payment in this file (measured on the development accounts, over the five month pairs), so the yield is {{yield_pct}}. The **funding cost** is the policy rate ({{funding_pct}} on {{policy_date}}): money lent on a card is money not put in government paper. **Running cost** ({{opex_pct}} a year) and **loss** ({{loss_pct}} of the balance) are assumptions. The margin is {{margin_month_pct}} a month ({{margin_year_pct}} a year).
+Over one billing month, per unit of balance: an account that **pays** earns `margin = (yield − funding − running cost) ÷ 12`, and an account that **defaults** loses `loss`. The **yield** is the card APR times the share of balances that revolve; the APR is {{apr}} (MCB's published retail markup, 3.67% a month, "an APR of up to 44%", July to December 2026, [source]({{mcb_url}})), and {{revolve_pct}} of balances are left unpaid after the next month's payment in this file (measured on the development accounts, over the five month pairs), so the yield is {{yield_pct}}. The **funding cost** is the policy rate ({{funding_pct}} on {{policy_date}}): money lent on a card is money not put in government paper. **Running cost** ({{opex_pct}} a year) is an assumption. The **loss** ({{loss_pct}} of the balance on an account that misses a payment) is measured from the roll rates of the repayment history (section 10), with two assumptions of its own. The margin is {{margin_month_pct}} a month ({{margin_year_pct}} a year).
 
 An account with probability of default p is worth `(1 − p) × margin − p × loss` per unit of balance, which is positive only while `p < margin ÷ (margin + loss)`: **{{break_even}}**. A bad account costs {{cost_ratio:.1f}} good accounts' monthly profit. With calibrated probabilities, approving every account at or below the break-even probability maximises expected profit, whatever the balances. The check on the data: the cut-off that earns most on the development accounts (out-of-fold predictions) is {{empirical_cutoff_pct}}, {{emp_phrase}} the break-even probability of {{break_even}}; it is the break-even probability that is reported, because it does not depend on a noisy peak.
 
@@ -94,20 +94,94 @@ Balances are the September statement, never below zero. Profit is on the hold-ou
 
 {{scenarios_table}}
 
-**Sensitivity.** Share of accounts worth approving and the break-even probability, for combinations of APR and loss on a default, at the current policy rate:
+**Sensitivity.** Share of accounts worth approving and the break-even probability, for combinations of APR and loss on a missed payment, at the current policy rate:
 
 {{sensitivity_table}}
 
-## 10. Limits of the method
+## 10. Roll rates and the loss on a missed payment
+
+The label is a missed payment, so the loss on it cannot be read from the data. [`creditrisk/rollrates.py`](../creditrisk/rollrates.py) estimates it from how accounts move between repayment statuses.
+
+- **States.** The five months {{roll_months}} are the ones coded on one basis (a status of 1 hardly appears in them). A status of 0 or below is "current"; the late statuses 2, 3, 4, 5 and 6-or-more are five further states (a status of 1 joins 2).
+- **Transition matrix.** Counting every account's move from one month to the next over the four month pairs gives {{roll_moves}} moves, and from them the chance of going from each state to each other state.
+
+{{rollrates_matrix_table}}
+
+- **From a missed payment to a write-off.** Treating the matrix as steady, raising it to the power of the number of months gives the chance that an account that starts in a given state reaches a given status within {{horizon_months}} months, counting it once it gets there.
+- **Where the chain starts.** The label is a missed payment in October, so every account that defaulted is late in October, whatever it was in September ({{entry_current}} of them were current, {{entry_first_late}} at the first late level, {{entry_deeper}} deeper). Starting the chain from September's state would treat the current ones as not having missed yet, and let the late ones cure in the very step the label says they did not. Instead each is moved one month on, using the matrix's own odds of each late state from where it stood with the odds of being current set aside and the rest scaled up to one (`october_entry`): a current account lands on the first late level; a late one stays or gets worse. That puts {{landing_first}} of the missed payments on the first late level, {{landing_second}} one level deeper and {{landing_line}} at or beyond the write-off line, and the chain runs from there. The 95% ranges resample accounts, so they cover the uncertainty of both the matrix and the starting point. The method is checked on simulated accounts that follow a known chain, where the true chance of a write-off after a missed payment can be counted (`tests/test_rollrates.py`).
+- **A check against September.** The matrix was estimated on April to August, so the step from September to October is one it has not seen. Accounts at status 2 in September did not default {{sep_two_pays}} of the time, {{sep_two_vs_cure}} the {{roll_cure}} of late accounts that recovered in a month between April and August. Accounts at status 1 did not default {{sep_one_pays}} of the time: that status hardly appears before September, so the matrix has little to say about it. And accounts that were not late in September defaulted {{sep_not_late_default}} of the time, against the {{roll_into_late}} of current accounts that became late in an average month before. Either the crisis deepened in October or September's codes count lateness differently from the earlier months; the data cannot separate the two. Either way the roll rates of April to August probably understate how bad things got, which is one more reason to read the loss as a floor.
+- **Loss.** loss = (share never recovered) x (chance of write-off) + (cost of collection and of the income lost while late). The share never recovered ({{lgd_pct}}) and the cost ({{collection_pct}} of the balance) are assumptions; the chance is measured.
+
+{{evidence_table}}
+
+{{split_sentence}}
+
+{{split_table}}
+
+The base case uses the conservative line (status {{writeoff_status}}) because the codes are not documented in months and the history is the start of a crisis, when roll rates were rising. {{loss_stress_pct}}, the placeholder used before this was measured, is kept as a stress case. What each loss does to the cut-off, on the hold-out accounts:
+
+{{loss_cases_table}}
+
+{{loss_cases_sentence}}
+
+## 11. An explainable boosting model
+
+LightGBM can be told that a feature may only push the probability of default one way. The constraints are in `config.MONOTONE`: credit limit, payments and the share of the bill paid can only lower the probability as they rise; months late, recent late months and the worst status can only raise it. Repayment statuses are codes and credit used is U-shaped at the low end, so they are left free. The same settings as the free model are used and the probabilities are recalibrated the same way. Whether the model obeys is checked, not assumed: for a sample of accounts each constrained feature is moved across its range with everything else fixed, and any move of the probability the wrong way is counted.
+
+{{advanced_models_table}}
+
+{{mono_sentence}}
+
+## 12. Swap sets
+
+A swap-set analysis, standard in model validation, compares two models by the accounts on which they disagree. At the break-even cut-off, each account is approved by both models, by one, or by neither; for each group the table shows how many, how many defaulted, their average balance, and what approving them would have earned (realised, per account of the whole portfolio).
+
+{{swap_table}}
+
+{{swap_sentence}}
+
+## 13. Stress tests
+
+A stress test asks what a shock does to profit. Defaults are raised by multiplying every account's odds of default by a factor (for small probabilities this is close to multiplying the probability), money gets dearer by taking the funding cost from the policy rate at its 2023 peak, or both. For each scenario the expected profit per account is worked out from the scorecard's own probabilities for the accounts approved under two policies: the cut-off kept where it is, and the cut-off re-set to the scenario's break-even. These are expected values, not outcomes: the file has no accounts that lived through a different year.
+
+{{stress_table}}
+
+{{stress_sentence}}
+
+## 14. Risk-based pricing
+
+The same arithmetic can be turned round. The margin on a good account must cover the expected loss, p x loss / (1 - p), so the APR that makes approving a group break even is (12 x that margin + funding + running cost) / (share of balances that revolve). For each tenth of accounts, from the safest:
+
+{{pricing_table}}
+
+{{pricing_sentence}}
+
+## 15. Moving the scorecard to another lender
+
+A scorecard fitted on accounts that miss a payment at one rate can be used on a lender whose accounts miss at another. The ranking is kept; every log-odds moves by logit(new rate) - logit(old rate), the usual correction for a change in the base rate (it assumes the way the features relate to risk is the same, which is the part that needs a local test). The break-even cut-off, in the original probabilities, is then the break-even probability moved back by the same amount.
+
+{{local_rate_table}}
+
+{{local_sentence}}
+
+## 16. What drives the approval gaps
+
+The scorecard is a sum of points, so the gap in average score between a group and the best-treated group of its attribute is the sum of the gaps in the points each feature gives. The table covers every group that is flagged or within 10 points of the four-fifths line (disparate impact under {{watch_below}}) and lists the three features that contribute most to its gap.
+
+{{drivers_table}}
+
+{{drivers_sentence}}
+
+## 17. Limits of the method
 
 - The cardholders are not Pakistani and the book is from a crisis period; nothing here measures how Pakistani cardholders behave.
-- "Default" is a missed payment. The loss on a default, the running cost and (to some degree) the APR that applies are assumptions.
+- "Default" is a missed payment. The loss on it comes from roll rates over five months at the start of a crisis, with two assumptions (the share never recovered, the cost of collection); the running cost and (to some degree) the APR that applies are assumptions too. The re-anchoring to another lender assumes the features relate to risk in the same way there.
 - One cohort: no out-of-time test, no view of behaviour through a cycle.
 - Selection: only accounts the bank had approved are in the data.
 - One month of margin is counted, which understates the value of an account that keeps paying.
 - The fairness audit looks at four groups on the information in the file; it does not cover other groups or other notions of fairness, and it is not legal advice.
 - The statistical ranges describe sampling noise in a {{n_hold:,}}-account test, not uncertainty about the assumptions.
 
-## 11. Reproducibility
+## 18. Reproducibility
 
 A fixed seed (42) drives the split, the cross-validation, the tuning and the bootstrap. Library versions are pinned in `requirements.txt`. Raw files are checked against `data/raw/MANIFEST.json` by `python -m creditrisk verify`. The tests check each function on made-up portfolios with known answers (weight of evidence, points, the break-even cut-off), run the whole analysis on a sample, and check that the committed results, documents, dashboard and notebook agree with each other.

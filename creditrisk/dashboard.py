@@ -55,6 +55,7 @@ def payload() -> dict:
     fairness = _read("fairness_groups.csv")
     importance = _read("challenger_importance.csv").head(IMPORTANCE_ROWS)
     importance["name"] = importance["feature"].map(config.feature_name)
+    sensitivity = _read("sensitivity.csv")
     policy = macro.policy_rate()
     policy["effective_date"] = policy["effective_date"].dt.strftime("%Y-%m-%d")
     return _clean({
@@ -82,7 +83,12 @@ def payload() -> dict:
         "credit": _records(_read("pakistan_private_credit.csv"), 3),
         "policy": _records(policy[["effective_date", "policy_rate_pct"]], 2),
         "scenarioDates": list(config.POLICY_SCENARIOS),
-        "aprChecks": list(config.APR_CHECKS), "lossChecks": list(config.LOSS_CHECKS),
+        "aprChecks": list(config.APR_CHECKS), "lossChecks": sorted(float(v) for v in sensitivity["loss"].unique()),
+        "rollMatrix": _records(_read("rollrates_matrix.csv"), 5), "rollEvidence": _records(_read("rollrates_evidence.csv"), 5), "rollSplit": _records(_read("rollrates_split.csv"), 5),
+        "lossCases": _records(_read("loss_cases.csv"), 5), "advModels": _records(_read("advanced_models.csv"), 5),
+        "advComparisons": _records(_read("advanced_comparisons.csv"), 5), "advProfits": _records(_read("advanced_profits.csv"), 5),
+        "monotone": _records(_read("monotone_check.csv"), 5), "watchBelow": config.DISPARATE_IMPACT_WATCH, "swap": _records(_read("swap_sets.csv"), 5), "stress": _records(_read("stress.csv"), 5),
+        "pricing": _records(_read("pricing.csv"), 5), "localRate": _records(_read("local_rate.csv"), 5), "drivers": _records(_read("fairness_drivers.csv"), 4),
         "featureNames": {c: config.feature_name(c) for c in sorted(set(points["feature"]) | set(importance["feature"]))},
         "statusMeaning": {str(k): v for k, v in config.STATUS_MEANING.items()},
         "source": {"mcb": config.MCB_CARD_URL, "uci": config.UCI_PAGE},

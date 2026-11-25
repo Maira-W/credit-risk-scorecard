@@ -18,7 +18,8 @@ def payload():
 
 def test_the_payload_holds_every_part_the_page_draws(payload):
     needed = {"stats", "segments", "points", "screening", "metrics", "comparisons", "cv", "roc", "calibration", "lift", "scoreDist", "bands", "importance", "psi", "explorer",
-              "strategies", "scenarios", "fairGroups", "fairBins", "proxy", "npl", "credit", "policy", "scenarioDates", "aprChecks", "lossChecks", "featureNames", "statusMeaning"}
+              "strategies", "scenarios", "fairGroups", "fairBins", "proxy", "npl", "credit", "policy", "scenarioDates", "aprChecks", "lossChecks", "featureNames", "statusMeaning",
+              "rollMatrix", "rollEvidence", "lossCases", "advModels", "advComparisons", "advProfits", "monotone", "swap", "stress", "pricing", "localRate", "drivers", "watchBelow"}
     assert needed <= set(payload)
     assert set(payload["explorer"]) == {"naive", "scorecard", "challenger"} and set(payload["roc"]) == {"naive", "scorecard", "challenger"}
 
@@ -55,7 +56,8 @@ def test_the_page_on_disk_is_current():
 
 def test_the_page_names_its_tabs_and_its_caveat():
     html = (config.DASHBOARD / "dashboard.html").read_text(encoding="utf-8")
-    for tab in ("The answer", "Who defaults", "The scorecard", "How good is it?", "Cut-off explorer", "Policy-rate scenarios", "Fairness", "Pakistan context", "Method and limits"):
+    for tab in ("The answer", "Who defaults", "The scorecard", "How good is it?", "Cut-off explorer", "Policy-rate scenarios", "Fairness", "Pakistan context", "Method and limits",
+                "Loss evidence", "Going further"):
         assert tab in html
     assert "Taiwan" in html and "not lending advice" in html and "github.com/Maira-W/credit-risk-scorecard" in html
 

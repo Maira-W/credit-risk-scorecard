@@ -65,8 +65,10 @@
   <section id="card" hidden></section>
   <section id="quality" hidden></section>
   <section id="cutoff" hidden></section>
+  <section id="loss" hidden></section>
   <section id="rates" hidden></section>
   <section id="fair" hidden></section>
+  <section id="more" hidden></section>
   <section id="pakistan" hidden></section>
   <section id="method" hidden></section>
 </main>
@@ -96,7 +98,7 @@
   const cfg = { displayModeBar: false, responsive: true };
   const list = a => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1];
   const tabs = [["answer", "The answer"], ["who", "Who defaults"], ["card", "The scorecard"], ["quality", "How good is it?"], ["cutoff", "Cut-off explorer"],
-                ["rates", "Policy-rate scenarios"], ["fair", "Fairness"], ["pakistan", "Pakistan context"], ["method", "Method and limits"]];
+                ["loss", "Loss evidence"], ["rates", "Policy-rate scenarios"], ["fair", "Fairness"], ["more", "Going further"], ["pakistan", "Pakistan context"], ["method", "Method and limits"]];
   const rendered = {}, renderers = {};
   tabs.forEach(([id, label]) => {
     const b = document.createElement("button"); b.textContent = label; b.setAttribute("role", "tab"); b.id = "t-" + id;
@@ -134,7 +136,7 @@
 
   function sliders(container, onChange, only) {
     const defs = [["apr", "Card APR (yield if the balance is not repaid in time)", 0.20, 0.60, 0.01], ["funding", "Funding cost: the policy rate", 0, 0.30, 0.0025],
-                  ["opex", "Running cost, a year", 0, 0.15, 0.005], ["loss", "Loss when an account defaults (share of balance)", 0.05, 0.60, 0.01]]
+                  ["opex", "Running cost, a year", 0, 0.15, 0.005], ["loss", "Loss when an account misses a payment (share of balance)", 0.01, 0.40, 0.005]]
       .filter(d => !only || only.includes(d[0]));
     const box = document.createElement("div"); box.className = "sliders";
     defs.forEach(([key, label, lo, hi, step]) => {
@@ -166,7 +168,7 @@
         <div class="kpi"><b>${f3(ch.auc)}</b><span>AUC of gradient boosting, ${cmp.difference >= 0 ? "+" : ""}${f3(cmp.difference)} on the scorecard: ${gap}</span></div>
         <div class="kpi"><b>${E0.cutoff_score == null ? "none" : E0.cutoff_score}</b><span>cut-off score: approve at or above it, if the assumptions below hold</span></div>
       </div>
-      <div class="callout"><b>The answer, under stated assumptions.</b> With a card APR of ${pc(E0.apr, 0)}, ${pc(E0.revolve_share, 0)} of balances not repaid in time, money costing ${pc(E0.funding, 2)} (the policy rate on ${E0.policy_rate_date}), running costs of ${pc(E0.opex, 0)} and a loss of ${pc(E0.loss, 0)} of the balance when an account defaults,
+      <div class="callout"><b>The answer, under stated assumptions.</b> With a card APR of ${pc(E0.apr, 0)}, ${pc(E0.revolve_share, 0)} of balances not repaid in time, money costing ${pc(E0.funding, 2)} (the policy rate on ${E0.policy_rate_date}), running costs of ${pc(E0.opex, 0)} and a loss of ${pc(E0.loss, 1)} of the balance when an account misses a payment (estimated from roll rates: see "Loss evidence"),
         an account is worth approving only while its probability of default is under <b>${pc(E0.break_even_pd)}</b> (a bad account costs about ${E0.cost_ratio.toFixed(1)} good accounts' monthly profit). On the hold-out accounts that approves <b>${pc(strat.scorecard.approved_share, 0)}</b> of them, ${pc(strat.scorecard.default_rate_approved)} of whom default, and the portfolio earns
         <b>${nt(strat.scorecard.profit_per_account)}</b> per account a month (95% range ${nt(strat.scorecard.low)} to ${nt(strat.scorecard.high)}), against <b>${nt(strat.approve_all.profit_per_account)}</b> if everyone were approved. The assumptions are the weak part: change them in the <a href="#cutoff" id="go-cutoff">cut-off explorer</a>.</div>
       <div class="grid2">
@@ -280,17 +282,22 @@
   renderers.cutoff = function () {
     $("cutoff").innerHTML = `<div class="card"><h2>Where does approving stop paying?</h2>
       <p class="sub">An account that pays earns a margin on its balance; an account that defaults loses a share of it. Approve every account whose probability of default is under margin ÷ (margin + loss). Move the assumptions and see the cut-off, the share approved and the profit change, on the ${num(S.data.holdout)} hold-out accounts and their real outcomes.</p>
-      <div class="row"><span class="note">Funding cost at a policy-rate date:</span><span id="c-presets"></span></div><div id="c-sliders"></div>
+      <div class="row"><span class="note">Funding cost at a policy-rate date:</span><span id="c-presets"></span></div>
+      <div class="row"><span class="note">Loss on a missed payment:</span><span id="c-loss-presets"></span></div><div id="c-sliders"></div>
       <div class="row"><label>Model <select id="c-model">${["scorecard", "challenger", "naive"].map(k => `<option value="${k}">${NAME[k]}</option>`).join("")}</select></label></div>
       <div class="kpis" id="c-kpis"></div></div>
       <div class="card"><h2>Profit against the share of accounts approved</h2><p class="sub">Accounts are approved from the safest up. The dot is the break-even cut-off.</p><div id="c-chart" style="height:360px"></div></div>
-      <div class="note">Base case: APR ${pc(E0.apr, 0)} (MCB's published retail markup of 3.67% a month is "an APR of up to 44%"), ${pc(E0.revolve_share, 0)} of balances revolving (measured in this file), funding ${pc(E0.funding, 2)}, running cost ${pc(E0.opex, 0)}, loss ${pc(E0.loss, 0)}. Only the APR and the policy rate are sourced; the rest are assumptions.</div>`;
+      <div class="note">Base case: APR ${pc(E0.apr, 0)} (MCB's published retail markup of 3.67% a month is "an APR of up to 44%"), ${pc(E0.revolve_share, 0)} of balances revolving (measured in this file), funding ${pc(E0.funding, 2)}, running cost ${pc(E0.opex, 0)}, loss ${pc(E0.loss, 1)} (from the roll rates, with two assumptions: ${pc(S.rollrates.lgd, 0)} of a written-off balance never recovered and ${pc(S.rollrates.collection_cost, 0)} for collection). The APR and the policy rate are sourced; running cost is an assumption.</div>`;
     const presets = $("c-presets");
     D.scenarioDates.forEach((d, i) => { const row = D.policy.filter(p => p.effective_date <= d).pop(); const b = document.createElement("button"); b.className = "act";
       b.textContent = `${new Date(d + "T00:00:00").toLocaleString("en-GB", { month: "short", year: "numeric" })}: ${row.policy_rate_pct}%`;
       b.addEventListener("click", () => { state.funding = row.policy_rate_pct / 100; sync(); draw(); }); presets.appendChild(b); presets.appendChild(document.createTextNode(" ")); });
     const reset = document.createElement("button"); reset.className = "act"; reset.textContent = "Reset all";
     reset.addEventListener("click", () => { Object.assign(state, { apr: E0.apr, funding: E0.funding, opex: E0.opex, loss: E0.loss }); sync(); draw(); }); presets.appendChild(reset);
+    const lossPresets = $("c-loss-presets"), addLoss = (label, value) => { const b = document.createElement("button"); b.className = "act"; b.textContent = label;
+      b.addEventListener("click", () => { state.loss = value; sync(); draw(); }); lossPresets.appendChild(b); lossPresets.appendChild(document.createTextNode(" ")); };
+    D.rollEvidence.slice().sort((a, b) => a.loss - b.loss).forEach(r => addLoss("Roll rates, status " + r.write_off_status + "+: " + pc(r.loss), r.loss));
+    [S.rollrates.loss_stress, 0.30].forEach(v => addLoss("Stress: " + pc(v, 0), v));
     sliders("c-sliders", draw); $("c-model").addEventListener("change", ev => { state.model = ev.target.value; draw(); }); sync();
     function draw() {
       const e = econ(state), model = state.model, at = atCutoff(model, state, e.be), all = curve(model, state).slice(-1)[0], b = best(model, state);
@@ -328,7 +335,7 @@
       $("r-table").innerHTML = "<tr><th class='l'>Policy rate on</th><th>Rate</th><th>Margin a month</th><th>Break-even probability</th><th>Share approved</th><th>Default rate of approved</th><th>Profit per account</th><th>If the first cut-off were kept</th></tr>" +
         rows.map(r => `<tr><td class="l">${r.d}</td><td>${pc(r.rate, 2)}</td><td>${pc(r.e.margin, 2)}</td><td>${pc(r.e.be)}</td><td>${pc(r.mine.share, 0)}</td><td>${pc(r.mine.badRate)}</td><td>${nt(r.mine.profit)}</td><td>${nt(r.kept.profit)}</td></tr>`).join("");
       const grid2 = D.aprChecks.slice().sort((a, b) => b - a);
-      $("r-grid").innerHTML = "<tr><th class='l'>Card APR \\ loss on default</th>" + D.lossChecks.map(l => `<th>${pc(l, 0)}</th>`).join("") + "</tr>" +
+      $("r-grid").innerHTML = "<tr><th class='l'>Card APR \\ loss on default</th>" + D.lossChecks.map(l => `<th>${pc(l, 1)}</th>`).join("") + "</tr>" +
         grid2.map(a => `<tr><td class="l">${pc(a, 0)}</td>` + D.lossChecks.map(l => { const st = Object.assign({}, state, { apr: a, loss: l }), e = econ(st), at = atCutoff(model, st, e.be);
           return `<td>${pc(at.share, 0)} <span class="tag">(< ${pc(e.be)})</span></td>`; }).join("") + "</tr>").join("");
     }
@@ -366,6 +373,76 @@
   };
 
   // ------------------------------------------------------------------ Pakistan
+  // ------------------------------------------------------------------ what a missed payment costs
+  renderers.loss = function () {
+    const R = S.rollrates, M = D.rollMatrix, names = [...new Set(M.map(r => r.from_state))];
+    const z = names.map(a => names.map(b => M.find(r => r.from_state === a && r.to_state === b).probability));
+    const short = names.map(n => n.replace("Late, status ", "Late ").replace(" or more", "+"));
+    $("loss").innerHTML = `<div class="callout"><b>The loss on a missed payment is not in the data, so it is estimated from how accounts move.</b> In the five months April to August (the months coded on one basis), an account that is late recovers by the next month ${pc(R.p_cure_from_first_late, 0)} of the time, stays at the same level ${pc(R.p_stay_first_late, 0)} and gets worse ${pc(R.p_worse_from_first_late, 0)}. An account that has missed a payment is late, so each account that really missed one is moved on to where it landed in October (a current account on the first late level, a late one staying or getting worse), and the ladder is followed from there for ${R.horizon} months. The chance that an account that misses a payment is written off (reaches status ${R.write_off_status}, the conservative line) is <b>${pc(R.base_probability)}</b>. With ${pc(R.lgd, 0)} of a written-off balance never recovered and ${pc(R.collection_cost, 0)} for collection and income lost while the account is late, that is a loss of <b>${pc(R.base_loss)}</b> of the balance: the base case. The placeholder of ${pc(R.loss_stress, 0)} used before the roll rates were measured is kept as a stress case.</div>
+      <div class="grid2"><div class="card"><h2>Where accounts go next month</h2><p class="sub">Share of account-months; ${num(R.transitions)} month-to-month moves in the development accounts.</p><div id="l-heat" style="height:380px"></div></div>
+      <div class="card"><h2>What a missed payment costs</h2><p class="sub">Chance of being written off within ${R.horizon} months of the missed payment, with 95% bootstrap ranges, for all of them and by where the account stood in September.</p>
+        <table><tr><th class="l">Written off at</th><th>Chance</th><th>95% range</th><th>Loss</th><th>95% range</th></tr>${D.rollEvidence.map(r => `<tr class="${r.write_off_status === R.write_off_status ? "hl" : ""}"><td class="l">status ${r.write_off_status} or worse${r.write_off_status === R.write_off_status ? " (base case)" : ""}</td><td>${pc(r.probability)}</td><td>${pc(r.low)} to ${pc(r.high)}</td><td>${pc(r.loss)}</td><td>${pc(r.loss_low)} to ${pc(r.loss_high)}</td></tr>`).join("")}</table>
+        <table style="margin-top:10px"><tr><th class="l">Stood in September</th><th>Share</th><th>Chance, status ${R.write_off_status}+</th><th>Loss</th></tr>${D.rollSplit.filter(r => r.write_off_status === R.write_off_status).map(r => `<tr><td class="l">${r.group}</td><td>${pc(r.share, 0)}</td><td>${pc(r.probability)}</td><td>${pc(r.loss)}</td></tr>`).join("")}</table>
+        <p class="note">Loss = ${pc(R.lgd, 0)} x the chance + ${pc(R.collection_cost, 0)}. The base case is the mix of the first-miss and already-late accounts. The ladder assumes the roll rates of April to August hold for a year, in a file that is the start of a card-debt crisis, so later roll rates were probably worse: read the loss as a floor, not a forecast. How the status codes map to months is not documented.</p></div></div>
+      <div class="card"><h2>What each loss does to the cut-off</h2><p class="sub">Hold-out accounts, with the card yield and funding cost of the base case. Profit is per account of the whole portfolio, a month, with 95% bootstrap ranges.</p><div id="l-chart" style="height:340px"></div><table id="l-table"></table></div>`;
+    Plotly.newPlot("l-heat", [{ type: "heatmap", z, x: short, y: short, colorscale: [[0, dark ? "#1D2530" : "#F3F5F8"], [1, "#2A9D8F"]], zmin: 0, zmax: 1, showscale: false,
+      text: z.map(r => r.map(v => v >= 0.005 ? (v * 100).toFixed(0) + "%" : "")), texttemplate: "%{text}", hovertemplate: "%{y} to %{x}: %{z:.1%}<extra></extra>" }],
+      layout({ margin: { t: 10, r: 10, b: 80, l: 110 }, xaxis: { title: "next month" }, yaxis: { autorange: "reversed", title: "this month" } }), cfg);
+    const cases = [...new Set(D.lossCases.map(r => r.case))], rule = k => cases.map(c => D.lossCases.find(r => r.case === c && r.rule === k));
+    const bar = (k, name, colour) => { const rows = rule(k); return { type: "bar", name, x: cases.map(c => c.replace("Roll rates, written off at ", "Roll rates, ")), y: rows.map(r => r.profit_per_account), marker: { color: colour },
+      error_y: { type: "data", symmetric: false, array: rows.map(r => r.high - r.profit_per_account), arrayminus: rows.map(r => r.profit_per_account - r.low), color: GREY } }; };
+    Plotly.newPlot("l-chart", [bar("approve_all", "Approve everyone", GREY), bar("scorecard", "Scorecard at break-even", primary), bar("challenger", "Gradient boosting at break-even", TEAL)],
+      layout({ barmode: "group", yaxis: { gridcolor: grid, title: "NT$ per account a month", zerolinecolor: ink }, legend: { x: 0.01, y: 0.02, yanchor: "bottom", font: { size: 11 } }, margin: { t: 10, r: 14, b: 90, l: 70 } }), cfg);
+    $("l-table").innerHTML = "<tr><th class='l'>Loss case</th><th>Loss</th><th>Break-even probability</th><th>Scorecard approves</th><th>Default rate of approved</th><th>Scorecard profit</th><th>Approving everyone</th></tr>" +
+      cases.map(c => { const sc = D.lossCases.find(r => r.case === c && r.rule === "scorecard"), all = D.lossCases.find(r => r.case === c && r.rule === "approve_all");
+        return `<tr class="${c.includes("base case") ? "hl" : ""}"><td class="l">${c}</td><td>${pc(sc.loss)}</td><td>${pc(sc.break_even)}</td><td>${pc(sc.approved_share, 0)}</td><td>${pc(sc.default_rate_approved)}</td><td>${nt(sc.profit_per_account)} (${nt(sc.low)} to ${nt(sc.high)})</td><td>${nt(all.profit_per_account)}</td></tr>`; }).join("");
+  };
+
+  // ------------------------------------------------------------------ going further
+  renderers.more = function () {
+    const PALETTE = [primary, TEAL, ORANGE, AMBER, "#7B4FA3", GREY, "#4C9F70", "#C84B6B"];
+    const A = Object.fromEntries(D.advModels.map(r => [r.model, r])), P = Object.fromEntries(D.advProfits.map(r => [r.rule, r]));
+    const viol = m => D.monotone.filter(r => r.model === m).reduce((s, r) => s + r.violations, 0);
+    const free = D.monotone.filter(r => r.model === "challenger"), checks = free.length * free[0].accounts;
+    const worstFall = Math.max(...free.map(r => r.largest_fall)), avgFall = free.reduce((s, r) => s + r.average_fall * r.violations, 0) / Math.max(1, viol("challenger"));
+    const points = x => (x * 100).toFixed(1) + " percentage points";
+    const cmp = (a, b) => D.advComparisons.find(r => r.model === a && r.against === b && r.metric === "auc");
+    const sg = x => (x >= 0 ? "+" : "") + x.toFixed(4);
+    const label = { scorecard: "Scorecard", monotone: "Monotone boosting", challenger: "Gradient boosting" };
+    const pairs = [...new Set(D.swap.map(r => r.pair))], bands = D.pricing, apr = S.economics.apr;
+    $("more").innerHTML = `
+      <div class="card"><h2>Explainable machine learning</h2><p class="sub">The gradient-boosting model is told, for the features where the direction is obvious (credit limit, payments, months late, share of the bill paid), that more of the feature never means less risk. It can then be explained with the same kind of reasons as the scorecard, and cannot contradict common sense.</p>
+        <table><tr><th class="l">Model</th><th>AUC</th><th>95% range</th><th>KS</th><th>Brier</th><th>Profit per account at break-even</th><th>95% range</th></tr>
+        ${["scorecard", "monotone", "challenger"].map(k => `<tr><td class="l">${label[k]}</td><td>${f3(A[k].auc)}</td><td>${f3(A[k].auc_low)} to ${f3(A[k].auc_high)}</td><td>${f3(A[k].ks)}</td><td>${A[k].brier.toFixed(4)}</td><td>${nt(P[k].profit_per_account)}</td><td>${nt(P[k].low)} to ${nt(P[k].high)}</td></tr>`).join("")}</table>
+        <p class="note">AUC of monotone boosting against the scorecard: ${sg(cmp("monotone", "scorecard").difference)} (95% range ${sg(cmp("monotone", "scorecard").low)} to ${sg(cmp("monotone", "scorecard").high)}); of free boosting against monotone boosting: ${sg(cmp("challenger", "monotone").difference)} (${sg(cmp("challenger", "monotone").low)} to ${sg(cmp("challenger", "monotone").high)}). Moving each constrained feature across its range for ${num(D.monotone[0].accounts)} sampled accounts (${num(checks)} account-and-feature checks), the monotone model moved the wrong way in ${num(viol("monotone"))} of them and the free model in ${num(viol("challenger"))} (${pc(viol("challenger") / checks, 0)}); where it did, the probability fell by ${points(avgFall)} on average below an earlier level and by as much as ${points(worstFall)}.</p></div>
+      <div class="card"><h2>Swap sets</h2><p class="sub">Where two models disagree at the break-even cut-off, and who was right. Profit is what approving those accounts would have earned, per account of the whole portfolio.</p>
+        <div class="row"><label>Compare <select id="m-pair">${pairs.map(p => `<option>${p}</option>`).join("")}</select></label></div><table id="m-swap"></table></div>
+      <div class="grid2"><div class="card" style="overflow-x:auto"><h2>Stress tests</h2><p class="sub">Expected profit per account a month from the scorecard's own probabilities, when defaults rise (the odds are multiplied) or money gets dearer. "Kept" leaves the cut-off where it is; "re-set" moves it to the scenario's break-even.</p><table id="m-stress"></table></div>
+      <div class="card"><h2>Risk-based pricing</h2><p class="sub">The card APR at which approving each tenth of accounts breaks even. Orange tenths cannot pay at ${pc(apr, 0)}; the chart stops at 150%.</p><div id="m-pricing" style="height:300px"></div></div></div>
+      <div class="card"><h2>Moving the scorecard to another lender</h2><p class="sub">The ranking carries over; the probabilities do not. A lender whose accounts miss a payment at another rate re-anchors every log-odds by the difference between the two base log-odds. Expected values from the scorecard's probabilities, at the base-case economics.</p><table id="m-local"></table></div>
+      <div class="card"><h2>What lies behind the approval gaps</h2><p class="sub">The scorecard adds up points, so each group's gap to the best-treated group of its attribute splits by feature: the average points the group gets from each feature, against the reference (negative: fewer points). Groups flagged at the base case, or within 10 points of the four-fifths line (disparate impact under ${D.watchBelow.toFixed(2)}).</p><div id="m-drivers" style="height:380px"></div></div>`;
+    const drawSwap = () => { const rows = D.swap.filter(r => r.pair === $("m-pair").value);
+      $("m-swap").innerHTML = "<tr><th class='l'>Who approves</th><th>Accounts</th><th>Defaulted</th><th>Average balance</th><th>Profit if approved</th></tr>" +
+        rows.map(r => `<tr><td class="l">${r.cell}</td><td>${pc(r.share)}</td><td>${pc(r.default_rate)}</td><td>${nt(r.mean_balance)}</td><td>${nt(r.profit_if_approved)}</td></tr>`).join(""); };
+    $("m-pair").addEventListener("change", drawSwap); drawSwap();
+    $("m-stress").innerHTML = "<tr><th class='l'>Scenario</th><th>Kept: share</th><th>Kept: profit</th><th>Re-set: share</th><th>Re-set: profit</th></tr>" +
+      D.stress.map(r => `<tr><td class="l">${r.scenario}</td><td>${pc(r.approved_kept, 0)}</td><td>${nt(r.profit_kept)}</td><td>${pc(r.approved_reset, 0)}</td><td>${nt(r.profit_reset)}</td></tr>`).join("");
+    Plotly.newPlot("m-pricing", [{ type: "bar", x: bands.map(b => b.group), y: bands.map(b => Math.min(b.required_apr, 1.5)), marker: { color: bands.map(b => b.pays_at_current_apr ? TEAL : ORANGE) },
+      text: bands.map(b => pc(b.required_apr, 0)), textposition: "outside", hovertemplate: "tenth %{x}: break-even APR %{text}<extra></extra>" }],
+      layout({ shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: apr, y1: apr, line: { color: primary, dash: "dash", width: 1 } }], xaxis: { gridcolor: grid, title: "scorecard tenth (1 = safest)", dtick: 1 },
+        yaxis: { gridcolor: grid, tickformat: ".0%", title: "break-even APR", range: [0, 1.7] } }), cfg);
+    $("m-local").innerHTML = "<tr><th class='l'>Lender's monthly missed-payment rate</th><th>Cut-off score</th><th>Share approved</th><th>Expected default rate of approved</th><th>Expected profit per account</th></tr>" +
+      D.localRate.map(r => `<tr class="${Math.abs(r.log_odds_shift) < 1e-9 ? "hl" : ""}"><td class="l">${pc(r.local_default_rate)}${Math.abs(r.log_odds_shift) < 1e-9 ? " (this file)" : ""}</td><td>${r.cutoff_score}</td><td>${pc(r.approved_share, 0)}</td><td>${pc(r.expected_default_rate_approved)}</td><td>${nt(r.expected_profit_per_account)}</td></tr>`).join("");
+    const watched = D.drivers.filter(r => r.flagged || r.disparate_impact < D.watchBelow), groups = [...new Set(watched.map(r => r.attribute + ": " + r.group))], featureOrder = [...new Set(watched.map(r => r.feature))];
+    const names = { sex: "Sex", age_band: "Age", education: "Education", marriage: "Marital status" };
+    if (!groups.length) { $("m-drivers").innerHTML = "<p class='note'>No group is flagged or close to the line.</p>"; return; }
+    Plotly.newPlot("m-drivers", featureOrder.map((f, i) => ({ type: "bar", orientation: "h", name: D.featureNames[f] || f,
+      y: groups.map(g => { const [a, ...rest] = g.split(": "); return names[a] + ": " + rest.join(": "); }),
+      x: groups.map(g => { const row = watched.find(r => r.attribute + ": " + r.group === g && r.feature === f); return row ? row.points_gap : 0; }), marker: { color: PALETTE[i % PALETTE.length] },
+      hovertemplate: "%{y}, " + (D.featureNames[f] || f) + ": %{x:.1f} points<extra></extra>" })),
+      layout({ barmode: "relative", margin: { t: 10, r: 14, b: 50, l: 160 }, xaxis: { gridcolor: grid, title: "points against the reference group" }, yaxis: { autorange: "reversed" }, legend: { orientation: "h", y: -0.3, font: { size: 10 } } }), cfg);
+  };
+
   renderers.pakistan = function () {
     const P = S.pakistan;
     $("pakistan").innerHTML = `<div class="callout"><b>Why Pakistan is in a Taiwanese dataset.</b> The cardholders are not Pakistani, so nothing here says how Pakistani cardholders behave. What is Pakistani is the price of money: the policy rate sets what a lender gives up by holding a card balance instead of government paper, so it moves the break-even cut-off. The policy rate went from ${P.rate_low}% (${P.rate_low_date}) to ${P.rate_peak}% (${P.rate_peak_date}) and was ${P.rate_now}% on ${P.rate_now_date}.</div>
@@ -388,11 +465,12 @@
       <li><b>Challenger.</b> LightGBM, ${st.tuning_trials} random settings tried by ${st.cv_folds}-fold cross-validation on the development accounts, then recalibrated with a logistic correction fitted on out-of-fold predictions (log loss ${f3(S.challenger.log_loss_before_recalibration)} before, ${f3(S.challenger.log_loss_after_recalibration)} after, on the hold-out). Probabilities are rounded to 0.1 of a percentage point.</li>
       <li><b>Validation.</b> ${st.cv_repeats} × ${st.cv_folds}-fold cross-validation with every step refitted, hold-out AUC, KS, Brier score and calibration slope with ${num(st.bootstrap_draws)} bootstrap resamples, lift, and population stability.</li>
       <li><b>Fairness.</b> Sex, marital status, education and age are not inputs. Decisions are audited by group at the cut-off; leaving them out costs almost nothing in accuracy.</li>
-      <li><b>Cut-off.</b> Profit per unit of balance over one billing month: margin if the account pays, minus loss if it defaults. Balances are the September statement.</li></ul></div>
+      <li><b>Cut-off.</b> Profit per unit of balance over one billing month: margin if the account pays, minus loss if it defaults. Balances are the September statement.</li>
+      <li><b>Going further.</b> The loss on a missed payment is estimated from roll rates (tab "Loss evidence"). A boosting model whose directions are checked, swap sets between models, stress tests, risk-based pricing, re-anchoring the scorecard to another lender and what drives the approval gaps are in "Going further".</li></ul></div>
       <div class="card"><h2>What this cannot tell you</h2><ul class="tight">
       <li><b>Not Pakistani data.</b> The cardholders are from Taiwan in 2005, a crisis-era book. There is no public borrower-level data for Pakistan. A Pakistani lender would refit the scorecard on its own accounts.</li>
-      <li><b>Default means a missed payment.</b> It is not a charge-off, so the loss when an account "defaults" is an assumption, not a measurement.</li>
-      <li><b>The economics are assumptions.</b> Only the card APR (MCB's published rate) and the policy rate are sourced. The share of balances that revolve is measured in this file; running cost and loss are guesses with ranges, and the answer moves a lot with them.</li>
+      <li><b>Default means a missed payment.</b> It is not a charge-off, so the loss when an account "defaults" is estimated from roll rates over five months at the start of a crisis (a floor, not a forecast), not read from the data.</li>
+      <li><b>The economics are assumptions.</b> Only the card APR (MCB's published rate) and the policy rate are sourced. The share of balances that revolve is measured in this file; the loss on a missed payment is built from the roll rates with two assumptions (the share of a written-off balance never recovered, and the cost of collection) and running cost is a guess; the answer moves a lot with them.</li>
       <li><b>One cohort.</b> The accounts are one snapshot, so there is no later period to test the model's stability against, and no way to check how it would behave through a cycle.</li>
       <li><b>Selection.</b> These are accounts the bank had already approved; applicants it rejected are not here.</li>
       <li><b>Repayment codes.</b> The documentation does not explain the codes -2 and 0, and "1 month late" hardly appears before September; the card treats status 1 and above as late.</li>

@@ -30,7 +30,7 @@ import pandas as pd
 ROOT = Path.cwd().parent if Path.cwd().name == "notebooks" else Path.cwd()
 sys.path.insert(0, str(ROOT))
 # the same functions the pipeline uses
-from creditrisk import binning, build, config, economics, models, scorecard, validation  # noqa: E402
+from creditrisk import binning, build, config, economics, models, rollrates, scorecard, validation  # noqa: E402
 
 P = ROOT / "data" / "processed"
 pd.options.display.float_format = "{:,.3f}".format
@@ -142,6 +142,34 @@ SCENARIOS = '''pd.read_csv(P / "scenarios.csv")[["date", "policy_rate", "break_e
 FAIRNESS = '''f = pd.read_csv(P / "fairness_groups.csv").query("model == 'scorecard'")
 f[["attribute", "group", "accounts", "default_rate", "mean_probability", "approval_rate", "disparate_impact", "flagged"]].round(3)'''
 
+ROLLRATES = '''# What a missed payment costs, from the file's own repayment history: how accounts move between statuses from one month to the next.
+evidence, roll = rollrates.evidence(dev, y_dev, draws=50)       # the draws only give the 95% range; the point estimates do not depend on them
+base = evidence[evidence["write_off_status"] == config.ECON_WRITEOFF_STATUS].iloc[0]
+stored = summary["rollrates"]
+assert abs(base["probability"] - stored["base_probability"]) < 1e-9 and abs(base["loss"] - stored["base_loss"]) < 1e-9
+assert abs(roll["matrix"].sum(axis=1) - 1).max() < 1e-12 and int(roll["counts"].sum()) == stored["transitions"]
+print(f"{int(roll['counts'].sum()):,} month-to-month moves; a late account recovers by the next month {roll['p_cure_from_first_late']:.0%} of the time, "
+      f"stays where it is {roll['p_stay_first_late']:.0%} and gets worse {roll['p_worse_from_first_late']:.0%}")
+print(f"chance that a missed payment is written off within {config.ECON_HORIZON} months (status {config.ECON_WRITEOFF_STATUS} line): "
+      f"{base['probability']:.2%} here, {stored['base_probability']:.2%} in the results")
+print(f"loss = {config.ECON_LGD:.0%} never recovered x {base['probability']:.2%} + {config.ECON_COLLECTION_COST:.0%} for collection = {base['loss']:.2%}")
+pd.DataFrame(roll["matrix"], index=rollrates.NAMES, columns=rollrates.NAMES)'''
+
+MORE = '''# The second layer reads the committed tables: an explainable boosting model, and the check that it keeps the directions it was given.
+check = pd.read_csv(P / "monotone_check.csv")
+told, free = check[check["model"] == "monotone"], check[check["model"] == "challenger"]
+n_checks = len(told) * int(told["accounts"].iloc[0])
+print(f"a feature moved across its range for {int(told['accounts'].iloc[0])} accounts ({n_checks:,} account-and-feature checks): "
+      f"direction broken {int(told['violations'].sum())} times by the monotone model and {int(free['violations'].sum()):,} times by free boosting "
+      f"(its deepest fall below an earlier level: {free['largest_fall'].max() * 100:.1f} percentage points)")
+pd.read_csv(P / "advanced_models.csv").set_index("model")[["auc", "auc_low", "auc_high", "ks", "brier"]]'''
+
+STRESS = '''# Expected profit per account a month when defaults rise or money gets dearer, with the cut-off kept and with it re-set.
+pd.read_csv(P / "stress.csv")[["scenario", "policy_rate", "approved_kept", "profit_kept", "approved_reset", "profit_reset"]]'''
+
+PRICING = '''# The card APR at which approving each tenth of accounts (1 = safest) would break even.
+pd.read_csv(P / "pricing.csv")[["group", "mean_probability", "required_apr", "pays_at_current_apr", "expected_profit_per_account"]]'''
+
 
 def cells() -> list[tuple[str, str]]:
     import pandas as pd
@@ -154,15 +182,15 @@ def cells() -> list[tuple[str, str]]:
 
 **Approach.** A points scorecard built the way banks build them (weight of evidence, logistic regression, points), tested against a gradient-boosting model and a naive rule, checked for calibration and fairness, then priced: the cut-off that earns most depends on the card's yield, the loss on a default, and the cost of money, which here is the State Bank of Pakistan's policy rate.
 
-**Short answer.** On {d['holdout']:,} hold-out accounts the scorecard has an AUC of {m['scorecard']['auc']:.3f} against {m['naive']['auc']:.3f} for a rule that only reads last month's status and {m['challenger']['auc']:.3f} for gradient boosting. Under the stated assumptions an account is worth approving while its probability of default is under {_pc(e['break_even_pd'])}, which approves {_pc(share, 0)} of the hold-out accounts (section 8).
+**Short answer.** On {d['holdout']:,} hold-out accounts the scorecard has an AUC of {m['scorecard']['auc']:.3f} against {m['naive']['auc']:.3f} for a rule that only reads last month's status and {m['challenger']['auc']:.3f} for gradient boosting. Under the stated assumptions an account is worth approving while its probability of default is under {_pc(e['break_even_pd'])}, which approves {_pc(share, 0)} of the hold-out accounts (section 9).
 
 The cardholders are from Taiwan, not Pakistan, and "default" means a missed payment, not a write-off. The yield, running cost and loss in the economics are assumptions. This notebook refits the scorecard from the raw file in a few seconds and checks it against the committed results; everything else it reads from `data/processed`. Nothing here is lending advice."""
-    limits = (f"## 11. Limits\n\n- **Not Pakistani data.** The accounts are Taiwanese from 2005, a crisis-era book where {_pc(d['default_rate'], 0)} missed a payment in one month. "
+    limits = (f"## 13. Limits\n\n- **Not Pakistani data.** The accounts are Taiwanese from 2005, a crisis-era book where {_pc(d['default_rate'], 0)} missed a payment in one month. "
               "What carries over to Pakistan is the method and the link between the policy rate and the cut-off.\n"
-              "- **Default is a missed payment**, not a charge-off, so the loss on a default is an assumption.\n"
+              "- **Default is a missed payment**, not a charge-off, so the loss on it is estimated from roll rates over five months at the start of a crisis: a floor, not a forecast.\n"
               "- **One cohort.** There is no later period to test the scorecard's stability against.\n"
               "- **Selection.** Only accounts the bank had approved are here.\n"
-              "- **The assumptions drive the cut-off.** Only the card APR and the policy rate are sourced; see the sensitivity table in the dashboard.")
+              "- **The assumptions drive the cut-off.** Only the card APR and the policy rate are sourced (the loss is measured, with two assumptions of its own); see the sensitivity table in the dashboard.")
     return [
         ("markdown", intro),
         ("code", SETUP),
@@ -185,12 +213,18 @@ The cardholders are from Taiwan, not Pakistan, and "default" means a missed paym
         ("code", CHALLENGER),
         ("code", SUBSETS),
         ("code", CALIBRATION),
-        ("markdown", "## 8. Where to draw the line\n\nOver one billing month an approved account that pays earns a margin on its balance, and one that defaults loses a share of it. Approving pays while the probability of default is under margin / (margin + loss). The margin comes from the card's APR (MCB publishes 3.67% a month, up to 44% a year), the share of balances that revolve (measured in this file), the cost of money (the policy rate) and a running cost; the loss is an assumption."),
+        ("markdown", "## 8. What a missed payment costs\n\nThe label is a missed payment, not a write-off, so the loss on it is not in the data. It is estimated from roll rates: the repayment status of April to August (the months coded on one basis) is read as a ladder of states, current and then late 2, 3, 4, 5 and 6 or more, and the moves from one month to the next give a transition matrix. An account that really missed its payment is late in October by definition, so each one is moved one month on to the late state it landed in, and raising the matrix to a power then gives the chance that it is written off within a year. The loss is that chance times the share of the balance never recovered (85%, an assumption) plus a cost of collection (2%, an assumption). The cell recomputes it from the development accounts and checks it against the committed result."),
+        ("code", ROLLRATES),
+        ("markdown", "## 9. Where to draw the line\n\nOver one billing month an approved account that pays earns a margin on its balance, and one that defaults loses a share of it. Approving pays while the probability of default is under margin / (margin + loss). The margin comes from the card's APR (MCB publishes 3.67% a month, up to 44% a year), the share of balances that revolve (measured in this file), the cost of money (the policy rate) and a running cost; the loss comes from the roll rates above."),
         ("code", BREAKEVEN),
         ("code", CUTOFF),
-        ("markdown", "## 9. What the policy rate does to the cut-off\n\nWhen the State Bank raised its rate from 7.25% to 22%, the margin on a card balance shrank and the break-even probability fell: a lender that kept its 2021 cut-off through 2023 would have approved accounts that lost money."),
+        ("markdown", "## 10. What the policy rate does to the cut-off\n\nWhen the State Bank raised its rate from 7.25% to 22%, the margin on a card balance shrank and the break-even probability fell: a lender that kept its 2021 cut-off through 2023 would have approved accounts that lost money."),
         ("code", SCENARIOS),
-        ("markdown", "## 10. Fairness\n\nSex, age, education and marital status are not inputs. The audit shows what the decisions do to each group at the cut-off. The disparate-impact ratio flags a group approved at under four-fifths of the best group's rate; it is a screening rule, not a legal test in Pakistan."),
+        ("markdown", "## 11. Going further\n\nThe pipeline goes on to a boosting model that is told which way common-sense features must push the probability (and a check that it obeys), swap sets between models, stress tests and risk-based pricing. This notebook reads those tables rather than recomputing them; the code is in `creditrisk/advanced.py` and the figures and write-up are in the dashboard and the method document."),
+        ("code", MORE),
+        ("code", STRESS),
+        ("code", PRICING),
+        ("markdown", "## 12. Fairness\n\nSex, age, education and marital status are not inputs. The audit shows what the decisions do to each group at the cut-off. The disparate-impact ratio flags a group approved at under four-fifths of the best group's rate; it is a screening rule, not a legal test in Pakistan."),
         ("code", FAIRNESS),
         ("markdown", limits),
     ]
