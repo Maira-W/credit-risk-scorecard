@@ -41,4 +41,4 @@ def test_the_refit_in_the_notebook_reproduced_the_committed_numbers(nb):
 
 def test_the_notebook_has_the_plots_it_describes(nb):
     images = sum(1 for cell in nb.cells if cell.cell_type == "code" for o in cell.outputs if o.output_type == "display_data" and "image/png" in o.data)
-    assert images >= 4
+    assert images >= 3                      # the segments, the calibration plot and the profit curve

@@ -29,7 +29,8 @@ import pandas as pd
 
 ROOT = Path.cwd().parent if Path.cwd().name == "notebooks" else Path.cwd()
 sys.path.insert(0, str(ROOT))
-from creditrisk import binning, build, config, economics, models, scorecard, validation  # noqa: E402  (the same functions the pipeline uses)
+# the same functions the pipeline uses
+from creditrisk import binning, build, config, economics, models, scorecard, validation  # noqa: E402
 
 P = ROOT / "data" / "processed"
 pd.options.display.float_format = "{:,.3f}".format
